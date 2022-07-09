@@ -1,0 +1,108 @@
+import numpy as np
+from Application.Views import BuyWindow
+
+def snapQuoteRequested(self):
+    if(self.snapW.isVisible()):
+        self.snapW.hideWindow()
+
+    token = int(self.marketW.tableView.selectedIndexes()[0].data())
+
+    if(token!=self.snapW.token):
+
+        self.snapW.Token = token
+
+        self.ins_details = self.fo_contract[token-35000]
+        lua = self.ins_details
+
+        self.snapW.cbEx.setCurrentText(lua[0])
+        self.snapW.cbSg.setCurrentText(lua[1])
+        self.snapW.cbIns.setCurrentText(lua[5])
+        self.snapW.cbSym.setCurrentText(lua[3])
+        self.snapW.cbExp.setCurrentText(lua[6])
+        self.snapW.cbStrk.setCurrentText(lua[7])
+        self.snapW.cbOtype.setCurrentText(lua[8])
+        self.snapW.LeToken.setText(str(token))
+    else:
+        self.snapW.subscription_feed(self.snapW.token)
+
+        if(self.snapW.isVisible()):
+            self.snapW.hideWindow()
+    self.snapW.show()
+
+
+def requestBuyWindow(self,sourceClass):
+
+    if(sourceClass == 'MarketWatch'):
+        selectedIndexes = self.marketW.tableView.selectedIndexes()
+
+        token = int(selectedIndexes[0].data())
+        exchange = selectedIndexes[1].data()
+        price = '%.2f' % selectedIndexes[8].data()
+
+    elif(sourceClass == 'NetPosition'):
+        pass
+    elif(sourceClass == 'SnapQuote'):
+
+        token = self.snapW.token
+        exchange = self.snapW.exchange
+        price = self.snapW.sp1.text()
+
+    elif(sourceClass == 'FolioPosition'):
+        pass
+
+
+    if(exchange == 'NSEFO'):
+        ins_details = self.fo_contract[token-35000]
+    else:
+        ins_details = self.fo_contract[token]
+    instrumentType = ins_details[5]
+    symbol = ins_details[3]
+    exp = ins_details[6]
+    strk = ins_details[7]
+    opt = ins_details[8]
+    tick = ins_details[10]
+    lot = ins_details[11]
+    max = ins_details[14]
+
+    BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)
+
+
+
+def requestSellWindow(self,sourceClass):
+
+
+    if(sourceClass == 'MarketWatch'):
+        selectedIndexes = self.marketW.tableView.selectedIndexes()
+        token = int(selectedIndexes[0].data())
+        exchange = selectedIndexes[1].data()
+        price = '%.2f' % selectedIndexes[7].data()
+
+    elif(sourceClass == 'NetPosition'):
+        pass
+    elif(sourceClass == 'SnapQuote'):
+        token = self.snapW.token
+        exchange = self.snapW.exchange
+        price = self.snapW.bp1.text()
+
+    elif(sourceClass == 'FolioPosition'):
+        pass
+
+
+    if(exchange == 'NSEFO'):
+        ins_details = self.fo_contract[token-35000]
+    else:
+        ins_details = self.fo_contract[token]
+
+    instrumentType = ins_details[5]
+    symbol = ins_details[3]
+    exp = ins_details[6]
+    strk = ins_details[7]
+    opt = ins_details[8]
+    tick = ins_details[10]
+    lot = ins_details[11]
+    max = ins_details[14]
+
+
+    self.sellW.showWindow(exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)
+
+

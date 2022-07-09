@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Frame</class>
+ <widget class="QFrame" name="Frame">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>445</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <widget class="QLabel" name="a_logo">
+   <property name="geometry">
+    <rect>
+     <x>-1</x>
+     <y>-1</y>
+     <width>800</width>
+     <height>450</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lb_ia_secretKey">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>220</y>
+     <width>281</width>
+     <height>17</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbLogin">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>330</y>
+     <width>70</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbMDStatus">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>280</y>
+     <width>81</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(213, 213, 213);</string>
+   </property>
+   <property name="text">
+    <string>Not Connected</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbIAStatus">
+   <property name="geometry">
+    <rect>
+     <x>700</x>
+     <y>220</y>
+     <width>81</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(213, 213, 213);</string>
+   </property>
+   <property name="text">
+    <string>Not Connected</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lb_loginId">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>160</y>
+     <width>281</width>
+     <height>17</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lb_ia_appKey">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>190</y>
+     <width>281</width>
+     <height>17</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbCancel">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>330</y>
+     <width>70</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lb_md_secretKey">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>280</y>
+     <width>281</width>
+     <height>17</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lb_md_appKey">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>250</y>
+     <width>281</width>
+     <height>17</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>250</y>
+     <width>90</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(229, 229, 229)</string>
+   </property>
+   <property name="text">
+    <string>MD_APPKEY</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>220</y>
+     <width>90</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(229, 229, 229)</string>
+   </property>
+   <property name="text">
+    <string>IA_SECRETKEY</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>280</y>
+     <width>90</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(229, 229, 229)</string>
+   </property>
+   <property name="text">
+    <string>MD_SECRETKEY</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>100</y>
+     <width>90</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(229, 229, 229)</string>
+   </property>
+   <property name="text">
+    <string>Server</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>160</y>
+     <width>90</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(229, 229, 229)</string>
+   </property>
+   <property name="text">
+    <string>LoginID</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>190</y>
+     <width>90</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(229, 229, 229)</string>
+   </property>
+   <property name="text">
+    <string>IA_APPKEY</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbNext">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>390</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(20, 140, 210);</string>
+   </property>
+   <property name="text">
+    <string>Next</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="cbCmaster">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>310</y>
+     <width>231</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(229, 229, 229)</string>
+   </property>
+   <property name="text">
+    <string>    DOWNLOAD CONTRACT MASTER.</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cbServer">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>100</y>
+     <width>141</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>ARHAM_DIRECT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>ARHAM_WEB</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TRADECIRCLE_DIRECT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TRADECIRCLE_WEB</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>UAT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>UAT_WEB</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="pbSave">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>360</y>
+     <width>70</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbRevert">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>360</y>
+     <width>70</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Revert</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="label">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>350</y>
+     <width>281</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+border-color: transparent;
+color: rgb(225,225,225);</string>
+   </property>
+   <property name="lineWidth">
+    <number>0</number>
+   </property>
+   <property name="textInteractionFlags">
+    <set>Qt::NoTextInteraction</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="leUID">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>100</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>HMT</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>130</y>
+     <width>90</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color:rgb(229, 229, 229)</string>
+   </property>
+   <property name="text">
+    <string>LoginID</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cbAPIType">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>130</y>
+     <width>141</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>IBT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>PRO</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TWS-S</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>TWS-M</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLineEdit" name="leClient">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>130</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>cbServer</tabstop>
+  <tabstop>lb_loginId</tabstop>
+  <tabstop>lb_ia_appKey</tabstop>
+  <tabstop>lb_ia_secretKey</tabstop>
+  <tabstop>lb_md_appKey</tabstop>
+  <tabstop>lb_md_secretKey</tabstop>
+  <tabstop>cbCmaster</tabstop>
+  <tabstop>pbLogin</tabstop>
+  <tabstop>pbCancel</tabstop>
+  <tabstop>pbRevert</tabstop>
+  <tabstop>pbSave</tabstop>
+  <tabstop>pbNext</tabstop>
+  <tabstop>label</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
