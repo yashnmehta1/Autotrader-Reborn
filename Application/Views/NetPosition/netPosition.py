@@ -14,7 +14,7 @@ from PyQt5 import uic
 import qtpy
 import qdarkstyle
 
-
+from Application.Utils.createTables import tables_details_np
 import pandas as pd
 import datatable as dt
 import numpy  as np
@@ -65,8 +65,8 @@ class NetPosition(QMainWindow):
             dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
             self.setStyleSheet(dt1)
 
-
-            self.tables_details()
+            tables_details_np(self)
+            # self.tables_details()
             self.tableView.horizontalHeader().sectionMoved.connect(print)
 
             # self.CreateToolBar()
@@ -131,57 +131,6 @@ class NetPosition(QMainWindow):
         self.sgCallTB.emit(token)
 
 
-
-    def tables_details(self):
-        try:
-            #############################################################################################################
-
-            self.heads = ['UserID',
-                          'ClientID','Segment','ExchangeInstrumentID', 'TradingSymbol', 'symbol',
-                          'Expiry','Stike_price','C/P','Quantity', 'MTM',
-                          'LTP', 'RealizedMTM','NetAmount','AvgPrice','lotsize',
-                          'maxQ','AssetToken','SerialNo','OpenQty','OpenAmt']
-
-            self.Apipos =  np.empty((1000, 19),dtype=object)
-            self.sectionDict={}
-            for j,i in enumerate(self.heads):
-                self.sectionDict[j]=i
-            #############################################################################################################
-
-            #############################################
-            self.modelP = ModelPosition(self.Apipos,self.heads)
-            self.smodelP = ProxyModel()
-            self.smodelP.setSourceModel(self.modelP)
-
-            self.smodelP.setDynamicSortFilter(False)
-            self.smodelP.setFilterKeyColumn(4)
-            self.smodelP.setFilterCaseSensitivity(False)
-
-            self.tableView.setModel(self.smodelP)
-
-
-            self.tableView.horizontalHeader().setSectionsMovable(True)
-            self.tableView.verticalHeader().setSectionsMovable(True)
-            self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
-            self.tableView.customContextMenuRequested.connect(self.rightClickMenu)
-            # self.tableView.setStyleSheet(
-            #     'background-color: rgb(50, 50, 50);selection-background-color: transparent;color: rgb(245, 245, 245);')
-            self.tableView.setDragDropMode(self.tableView.InternalMove)
-            # self.tableView.horizontalHeader().setStyleSheet('color : black')
-            self.tableView.setDragDropOverwriteMode(False)
-            # a=QtWidgets.QtableView.horizontalHeader()
-            # a.moveSection()
-            self.tableView.setColumnWidth(0,0)
-            self.tableView.setColumnWidth(2,0)
-            self.tableView.setColumnWidth(3,0)
-            self.tableView.setColumnWidth(14,0)
-            self.tableView.setColumnWidth(15,0)
-            self.tableView.setColumnWidth(16,0)
-
-            # self.tableView.clicked.connect(self.tvs6)
-        except:
-            print(traceback.print_exc())
-            logging.error(sys.exc_info()[1])
 
 
     def filtr(self):

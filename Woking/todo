@@ -2,13 +2,13 @@
 renaming ui file to resolve issue win to linux
 remove unnecessary ui files
 ########################################################################################################################
-save zipped the master file without any extension
+save zipped the master file without any extension -- using temp directory
 ########################################################################################################################
 db file should be a hidden file (check possibility if it can be a temp file)
 ########################################################################################################################
 intialise variables in sepret method and review all
 ########################################################################################################################
-what was llp function in marketW check in old code
+#what was llp function in marketW check in old code
 ########################################################################################################################
 review feedhandler working in snapQuote
 ########################################################################################################################

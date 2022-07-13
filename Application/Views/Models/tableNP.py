@@ -49,7 +49,7 @@ class ModelPosition(QtCore.QAbstractTableModel):
         return self.lastSerialNo
 
     def columnCount(self, index):
-            return len(self.heads)
+            return len(self.heads)-4
 
 
 

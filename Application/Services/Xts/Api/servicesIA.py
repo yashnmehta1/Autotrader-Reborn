@@ -233,15 +233,14 @@ def get_position(self):
     except:
         print(traceback.print_exc())
 
-def get_Pending(self):
+def get_Pending(self,ifFlush = False):
     try:
-        ApiOrder = np.empty((0, 22))
-        ApiOrder1 = np.empty((0, 22))
         if(self.Source=='WEBAPI'):
             url = self.URL + '/interactive/orders'
             req = requests.request("GET", url, headers=self.IAheaders)
             data_p = req.json()
             noOfPendingOrder = 0
+
             if(data_p['result']!=[]):
                 for j,i in enumerate(data_p['result']):
                     print('get_pending_order',j,i)
@@ -249,31 +248,24 @@ def get_Pending(self):
                     ######################################## contract working ##########################################
                     try:
                         if (i['ExchangeSegment'] == 'NSEFO'):
-                            ah = self.fo_contract[int(i['ExchangeInstrumentID']) - 35000]
-                            # print('ah',ah)
-                            ins = [ah[4], ah[3], ah[6], ah[7], ah[8], ah[11], ah[14], ah[9], ah[0], ah[5]]
-                            # self.cntrcts[int(i['ExchangeInstrumentID'])] = ins
+                            ins_details = self.fo_contract[int(i['ExchangeInstrumentID']) - 35000]
                         elif (i['ExchangeSegment'] == 'NSECM'):
-                            ah = self.eq_contract[int(i['ExchangeInstrumentID'])]
-                            # print('ah',ah)
-                            ins = [ah[4], ah[3], ah[6], ah[7], ah[8], ah[11], ah[14], ah[9], ah[0], ah[5]]
-                            # self.cntrcts[int(i['ExchangeInstrumentID'])] = ins
+                            ins_details = self.eq_contract[int(i['ExchangeInstrumentID'])]
                         elif (i['ExchangeSegment'] == 'NSECD'):
-                            ah = self.cd_contract[int(i['ExchangeInstrumentID'])]
-                            # print('ah',ah)
-                            ins = [ah[4], ah[3], ah[6], ah[7], ah[8], ah[11], ah[14], ah[9], ah[0], ah[5]]
-                            # self.cntrcts[int(i['ExchangeInstrumentId'])] = ins
-
+                            ins_details = self.cd_contract[int(i['ExchangeInstrumentID'])]
                     except:
                         logging.error(sys.exc_info()[1])
                         print(traceback.print_exc())
+
                     orderSide = i['OrderSide'].replace('BUY','Buy').replace('SELL','Sell')
                     anm =dt.Frame([[i['ClientID']],
-                                                            [i['ExchangeInstrumentID']], [ ins[0]], [ins[1]],[ins[2]], [ins[3]],
-                                                            [ins[4]],[orderSide],[(i['AppOrderID'])],[i['OrderType']], [i['OrderStatus']],
-                                                            [i['OrderQuantity']],[i['LeavesQuantity']],[i['OrderPrice']],[i['OrderStopPrice']], [i['OrderUniqueIdentifier']],
-                                                            [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']],[i['CancelRejectReason']],[ins[8]],[ins[9]],
-                                                            [i['OrderAverageTradedPrice']]]).to_numpy()
+                            [i['ExchangeInstrumentID']], [ ins_details[4]], [ins_details[3]],[ins_details[6]], [ins_details[7]],
+                            [ins_details[8]],[orderSide],[(i['AppOrderID'])],[i['OrderType']], [i['OrderStatus']],
+                            [i['OrderQuantity']],[i['LeavesQuantity']],[i['OrderPrice']],[i['OrderStopPrice']], [i['OrderUniqueIdentifier']],
+                            [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']],[i['CancelRejectReason']],[ins_details[0]],[ins_details[5]],
+                            [i['OrderAverageTradedPrice']]]).to_numpy()
+
+
 
                     self.OrderBook.ApiOrder[j, :] = anm
                     # self.OrderBook.rcount = self.TradeW.ApiTrade.shape[0]
@@ -293,31 +285,11 @@ def get_Pending(self):
                         self.PendingW.modelO.rowCount()
                         self.PendingW.modelO.insertRows()
 
-                    #     self.ApiOrderList = np.vstack([self.ApiOrderList, np.array([[str(i['AppOrderID']), i['ExchangeInstrumentID'], Qty1]])])
-                    #     fltr = np.asarray([i['ExchangeInstrumentID']])
-                    #     lua = self.ApiOrderSummary[np.in1d(self.ApiOrderSummary[:, 0], fltr)]
-                    #     if (lua.size != 0):
-                    #         prevQty = lua[0][1]
-                    #         self.ApiOrderSummary[np.in1d(self.ApiOrderSummary[:, 0], fltr), 1] = prevQty + Qty1
-                    #         self.sgAPQ.emit([i['ExchangeInstrumentID'],prevQty + Qty1])
-                    #     else:
-                    #         self.ApiOrderSummary = np.vstack([self.ApiOrderSummary,np.array([[i['ExchangeInstrumentID'], Qty1]])])
-                    #         self.sgAPQ.emit([i['ExchangeInstrumentID'], Qty1])
-                    #
-                    # fltr = np.asarray(['New','Replaced','PartiallyFilled'])
-                    # ApiOrder1 = ApiOrder[np.in1d(ApiOrder[:, 10], fltr)]
-
-
-
                 ind = self.PendingW.modelO.index(0, 0)
                 ind1 = self.PendingW.modelO.index(0, 1)
-
                 self.PendingW.modelO.dataChanged.emit(ind, ind1)
-
-
                 ind = self.OrderBook.modelO.index(0, 0)
                 ind1 = self.OrderBook.modelO.index(0, 1)
-
                 self.OrderBook.modelO.dataChanged.emit(ind, ind1)
 
 

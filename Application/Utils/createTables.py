@@ -8,6 +8,7 @@ from Application.Views.Models import tableMW
 from Application.Views.Models import tableTB
 from Application.Views.Models import tableFP
 from Application.Views.Models import ProxyModel
+from Application.Views.Models import tableNP
 from PyQt5.QtCore import QSortFilterProxyModel,Qt
 
 
@@ -78,7 +79,57 @@ def tables_details_tb(self):
         print(traceback.print_exc())
         logging.error(sys.exc_info())
 
+def tables_details_np(self):
+    try:
+        #############################################################################################################
 
+        self.heads = ['UserID',
+                      'ClientID','Segment','ExchangeInstrumentID', 'TradingSymbol', 'symbol',
+                      'Expiry','Stike_price','C/P','Quantity', 'MTM',
+                      'LTP', 'RealizedMTM','NetAmount','AvgPrice','lotsize',
+                      'maxQ','AssetToken','SerialNo','OpenQty','OpenAmt',
+                      'DayQ','DayAmt']
+
+        self.Apipos =  np.empty((1000, 23),dtype=object)
+        self.sectionDict={}
+        for j,i in enumerate(self.heads):
+            self.sectionDict[j]=i
+        #############################################################################################################
+
+        #############################################
+        self.modelP = tableNP.ModelPosition(self.Apipos,self.heads)
+        self.smodelP = QSortFilterProxyModel()
+        self.smodelP.setSourceModel(self.modelP)
+
+        self.smodelP.setDynamicSortFilter(False)
+        self.smodelP.setFilterKeyColumn(4)
+        self.smodelP.setFilterCaseSensitivity(False)
+
+        self.tableView.setModel(self.smodelP)
+
+
+        self.tableView.horizontalHeader().setSectionsMovable(True)
+        self.tableView.verticalHeader().setSectionsMovable(True)
+        self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.tableView.customContextMenuRequested.connect(self.rightClickMenu)
+        # self.tableView.setStyleSheet(
+        #     'background-color: rgb(50, 50, 50);selection-background-color: transparent;color: rgb(245, 245, 245);')
+        self.tableView.setDragDropMode(self.tableView.InternalMove)
+        # self.tableView.horizontalHeader().setStyleSheet('color : black')
+        self.tableView.setDragDropOverwriteMode(False)
+        # a=QtWidgets.QtableView.horizontalHeader()
+        # a.moveSection()
+        self.tableView.setColumnWidth(0,0)
+        self.tableView.setColumnWidth(2,0)
+        self.tableView.setColumnWidth(3,0)
+        self.tableView.setColumnWidth(14,0)
+        self.tableView.setColumnWidth(15,0)
+        self.tableView.setColumnWidth(16,0)
+
+        # self.tableView.clicked.connect(self.tvs6)
+    except:
+        print(traceback.print_exc())
+        logging.error(sys.exc_info()[1])
 
 def tables_details_fp(self):
     try:
@@ -110,3 +161,4 @@ def tables_details_fp(self):
     except:
         print(traceback.print_exc())
         logging.error(sys.exc_info()[1])
+

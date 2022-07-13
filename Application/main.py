@@ -52,7 +52,7 @@ from Application.Views.SnapQuote.snapQuote import Ui_snapQ
 from Application.Views.FolioPosition.folioPosition  import FolioPosition
 from Application.Views.NetPosition.netPosition  import NetPosition
 from Application.Utils.basicWinOps import res_max
-from Application.helper import *
+
 from Application.Utils.createTables import tables_details_mw
 from Application.Services.UDP.UDPSock import Receiver
 
@@ -206,7 +206,7 @@ class Ui_Main(QMainWindow):
             self.IAS.sgOpenPos.connect(lambda: updateOpenPosition(self))
 
             self.IAS.sgGetPOrder.connect(self.PendingW.updateGetApi)
-            self.IAS.sgGetOrder.connect(self.OrderBook.updateGetApi)
+            self.IAS.sgGetOrder.connect(self.on_get_orderBook)
             # self.IAS.sgPendSoc.connect(self.OrderBook.updateSocketOB)
 
             self.IAS.sgPendSoc.connect(self.PendingW.updateSocketOB)
@@ -220,9 +220,9 @@ class Ui_Main(QMainWindow):
             # self.IAS.sgRejection.connect(self.rejectionWorking)
 
 
-            self.IAS.sgAPIpos.connect(self.update_on_position)
+            self.IAS.sgAPIpos.connect(self.updateOnPosition)
             self.IAS.sgStatusUp.connect(lambda:updateStatusLable(self,'x'))
-            self.IAS.sgTrdSoc.connect(self.updateSocketTB1)
+            self.IAS.sgTrdSoc.connect(self.updateOnTrade)
 
             # self.IAS.sgTrdSoc.connect(self.FolioPos.updateApitrd)
             # self.IAS.sgTrdSoc.connect(self.updateApitrd)
@@ -375,19 +375,10 @@ class Ui_Main(QMainWindow):
         ############################################################
         self.jobbinMode = False
         self.Mrglvl = 0
-
-
         self.listBannedSymbol = []
         self.listBannedIns = []
-
         self.isOverOTRFIndex = True  #check its use
 
-    def on_new_feed_1501(self,data):
-        UpdateLTP(self,data)
-    def on_new_feed_1502(self,data):
-        self.snapW.sock1502(data)
-    def on_new_feed_Index(self,data):
-        updateCashIndex(self,data)
 
     def proceed2login(self):
         servicesMD.login(self)
@@ -401,21 +392,37 @@ class Ui_Main(QMainWindow):
         servicesMD.subscribeToken(self, 26001, 'NSECM')
         servicesMD.subscribeToken(self, 26002, 'NSECM')
 
-    def updateSocketTB1(self,trd):
-        updateSocketTB(self,trd)
-
     def movWin(self, x, y):
         self.move(self.pos().x() + x, self.pos().y() + y)
 
-
     def update_on_position(self,pos):
         print('update_on_position')
-        update_Position_Socket_NP(self,pos)
 
-        # try:
-        #     update_Position_socket_MW(self,pos)
-        # except:
-        #     print(traceback.print_exc())
+    def on_get_orderBook(self,orderBook):
+        updateGetOrderBook(self,orderBook)
+
+    def on_get_tradeBook(self,tradeBook):
+        updateGetTradeBook(self,tradeBook)
+
+    def on_get_positionBook(self,positionBook):
+        updateGetPostionBook(self, positionBook)
+
+    def updateOnOrder(self,order):
+        pass
+
+    def updateOnTrade(self,trade):
+        updateSocketTB(self,trade)
+
+    def updateOnPosition(self,position):
+        update_Position_Socket_NP(self, position)
+
+    def on_new_feed_1501(self,data):
+        UpdateLTP(self,data)
+    def on_new_feed_1502(self,data):
+        self.snapW.sock1502(data)
+    def on_new_feed_Index(self,data):
+        updateCashIndex(self,data)
+
 
 
 if __name__ == "__main__":

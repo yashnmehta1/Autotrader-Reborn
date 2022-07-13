@@ -15,7 +15,6 @@ def updateCashIndex(self, token, ltp):
     elif (token == 26002):
         self.PrcVIX.setText('%.2f' % ltp)
 
-
 def UpdateLTP(self, a):
     try:
         # print('in marketwatch update' ,a)
@@ -44,7 +43,6 @@ def UpdateLTP(self, a):
     except:
 
         print(traceback.print_exc())
-
 
 def updateGetPosition(self,ApiPos):
     for i in ApiPos:
@@ -294,7 +292,6 @@ def update_Position_Socket_NP(self,pos):
             ind1 = self.NetPos.modelP.index(0, 1)
             self.NetPos.modelP.dataChanged.emit(ind, ind1)
     print('update get posion finished')
-
 
 def updateOpenPosition(self,openPosArray):
     for i in openPosArray:
