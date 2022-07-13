@@ -29,7 +29,6 @@ def snapQuoteRequested(self):
             self.snapW.hideWindow()
     self.snapW.show()
 
-
 def requestBuyWindow(self,sourceClass):
 
     if(sourceClass == 'MarketWatch'):
@@ -65,8 +64,6 @@ def requestBuyWindow(self,sourceClass):
     max = ins_details[14]
 
     BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)
-
-
 
 def requestSellWindow(self,sourceClass):
 

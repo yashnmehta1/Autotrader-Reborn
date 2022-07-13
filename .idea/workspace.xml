@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="initial">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/createTables.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/createTables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/supMethods.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/supMethods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/updation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/updation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Views/Models/tableNP.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/Models/tableNP.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Views/NetPosition/netPosition.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/NetPosition/netPosition.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Woking/todo" beforeDir="false" afterPath="$PROJECT_DIR$/Woking/todo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/openRequstedWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/openRequstedWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/helper.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -338,7 +329,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657121248972</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="initial">
+      <created>1657719255479</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1657719255479</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
