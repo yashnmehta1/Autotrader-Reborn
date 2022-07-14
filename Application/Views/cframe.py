@@ -25,6 +25,7 @@ class Ui_CFrame(QMainWindow):
 
         # self.tabifyDockWidget(self.dockPB, self.dockOP)
         self.tabifyDockWidget(self.dockOP, self.dockMGR)
+        self.tabifyDockWidget(self.dockMW, self.dockMW_basic)
         # print( dir(self.dockPB))
         # self.tabifyDockWidget(self.dockWidget, self.dockWidget_5)
 

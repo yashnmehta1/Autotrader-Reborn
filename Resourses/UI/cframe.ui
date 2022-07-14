@@ -47,6 +47,15 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents"/>
   </widget>
+  <widget class="QDockWidget" name="dockMW_basic">
+   <property name="windowTitle">
+    <string>BasicMWatch</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2"/>
+  </widget>
  </widget>
  <resources/>
  <connections/>

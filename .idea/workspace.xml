@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="initial">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/supMethods.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/supMethods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/updation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/updation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Woking/todo" beforeDir="false" afterPath="$PROJECT_DIR$/Woking/todo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/cframe.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/cframe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resourses/UI/cframe.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/UI/cframe.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,8 +153,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.servicesIA" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.servicesIA" />
         <item itemvalue="Python.Main" />
         <item itemvalue="Python.netPosition" />
         <item itemvalue="Python.getMasters" />
@@ -346,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657719770285</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="initial">
+      <created>1657795917790</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1657795917790</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
