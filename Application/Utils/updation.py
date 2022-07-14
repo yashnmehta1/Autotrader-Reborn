@@ -396,3 +396,66 @@ def updateSocketTB(self,trd):
         logging.error(sys.exc_info())
 
 
+
+def updateGetOrderTable(self,order,rowNo):
+    self.OrderBook.ApiOrder[rowNo, :] = order
+    # self.OrderBook.rcount = self.TradeW.ApiTrade.shape[0]
+    self.OrderBook.lastSerialNo += 1
+    self.OrderBook.modelO.lastSerialNo += 1
+    self.OrderBook.modelO.rowCount()
+    self.OrderBook.modelO.insertRows()
+    #############################################################################################
+def updateGetTradeTable(self,trade,rowNo):
+    self.TradeW.ApiTrade[rowNo, :] = trade
+    self.TradeW.lastSerialNo += 1
+    self.TradeW.modelT.lastSerialNo += 1
+    self.TradeW.modelT.rowCount()
+    self.TradeW.modelT.insertRows()
+
+
+def updateGetPendingOrderTable(self,order,rowNo):
+    self.PendingW.ApiOrder[rowNo, :] = order
+    self.PendingW.rcount = self.TradeW.ApiTrade.shape[0]
+    self.PendingW.lastSerialNo += 1
+    self.PendingW.modelO.lastSerialNo += 1
+    self.PendingW.modelO.rowCount()
+    self.PendingW.modelO.insertRows()
+
+def updateGetPositionTable(self,pos,rowNo):
+    self.NetPos.Apipos[rowNo, :] = pos
+    self.NetPos.lastSerialNo += 1
+    self.NetPos.modelP.lastSerialNo += 1
+    self.NetPos.modelP.insertRows()
+    self.NetPos.modelP.rowCount()
+
+
+def pendingW_datachanged_full(self):
+    ind = self.PendingW.modelO.index(0, 0)
+    ind1 = self.PendingW.modelO.index(0, 1)
+    self.PendingW.modelO.dataChanged.emit(ind, ind1)
+
+
+def orderW_datachanged_full(self):
+    ind = self.OrderBook.modelO.index(0, 0)
+    ind1 = self.OrderBook.modelO.index(0, 1)
+    self.OrderBook.modelO.dataChanged.emit(ind, ind1)
+
+def tradeW_datachanged_full(self):
+    ind = self.TradeW.modelT.index(0, 0)
+    ind1 = self.TradeW.modelT.index(0, 1)
+    self.TradeW.modelT.dataChanged.emit(ind, ind1)
+
+
+def PosionW_datachanged_full(self):
+    ind = self.NetPos.modelP.index(0, 0)
+    ind1 = self.NetPos.modelO.index(0, 1)
+    self.NetPos.modelP.dataChanged.emit(ind, ind1)
+
+
+def marketW_datachanged_full(self):
+    ind = self.OrderBook.modelO.index(0, 0)
+    ind1 = self.OrderBook.modelO.index(0, 1)
+    self.OrderBook.modelO.dataChanged.emit(ind, ind1)
+
+
+

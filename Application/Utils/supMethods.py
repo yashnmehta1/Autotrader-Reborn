@@ -152,3 +152,10 @@ def ShowPending(self):
     token = self.tableView.selectedIndexes()[0].data()
     self.sgShowPending.emit(str(token))
 
+def get_ins_details(self,exchange,token):
+    if (exchange == 'NSEFO'):
+        ins_details = self.fo_contract[int(token) - 35000]
+    elif (i['ExchangeSegment'] == 'NSECM'):
+        ins_details = self.eq_contract[int(i['ExchangeInstrumentID'])]
+    elif (i['ExchangeSegment'] == 'NSECD'):
+        ins_details = self.cd_contract[int(i['ExchangeInstrumentID'])]

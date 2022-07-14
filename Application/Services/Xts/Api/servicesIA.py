@@ -2,13 +2,17 @@ import logging
 import traceback
 import sys
 import requests
-from Application.Utils.configReader import readDefaultClient,writeITR,refresh,all_refresh_config
 from PyQt5.QtCore import pyqtSlot,pyqtSignal
 import numpy as np
 import datatable as dt
 import time
 import threading
 from Application.Views.Models.tableOrder import ModelOB
+from Application.Utils.configReader import readDefaultClient,writeITR,refresh,all_refresh_config
+from Application.Utils.supMethods import get_ins_details
+
+from Application.Utils.updation import updateGetOrderTable,updateGetPendingOrderTable,pendingW_datachanged_full,\
+    orderW_datachanged_full,PosionW_datachanged_full,updateGetPositionTable,tradeW_datachanged_full,updateGetTradeTable
 
 
 
@@ -75,7 +79,7 @@ def PlaceOrder( self,exchange, clientID, token,  orderSide, qty, limitPrice,  va
 
 ##############################################################################################################
 
-def get_open_poss(self):
+def getOpenPosition(self):
     try:
         print('in get_open_pos')
         if (self.Source == 'TWSAPI'):
@@ -174,17 +178,15 @@ def get_open_poss(self):
     except:
         print(traceback.print_exc())
 
-def get_position(self):
+def getPositionBook(self):
     try:
-        get_open_poss(self)
-        print('in get_pos')
+        getOpenPosition(self)
         self.NetPos.lastSerialNo = 0
         if(self.Source=='TWSAPI'):
             url = self.URL + '/interactive/portfolio/dealerpositions?dayOrNet=NetWise'
         elif(self.Source=='WEBAPI'):
             url = self.URL + '/interactive/portfolio/positions?dayOrNet=NetWise'
         req = requests.request("GET", url, headers=self.IAheaders)
-        print('in get_pos',req.text)
         data_p = req.json()
 
         aaa = data_p['result']['positionList']
@@ -192,48 +194,26 @@ def get_position(self):
         if(aaa!=[]):
             for j,i in enumerate(aaa):
                 try:
-                    try:
-                        if (i['ExchangeSegment'] == 'NSEFO'):
-                            ins_details = self.fo_contract[int(i['ExchangeInstrumentId']) - 35000]
-                        elif (i['ExchangeSegment'] == 'NSECM'):
-                            ins_details = self.eq_contract[int(i['ExchangeInstrumentId'])]
-                        elif (i['ExchangeSegment'] == 'NSECD'):
-                            ins_details = self.cd_contract[int(i['ExchangeInstrumentId'])]
-
-                    except:
-                        logging.error(sys.exc_info()[1])
-                        print(traceback.print_exc())
-
+                    ins_details = get_ins_details(self,i['ExchangeSegment'],i['ExchangeInstrumentId'])
                     qty = int(i['Quantity'])
-                    if (qty != 0):
-                        amt = float(i['NetAmount'])
-                        avgp = amt / qty
-                    else:
-                        avgp = 0.0
+                    amt =  float(i['NetAmount'])
+                    avgp =  amt/qty if (qty != 0) else 0.0
                     clientId = '*****'  if ('PRO' in i['AccountID']) else i['AccountID']
-
-                    self.NetPos.Apipos[j,:] = dt.Frame([
+                    pos = dt.Frame([
                         [self.userID],
                         [clientId], [i['ExchangeSegment']],[int(i['ExchangeInstrumentId'])],[ins_details[4]],[ins_details[3]],
                         [ins_details[6]],[ins_details[7]],[ins_details[8]],[int(i['Quantity'])],[float(i['MTM'])],
                         [0],[float(i['RealizedMTM'])],[float(i['NetAmount'])],[avgp],[ins_details [11]],
                         [ins_details[14]],[ins_details[9]],[j]]).to_numpy()
 
-                    self.NetPos.lastSerialNo +=1
-                    self.NetPos.modelP.lastSerialNo +=1
-                    self.NetPos.modelP.insertRows()
-                    self.NetPos.modelP.rowCount()
                 except:
                     print(traceback.print_exc(),'error in getPOs i',i)
-            ind = self.NetPos.modelP.index(0, 0)
-            ind1 = self.NetPos.modelP.index(0, 1)
 
-            self.NetPos.modelP.dataChanged.emit(ind, ind1)
-            print('self.NetPos.Apipos',self.NetPos.Apipos)
+            PosionW_datachanged_full(self)
     except:
         print(traceback.print_exc())
 
-def get_Pending(self,ifFlush = False):
+def getOrderBook(self,ifFlush = False):
     try:
         if(self.Source=='WEBAPI'):
             url = self.URL + '/interactive/orders'
@@ -243,55 +223,22 @@ def get_Pending(self,ifFlush = False):
 
             if(data_p['result']!=[]):
                 for j,i in enumerate(data_p['result']):
-                    print('get_pending_order',j,i)
-                    Qty1 = i['LeavesQuantity'] if(i['OrderSide'].upper()=='BUY') else -i['LeavesQuantity']
-                    ######################################## contract working ##########################################
-                    try:
-                        if (i['ExchangeSegment'] == 'NSEFO'):
-                            ins_details = self.fo_contract[int(i['ExchangeInstrumentID']) - 35000]
-                        elif (i['ExchangeSegment'] == 'NSECM'):
-                            ins_details = self.eq_contract[int(i['ExchangeInstrumentID'])]
-                        elif (i['ExchangeSegment'] == 'NSECD'):
-                            ins_details = self.cd_contract[int(i['ExchangeInstrumentID'])]
-                    except:
-                        logging.error(sys.exc_info()[1])
-                        print(traceback.print_exc())
 
+                    ######################################## contract working ##########################################
+                    ins_details = get_ins_details(self, i )
+                    Qty1 = i['LeavesQuantity'] if(i['OrderSide'].upper()=='BUY') else -i['LeavesQuantity']
                     orderSide = i['OrderSide'].replace('BUY','Buy').replace('SELL','Sell')
-                    anm =dt.Frame([[i['ClientID']],
+                    order =dt.Frame([[i['ClientID']],
                             [i['ExchangeInstrumentID']], [ ins_details[4]], [ins_details[3]],[ins_details[6]], [ins_details[7]],
                             [ins_details[8]],[orderSide],[(i['AppOrderID'])],[i['OrderType']], [i['OrderStatus']],
                             [i['OrderQuantity']],[i['LeavesQuantity']],[i['OrderPrice']],[i['OrderStopPrice']], [i['OrderUniqueIdentifier']],
                             [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']],[i['CancelRejectReason']],[ins_details[0]],[ins_details[5]],
-                            [i['OrderAverageTradedPrice']]]).to_numpy()
-
-
-
-                    self.OrderBook.ApiOrder[j, :] = anm
-                    # self.OrderBook.rcount = self.TradeW.ApiTrade.shape[0]
-                    self.OrderBook.lastSerialNo += 1
-                    self.OrderBook.modelO.lastSerialNo += 1
-                    self.OrderBook.modelO.rowCount()
-                    self.OrderBook.modelO.insertRows()
+                            [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
+                    updateGetOrderTable(self,order,j)
                     #############################################################################################
                     if(i['OrderStatus'] in ['PartiallyFilled','New','Replaced'] ):              #and i['OrderUniqueIdentifier']==self.FolioNo
-                        self.PendingW.ApiOrder[noOfPendingOrder, :] = anm
-
-                        noOfPendingOrder +=1
-                        self.PendingW.rcount = self.TradeW.ApiTrade.shape[0]
-
-                        self.PendingW.lastSerialNo += 1
-                        self.PendingW.modelO.lastSerialNo += 1
-                        self.PendingW.modelO.rowCount()
-                        self.PendingW.modelO.insertRows()
-
-                ind = self.PendingW.modelO.index(0, 0)
-                ind1 = self.PendingW.modelO.index(0, 1)
-                self.PendingW.modelO.dataChanged.emit(ind, ind1)
-                ind = self.OrderBook.modelO.index(0, 0)
-                ind1 = self.OrderBook.modelO.index(0, 1)
-                self.OrderBook.modelO.dataChanged.emit(ind, ind1)
-
+                        updateGetPendingOrderTable(self,order,noOfPendingOrder)
+                        noOfPendingOrder += 1
 
         else:
             jk = 0
@@ -299,79 +246,33 @@ def get_Pending(self,ifFlush = False):
                 url = self.URL + '/interactive/orders?clientID=' + kl
                 req = requests.request("GET", url, headers=self.IAheaders)
                 data_p = req.json()
+                noOfPendingOrder = 0
+
                 if (data_p['result'] != []):
                     for j, i in enumerate(data_p['result']):
+                        ######################################## contract working ##########################################
+                        ins_details = get_ins_details(self, i)
+                        ######################################## contract working ##########################################
                         Qty1 = i['LeavesQuantity'] if (i['OrderSide'].upper() == 'BUY') else -i['LeavesQuantity']
-                        ######################################## contract working ##########################################
-                        try:
-                            if (i['ExchangeSegment'] == 'NSEFO'):
-                                ah = self.fo_contract[int(i['ExchangeInstrumentID']) - 35000]
-                                # print('ah',ah)
-                                ins = [ah[4], ah[3], ah[6], ah[7], ah[8], ah[11], ah[14], ah[9], ah[0], ah[5]]
-                                # self.cntrcts[int(i['ExchangeInstrumentID'])] = ins
-                            elif (i['ExchangeSegment'] == 'NSECM'):
-                                ah = self.eq_contract[int(i['ExchangeInstrumentID'])]
-                                # print('ah',ah)
-                                ins = [ah[4], ah[3], ah[6], ah[7], ah[8], ah[11], ah[14], ah[9], ah[0], ah[5]]
-                                # self.cntrcts[int(i['ExchangeInstrumentID'])] = ins
-                            elif (i['ExchangeSegment'] == 'NSECD'):
-                                ah = self.cd_contract[int(i['ExchangeInstrumentID'])]
-                                # print('ah',ah)
-                                ins = [ah[4], ah[3], ah[6], ah[7], ah[8], ah[11], ah[14], ah[9], ah[0], ah[5]]
-                                # self.cntrcts[int(i['ExchangeInstrumentId'])] = ins
-                        except:
-                            logging.error(sys.exc_info()[1])
-                        ######################################## contract working ##########################################
-                        bs = i['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')
+                        orderSide = i['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')
 
-                        # if (jk == 0):
-                        #     n2darray = dt.Frame([[i['ClientID']], [i['ExchangeInstrumentID']], [ins[0]],
-                        #                           [ins[1]], [ins[2]], [ins[3]], [ins[4]],
-                        #                           [i['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')],
-                        #                           [i['AppOrderID']], [i['OrderType']], [i['OrderStatus']],
-                        #                           [i['OrderQuantity']],
-                        #                           [i['LeavesQuantity']], [i['OrderPrice']], [i['OrderStopPrice']],
-                        #                           [i['OrderUniqueIdentifier']], [i['OrderGeneratedDateTime']],
-                        #                           [i['ExchangeTransactTime']],
-                        #                           [i['CancelRejectReason']], [ins[8]], [ins[9]],
-                        #                           [i['OrderAverageTradedPrice']]]).to_numpy()
-                        # else:
-                        n2darray = dt.Frame([[i['ClientID']], [i['ExchangeInstrumentID']], [ins[0]],
-                                              [ins[1]], [ins[2]], [ins[3]], [ins[4]],
-                                              [i['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')],
-                                              [str(i['AppOrderID'])], [i['OrderType']], [i['OrderStatus']], [i['OrderQuantity']],
-                                              [i['LeavesQuantity']], [i['OrderPrice']], [i['OrderStopPrice']],
-                                              [i['OrderUniqueIdentifier']],
-                                              [i['OrderGeneratedDateTime']],
-                                              [i['ExchangeTransactTime']], [i['CancelRejectReason']], [ins[8]], [ins[9]],
-                                              [i['OrderAverageTradedPrice']]]).to_numpy()
-                        ApiOrder = np.vstack([ApiOrder, n2darray])
+                        order = dt.Frame([[i['ClientID']],
+                        [i['ExchangeInstrumentID']], [ins_details[4]], [ins_details[3]], [ins_details[6]], [ins_details[7]],
+                        [ins_details[8]],[orderSide],[i['AppOrderID']], [i['OrderType']], [i['OrderStatus']],
+                        [i['OrderQuantity']],[i['LeavesQuantity']], [i['OrderPrice']], [i['OrderStopPrice']],[i['OrderUniqueIdentifier']],
+                        [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']], [i['CancelRejectReason']], [ins_details[0]], [ins_details[5]],
+                        [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
                         #############################################################################################
-                        if (i['OrderStatus'] in ['PartiallyFilled', 'New', 'Replaced'] and i[
-                            'OrderUniqueIdentifier'] == self.FolioNo):
-                            self.ApiOrderList = np.vstack(
-                                [self.ApiOrderList, np.array([[i['AppOrderID'], i['ExchangeInstrumentID'], Qty1]])])
+                        updateGetOrderTable(self, order, j)
 
-                            fltr = np.asarray([i['ExchangeInstrumentID']])
-                            lua = self.ApiOrderSummary[np.in1d(self.ApiOrderSummary[:, 0], fltr)]
-                            if (lua.size != 0):
-                                prevQty = lua[0][1]
-                                self.ApiOrderSummary[np.in1d(self.ApiOrderSummary[:, 0], fltr), 1] = prevQty + Qty1
-                                self.sgAPQ.emit([i['ExchangeInstrumentID'], prevQty + Qty1])
-                            else:
-                                self.ApiOrderSummary = np.vstack(
-                                    [self.ApiOrderSummary, np.array([[i['ExchangeInstrumentID'], Qty1]])])
-                                self.sgAPQ.emit([i['ExchangeInstrumentID'], Qty1])
+                        if (i['OrderStatus'] in ['PartiallyFilled', 'New', 'Replaced']):  # and i['OrderUniqueIdentifier'] == self.FolioNo
+                            updateGetPendingOrderTable(self, order, noOfPendingOrder)
+                            noOfPendingOrder += 1
+
                         jk += 1
-                    fltr = np.asarray(['New', 'Replaced', 'PartiallyFilled'])
-                    ApiOrder1 = ApiOrder[np.in1d(ApiOrder[:, 10], fltr)]
-                time.sleep(0.5)
-            # print('ApiOrderApiOrderApiOrderApiOrder',ApiOrder)
-            # print('ApiOrder1',ApiOrder1)
-            self.sgGetOrder.emit(ApiOrder)
-            self.sgGetPOrder.emit(ApiOrder1)
 
-
+        pendingW_datachanged_full(self)
+        orderW_datachanged_full(self)
     ####################################################
     except:
         logging.error(sys.exc_info()[1])
@@ -380,48 +281,30 @@ def get_Pending(self,ifFlush = False):
 def get_Trades(self):
     try:
         if(self.Source=='WEBAPI'):
-            ApiTrade = np.empty((0, 23))
             url = self.URL + '/interactive/orders/trades'
             req = requests.request("GET", url, headers=self.IAheaders)
             data_p = req.json()
 
-
-
-
             if(data_p['result'] != []):
                 for j,i in enumerate(data_p['result']):
 
-                    if (i['ExchangeSegment'] == 'NSEFO'):
-                        ins_details = self.fo_contract[int(i['ExchangeInstrumentID']) - 35000]
-                    elif (i['ExchangeSegment'] == 'NSECM'):
-                        ins_details = self.eq_contract[int(i['ExchangeInstrumentID'])]
-                    elif (i['ExchangeSegment'] == 'NSECD'):
-                        ins_details = self.cd_contract[int(i['ExchangeInstrumentID'])]
-
+                    exchange = i['ExchangeSegment']
+                    token = i['ExchangeInstrumentID']
+                    ins_details = get_ins_details(self,exchange,token)
                     orderSide = i['OrderSide'].replace('BUY','Buy').replace('SELL','Sell')
                     tradedQty = i['LastTradedQuantity']
                     qty = tradedQty if (orderSide == 'Buy') else -tradedQty
                     netValue = qty * i['LastTradedPrice']
 
-                    self.TradeW.ApiTrade[j,:]= dt.Frame([[i['ClientID']],
+                    trade = dt.Frame([
+                        [i['ClientID']],
                         [i['ClientID']], [i['ExchangeInstrumentID']],[ins_details[4]],[ins_details[3]], [ins_details[6]],
-                            [ins_details[7]], [ins_details[8]],[orderSide],[i['AppOrderID']],[i['OrderType']],
+                        [ins_details[7]], [ins_details[8]],[orderSide],[i['AppOrderID']],[i['OrderType']],
                         [tradedQty], [i['OrderStatus']],[i['OrderAverageTradedPrice']],[i['ExchangeTransactTime']], [i['OrderUniqueIdentifier']],
                         [i['ExchangeOrderID']],[i['LastTradedPrice']],[qty],[netValue],[ins_details[0]],
-                            [ins_details[11]],[ins_details[14]],['openValue']
-                    ]).to_numpy()
-
-
-
-                    self.TradeW.lastSerialNo += 1
-                    self.TradeW.modelT.lastSerialNo += 1
-                    self.TradeW.modelT.rowCount()
-                    self.TradeW.modelT.insertRows()
-
-                    ind = self.TradeW.modelT.index(0, 0)
-                    ind1 = self.TradeW.modelT.index(0, 1)
-
-                    self.TradeW.modelT.dataChanged.emit(ind, ind1)
+                        [ins_details[11]],[ins_details[14]],['openValue']
+                        ]).to_numpy()
+                    updateGetTradeTable(self,trade,j)
 
         else:
             jk = 0
@@ -457,6 +340,8 @@ def get_Trades(self):
                             jk+=1
             self.sgGetTrd.emit(ApiTrade)
             print('get Trade signal is emitted')
+
+        tradeW_datachanged_full(self)
     except:
         print('get trade eeror',traceback.print_exc())
 
