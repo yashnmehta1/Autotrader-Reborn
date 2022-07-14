@@ -31,12 +31,12 @@ from Application.Utils.configReader import *
 from Theme.dt2 import  dt1
 
 
-class MarketW(QMainWindow):
+class MarketW_basic(QMainWindow):
     # sgTmSubd=pyqtSignal(dict)
     sgSnapQuote=pyqtSignal(int,int,int)
     sgShowPending= pyqtSignal(str)
     def __init__(self):
-        super(MarketW, self).__init__()
+        super(MarketW_basic, self).__init__()
         self.setObjectName('MarketWatch')
 
         #####################################################################
@@ -92,7 +92,7 @@ class MarketW(QMainWindow):
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
-    form = MarketW()
+    form = MarketW_basic()
     form.show()
     sys.exit(app.exec_())
 

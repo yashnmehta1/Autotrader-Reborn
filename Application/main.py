@@ -42,6 +42,7 @@ from Application.Views.OrderBook.orderBook import OrderBook
 from Application.Views.TradeBook.tradeBook import TradeBook
 from Application.Views.Prerferences.prefereances import Ui_Preferences
 from Application.Views.MarketWatch.mWatch import MarketW
+from Application.Views.basicMWatch.mWatch import MarketW_basic
 from Application.Views.Login.login import Ui_Login
 from Application.Views.cframe import  Ui_CFrame
 from Application.Views.splashScreen import Ui_Splash
@@ -121,6 +122,7 @@ class Ui_Main(QMainWindow):
             self.IAS = Interactive()
 
             self.marketW = MarketW()
+            self.marketWB = MarketW_basic()
             self.marketW.buyw = Ui_BuyW()
             self.marketW.sellw = Ui_SellW()
 
@@ -144,6 +146,7 @@ class Ui_Main(QMainWindow):
             # self.CFrame.dockPB.setWidget(self.FolioPos)
             self.CFrame.dockMGR.setWidget(self.Manager)
             self.CFrame.dockMW.setWidget(self.marketW)
+            self.CFrame.dockMW_basic.setWidget(self.marketWB)
 
             self.CFrame.resizeDocks([self.CFrame.dockOP,self.CFrame.dockMW],[500,500],Qt.Vertical)
             self.CFrame.resizeDocks([self.CFrame.dockOP],[500],Qt.Horizontal)

@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="initial">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Views/cframe.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/cframe.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resourses/UI/cframe.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/UI/cframe.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/basicMWatch/mWatch.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/basicMWatch/mWatch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,10 +41,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "last_opened_file_path": "/Users/yashnmehta/Autotrader-Reborn",
+    "last_opened_file_path": "/Users/yashnmehta/Autotrader-Reborn/Application/Views",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Application/Views" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.servicesIA">
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Autotrader-Reborn-2" />
@@ -352,7 +357,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657795917790</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="initial">
+      <created>1657796453458</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1657796453458</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
