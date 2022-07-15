@@ -64,7 +64,7 @@ from Application.Utils.configReader import get_udp_port
 from Application.Utils.shortcuts import setShortcuts
 from PyQt5 import uic
 
-
+from Application.Stretegies import TSpecial
 
 class Ui_Main(QMainWindow):
     ################################# Intialization Here ##################################################
@@ -270,6 +270,8 @@ class Ui_Main(QMainWindow):
             # self.Banned.pbRemBSym.clicked.connect(self.remBannedSymbol)
             # self.Banned.pbRemBIns.clicked.connect(self.remBannedInstrument)
             #
+
+            self.Manager.pbAdd.clicked.connect(self.addNewStretegy)
         except:
             print(traceback.print_exc())
 
@@ -426,7 +428,15 @@ class Ui_Main(QMainWindow):
     def on_new_feed_Index(self,data):
         updateCashIndex(self,data)
 
-
+    def addNewStretegy(self):
+        if(self.Manager.lastSelectedStretegy == self.Manager.pbTSpecial):
+            newStretegy = TSpecial.TSpecial.logic()
+            self.Manager.stretegyList.append(newStretegy)
+            print(len(self.Manager.stretegyList))
+            x=len(self.Manager.stretegyList)
+            folioName = str(x) +'_TSpecial'
+            newStretegy.addW.leFolioName.setText(folioName)
+            newStretegy.addW.show()
 
 if __name__ == "__main__":
     import sys

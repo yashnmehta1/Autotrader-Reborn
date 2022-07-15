@@ -1,0 +1,11 @@
+{
+  "Previous":
+  {
+    "Active": [{"FolioName": "abc","Date": "xyz"}]
+  },
+  "Today":
+  {
+    "Active": [],
+    "Closed": []
+  }
+}

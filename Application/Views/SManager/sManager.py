@@ -18,10 +18,11 @@ from Application.Views.SnapQuote.snapQuote import Ui_snapQ
 from Application.Utils.dbConnection import  *
 from Application.Utils.configReader import readConfig_All
 from Application.Views.Models.tableFP import ModelPosition
+from Application.Views.SManager.support import updatePbBGColor_stretegies,updatePbBGColor_filter
 from Theme.dt2 import dt1
 import logging
 
-
+from Application.Stretegies.TSpecial import TSpecial
 
 class Manager(QMainWindow):
     # sgTmSubd=pyqtSignal(dict)
@@ -33,47 +34,36 @@ class Manager(QMainWindow):
         super(Manager, self).__init__()
         try:
 
-            self.subToken=[]
-            self.MDFsubscribed=[]
-            self.onlyPoss = False
-            self.ii = 0
-            self.uid =0
-            self.istableEmpty = True
-            self.list1 = []
-            self.filterStr = ''
-            self.DayNet = 'NET'
-            self.sortColumnD=0
-            self.sortOrderD=0
-            self.sortColumn=0
-            self.sortOrder=0
-            self.MDheaders, self.IAheaders, self.MDToken, self.IAToken, self.URL, self.userID, self.source,self.MDKey,self.MDSecret,self.IAKey,self.IASecret,self.client_list,DClient,broadcastMode = readConfig_All()
+
             #####################################################################
             loc1 = getcwd().split('Application')
             ui_login = os.path.join(loc1[0] , 'Resourses','UI','sManager.ui')
             uic.loadUi(ui_login, self)
-
-
             dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
             self.setStyleSheet(dt1)
+
+            self.MDheaders, self.IAheaders, self.MDToken, self.IAToken, self.URL, self.userID, self.source,self.MDKey,self.MDSecret,self.IAKey,self.IASecret,self.client_list,DClient,broadcastMode = readConfig_All()
             self.tables_details()
-            self.sellw =Ui_SellW()
-            self.buyw = Ui_BuyW()
-            self.snapW = Ui_snapQ()
 
             ########################################################################################################################
 
-            self.tableView.call_pending_ob = QShortcut(QKeySequence('F3'), self.tableView)
-            self.tableView.call_pending_ob.setContext(Qt.WidgetWithChildrenShortcut)
-            self.tableView.call_pending_ob.activated.connect(self.orderRaise)
 
-            self.tableView.call_TB = QShortcut(QKeySequence('F8'), self.tableView)
-            self.tableView.call_TB.setContext(Qt.WidgetWithChildrenShortcut)
-            self.tableView.call_TB.activated.connect(self.showTB)
+            self.lastSelectedStretegy = self.pbStradle
+            self.lastSelectedFilter = self.pbFAll
 
+            self.stretegyList = []
 
-            # self.rb1.toggled.connect(self.changeDayNet)
-            self.tableView.horizontalHeader().sectionClicked.connect(self.llp)
-            print('abc')
+            self.pbStradle.clicked.connect(lambda :updatePbBGColor_stretegies(self,'Stradle'))
+            self.pbBox.clicked.connect(lambda :updatePbBGColor_stretegies(self,'Box'))
+            self.pbPairSell.clicked.connect(lambda :updatePbBGColor_stretegies(self,'PairSell'))
+            self.pbPairSellAdv.clicked.connect(lambda :updatePbBGColor_stretegies(self,'PairSellAdv'))
+            self.pbTSpecial.clicked.connect(lambda :updatePbBGColor_stretegies(self,'TSpecial'))
+            self.pbJodiATM.clicked.connect(lambda :updatePbBGColor_stretegies(self,'JodiATM'))
+
+            self.pbFAll.clicked.connect(lambda :updatePbBGColor_filter(self,'All'))
+            self.pbFActive.clicked.connect(lambda :updatePbBGColor_filter(self,'Active'))
+            self.pbFStop.clicked.connect(lambda :updatePbBGColor_filter(self,'Stop'))
+
             ########################################################################################################################
         except:
             print(traceback.print_exc())
