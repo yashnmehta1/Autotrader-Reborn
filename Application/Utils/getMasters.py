@@ -727,3 +727,14 @@ def getMaster(validation):
     except:
         print(traceback.print_exc())
         print(sys.exc_info(), "@download master")
+
+
+
+
+a,b,c,d = getMaster(False)
+xx=a[np.where(a[:,3] =='BANKNIFTY')][0,17]
+
+
+futureToken = a[xx-35000, 36]
+
+print(futureToken)

@@ -10,9 +10,9 @@
     "broadcastmode": "Partial",
     "url": "http://192.168.102.22:3000",
     "IAToken": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBMDExOV9CMjcwNDI0RjIyNDdENTJCMDA2ODQwIiwicHVibGljS2V5IjoiYjI3MDQyNGYyMjQ3ZDUyYjAwNjg0MCIsImlhdCI6MTY1Nzk3NTQ4NCwiZXhwIjoxNjU4MDYxODg0fQ.ohOjloxRPQ8VG2BscwS80FkoPx_9QVoI9NwkVgkKO2w",
-        "login_date": "22-07-16",
-        "login_time": "18:14:44",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBMDExOV9CMjcwNDI0RjIyNDdENTJCMDA2ODQwIiwicHVibGljS2V5IjoiYjI3MDQyNGYyMjQ3ZDUyYjAwNjg0MCIsImlhdCI6MTY1ODEyMjEwOCwiZXhwIjoxNjU4MjA4NTA4fQ.a-nIi2U3SiZUMln9VdZ5paXWCWvJX00cbTjJdrW_0gA",
+        "login_date": "22-07-18",
+        "login_time": "10:58:28",
         "Client_list": [
             "A0119"
         ]
