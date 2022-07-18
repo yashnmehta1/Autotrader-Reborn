@@ -2,17 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="initial">
-      <change afterPath="$PROJECT_DIR$/Application/DB/Stretegy_data/20220715/activeStretegyList.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Application/Stretegies/TSpecial/Views/addW.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Application/Stretegies/TSpecial/Views/modifyW.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Application/Utils/stretegyOperations.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Application/Views/SManager/support.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Autotrader-Reborn.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Autotrader-Reborn.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Stretegies/TSpecial/logic.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Views/SManager/sManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/SManager/sManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Masters/contract_cd.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Masters/contract_cd.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Masters/contract_eq.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Masters/contract_eq.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Masters/contract_fo.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Masters/contract_fo.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Stretegies/TSpecial/Views/addW.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Stretegies/TSpecial/Views/addW.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resourses/UI/Stretegies/TSpecial/inputParameter.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/UI/Stretegies/TSpecial/inputParameter.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resourses/UI/sManager.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/UI/sManager.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Downloads/ContractEQ" beforeDir="false" afterPath="$PROJECT_DIR$/Downloads/ContractEQ" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Downloads/cm_bhav.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Downloads/cm_bhav.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Downloads/cm_bhav.zip" beforeDir="false" afterPath="$PROJECT_DIR$/Downloads/cm_bhav.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Downloads/contractCD_raw.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Downloads/contractCD_raw.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Downloads/contractFO_raw.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Downloads/contractFO_raw.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Downloads/fo_bhav.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Downloads/fo_bhav.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Downloads/fo_bhav.zip" beforeDir="false" afterPath="$PROJECT_DIR$/Downloads/fo_bhav.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Downloads/idx_bhav.csv" beforeDir="false" afterPath="$PROJECT_DIR$/Downloads/idx_bhav.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resourses/UI/Main.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/UI/Main.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -379,7 +385,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657814483669</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="initial">
+      <created>1657876810197</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1657876810197</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -32,6 +32,13 @@ class addW(QWidget):
         dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(dt1)
 
+
+
+
+
+
+
+
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

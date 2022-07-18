@@ -431,8 +431,9 @@ class Ui_Main(QMainWindow):
     def addNewStretegy(self):
         if(self.Manager.lastSelectedStretegy == self.Manager.pbTSpecial):
             newStretegy = TSpecial.TSpecial.logic()
+            newStretegy.createObject(self.fo_contract)
+            # newStretegy.createConnection()
             self.Manager.stretegyList.append(newStretegy)
-            print(len(self.Manager.stretegyList))
             x=len(self.Manager.stretegyList)
             folioName = str(x) +'_TSpecial'
             newStretegy.addW.leFolioName.setText(folioName)

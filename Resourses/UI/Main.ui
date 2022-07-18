@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1440</width>
-    <height>790</height>
+    <width>1364</width>
+    <height>703</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,24 +33,671 @@
     <property name="spacing">
      <number>3</number>
     </property>
-    <item row="3" column="2">
-     <widget class="Line" name="line_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+    <item row="1" column="1" rowspan="4">
+     <widget class="QFrame" name="settingsMenu">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>0</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget {
+
+background-color: rgb(92, 110, 131);
+}
+QPushButton {
+  background-color: #000a14;
+  border: 1px solid #19232d;
+  color: #F0F0F0;
+  border-radius: 4px;
+  padding: 3px;
+  outline: none;
+  /* Issue #194 - Special case of QPushButton inside dialogs, for better UI */
+  min-width: 20px;
+	text-align:left;
+
+}
+
+QPushButton:disabled {
+  background-color: #19232d;
+  border: 1px solid #19232d;
+  color: #787878;
+  border-radius: 4px;
+  padding: 3px;
+}
+
+QPushButton:checked {
+  background-color: #19232d;
+  border: 1px solid #19232d;
+  border-radius: 4px;
+  padding: 3px;
+  outline: none;
+}
+
+QPushButton:checked:disabled {
+  background-color: #000A14;
+  border: 1px solid #19232d;
+  color: #787878;
+  border-radius: 4px;
+  padding: 3px;
+  outline: none;
+}
+
+QPushButton:checked:selected {
+  background: #1464A0;
+  color: #19232d;
+}
+
+QPushButton::menu-indicator {
+  subcontrol-origin: padding;
+  subcontrol-position: bottom right;
+  bottom: 4px;
+}
+
+QPushButton:pressed {
+  background-color: #000A14;
+  border: 1px solid #000A14;
+}
+
+QPushButton:pressed:hover {
+/*  border: 1px solid #148CD2;*/
+  background-color: #148CD2;
+}
+
+QPushButton:hover {
+  background-color: #148CD2;    
+}
+
+QPushButton:selected {
+  background: #1464A0;
+  color: #19232d;
+}
+
+QPushButton:hover {
+  border: 1px solid #148CD2;
+  color: #F0F0F0;
+}
+
+QPushButton:focus {
+  border: 1px solid #1464A0;
+}
+
+
+
+QComboBox {
+  background-color: #000A14;
+
+  border: 1px solid #19232d;
+  border-radius: 4px;
+  selection-background-color: #1464A0;
+  padding-left: 4px;
+  padding-right: 10px;
+  /* 4 + 16*2 See scrollbar size */
+  /* Fixes #103, #111 */
+  min-height: 1.5em;
+  /* padding-top: 2px;     removed to fix #132 */
+  /* padding-bottom: 2px;  removed to fix #132 */
+  /* min-width: 75px;      removed to fix #109 */
+  /* Needed to remove indicator - fix #132 */
+}
+
+QComboBox QAbstractItemView {
+  border: 1px solid #19232d;
+  border-radius: 0;
+  background-color: #000A14;
+  selection-background-color: #1464A0;
+}
+
+QComboBox QAbstractItemView:hover {
+  background-color: #000A14;
+  color: #F0F0F0;
+}
+
+QComboBox QAbstractItemView:selected {
+  background: #1464A0;
+  color: #19232d;
+}
+
+QComboBox QAbstractItemView:alternate {
+  background: #000A14;
+}
+
+QComboBox:disabled {
+  background-color: #000A14;
+  color: #787878;
+}
+
+QComboBox:hover {
+  border: 1px solid #148CD2;
+}
+
+QComboBox:focus {
+  border: 1px solid #1464A0;
+}
+
+QComboBox:on {
+  selection-background-color: #1464A0;
+}
+
+QComboBox::indicator {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  selection-background-color: transparent;
+  color: transparent;
+  selection-color: transparent;
+  /* Needed to remove indicator - fix #132 */
+}
+
+QComboBox::indicator:alternate {
+  background: #000A14;
+}
+
+QComboBox::item:alternate {
+  background: #000A14;
+}
+
+QComboBox::item:checked {
+  font-weight: bold;
+}
+
+QComboBox::item:selected {
+  border: 0px solid transparent;
+}
+
+QComboBox::drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: top right;
+  width: 12px;
+  border-left: 1px solid #19232d;
+}
+
+QComboBox::down-arrow {
+  image: url(&quot;:/qss_icons/rc/arrow_down_disabled.png&quot;);
+  height: 8px;
+  width: 8px;
+}
+
+QComboBox::down-arrow:on, QComboBox::down-arrow:hover, QComboBox::down-arrow:focus {
+  image: url(&quot;:/qss_icons/rc/arrow_down.png&quot;);
+}
+
+
+QLineEdit {
+  background-color: #19232D;
+  padding-top: 2px;
+  /* This QLineEdit fix  103, 111 */
+  padding-bottom: 2px;
+  /* This QLineEdit fix  103, 111 */
+  padding-left: 4px;
+  padding-right: 4px;
+  border-style: solid;
+  border: 1px solid #32414B;
+  border-radius: 4px;
+  color: #F0F0F0;
+}
+
+QLineEdit:disabled {
+  background-color: #19232D;
+  color: #787878;
+}
+
+QLineEdit:hover {
+  border: 1px solid #148CD2;
+  color: #F0F0F0;
+}
+
+QLineEdit:focus {
+  border: 1px solid #1464A0;
+}
+
+QLineEdit:selected {
+  background-color: #1464A0;
+  color: #32414B;
+}
+</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="pbHome">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Home</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/aperture.svg</normaloff>:/icon1/aperture.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbNetPos">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Net Position</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbFolioPos">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Folio Position</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbTradeB">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Trade Book</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/book-open.svg</normaloff>:/icon1/book-open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbOrderB">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Order Book</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbOpChain">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Option Chain</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbATMWatch">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        ATM Watch</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbDelta">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Delta Summary</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbTrdSet">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Trade Settings</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbBanned">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        BANNED Scrip</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbPreferences">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>28</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>        Preferrences</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons/icons.qrc">
+           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_25">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_24">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QFrame" name="mainFrame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4"/>
+     </widget>
+    </item>
+    <item row="1" column="4" rowspan="4">
+     <widget class="Line" name="line_17">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="Line" name="line_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1" colspan="3">
+     <widget class="QWidget" name="statusBar" native="true">
+      <layout class="QGridLayout" name="gridLayout_3">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="1" column="0" alignment="Qt::AlignLeft">
+        <widget class="QLabel" name="lbStatus">
+         <property name="maximumSize">
+          <size>
+           <width>600</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QFrame" name="frame_5">
+         <property name="minimumSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item row="4" column="0">
      <widget class="Line" name="line">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="Line" name="line_18">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
@@ -352,7 +999,7 @@ QLineEdit:selected {
             <property name="minimumSize">
              <size>
               <width>40</width>
-              <height>22</height>
+              <height>26</height>
              </size>
             </property>
             <item>
@@ -406,7 +1053,7 @@ QLineEdit:selected {
             <property name="minimumSize">
              <size>
               <width>25</width>
-              <height>22</height>
+              <height>26</height>
              </size>
             </property>
             <item>
@@ -450,7 +1097,7 @@ QLineEdit:selected {
             <property name="minimumSize">
              <size>
               <width>70</width>
-              <height>22</height>
+              <height>26</height>
              </size>
             </property>
            </widget>
@@ -479,7 +1126,7 @@ QLineEdit:selected {
             <property name="minimumSize">
              <size>
               <width>125</width>
-              <height>22</height>
+              <height>26</height>
              </size>
             </property>
            </widget>
@@ -508,7 +1155,7 @@ QLineEdit:selected {
             <property name="minimumSize">
              <size>
               <width>80</width>
-              <height>22</height>
+              <height>26</height>
              </size>
             </property>
            </widget>
@@ -537,7 +1184,7 @@ QLineEdit:selected {
             <property name="minimumSize">
              <size>
               <width>80</width>
-              <height>22</height>
+              <height>26</height>
              </size>
             </property>
            </widget>
@@ -566,7 +1213,7 @@ QLineEdit:selected {
             <property name="minimumSize">
              <size>
               <width>30</width>
-              <height>22</height>
+              <height>26</height>
              </size>
             </property>
            </widget>
@@ -595,7 +1242,7 @@ QLineEdit:selected {
             <property name="minimumSize">
              <size>
               <width>150</width>
-              <height>22</height>
+              <height>26</height>
              </size>
             </property>
            </widget>
@@ -756,21 +1403,11 @@ QLineEdit:selected {
       </layout>
      </widget>
     </item>
-    <item row="4" column="2">
-     <widget class="QFrame" name="mainFrame">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item row="3" column="2">
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4"/>
      </widget>
     </item>
     <item row="1" column="2" colspan="2" alignment="Qt::AlignTop">
@@ -1564,647 +2201,10 @@ QPushButton:hover {
       </layout>
      </widget>
     </item>
-    <item row="6" column="1" colspan="3">
-     <widget class="QWidget" name="statusBar" native="true">
-      <layout class="QGridLayout" name="gridLayout_3">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <item row="1" column="0" alignment="Qt::AlignLeft">
-        <widget class="QLabel" name="lbStatus">
-         <property name="maximumSize">
-          <size>
-           <width>600</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QFrame" name="frame_5">
-         <property name="minimumSize">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>20</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1" rowspan="4">
-     <widget class="QFrame" name="settingsMenu">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>0</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget {
-
-background-color: rgb(92, 110, 131);
-}
-QPushButton {
-  background-color: #000a14;
-  border: 1px solid #19232d;
-  color: #F0F0F0;
-  border-radius: 4px;
-  padding: 3px;
-  outline: none;
-  /* Issue #194 - Special case of QPushButton inside dialogs, for better UI */
-  min-width: 20px;
-	text-align:left;
-
-}
-
-QPushButton:disabled {
-  background-color: #19232d;
-  border: 1px solid #19232d;
-  color: #787878;
-  border-radius: 4px;
-  padding: 3px;
-}
-
-QPushButton:checked {
-  background-color: #19232d;
-  border: 1px solid #19232d;
-  border-radius: 4px;
-  padding: 3px;
-  outline: none;
-}
-
-QPushButton:checked:disabled {
-  background-color: #000A14;
-  border: 1px solid #19232d;
-  color: #787878;
-  border-radius: 4px;
-  padding: 3px;
-  outline: none;
-}
-
-QPushButton:checked:selected {
-  background: #1464A0;
-  color: #19232d;
-}
-
-QPushButton::menu-indicator {
-  subcontrol-origin: padding;
-  subcontrol-position: bottom right;
-  bottom: 4px;
-}
-
-QPushButton:pressed {
-  background-color: #000A14;
-  border: 1px solid #000A14;
-}
-
-QPushButton:pressed:hover {
-/*  border: 1px solid #148CD2;*/
-  background-color: #148CD2;
-}
-
-QPushButton:hover {
-  background-color: #148CD2;    
-}
-
-QPushButton:selected {
-  background: #1464A0;
-  color: #19232d;
-}
-
-QPushButton:hover {
-  border: 1px solid #148CD2;
-  color: #F0F0F0;
-}
-
-QPushButton:focus {
-  border: 1px solid #1464A0;
-}
-
-
-
-QComboBox {
-  background-color: #000A14;
-
-  border: 1px solid #19232d;
-  border-radius: 4px;
-  selection-background-color: #1464A0;
-  padding-left: 4px;
-  padding-right: 10px;
-  /* 4 + 16*2 See scrollbar size */
-  /* Fixes #103, #111 */
-  min-height: 1.5em;
-  /* padding-top: 2px;     removed to fix #132 */
-  /* padding-bottom: 2px;  removed to fix #132 */
-  /* min-width: 75px;      removed to fix #109 */
-  /* Needed to remove indicator - fix #132 */
-}
-
-QComboBox QAbstractItemView {
-  border: 1px solid #19232d;
-  border-radius: 0;
-  background-color: #000A14;
-  selection-background-color: #1464A0;
-}
-
-QComboBox QAbstractItemView:hover {
-  background-color: #000A14;
-  color: #F0F0F0;
-}
-
-QComboBox QAbstractItemView:selected {
-  background: #1464A0;
-  color: #19232d;
-}
-
-QComboBox QAbstractItemView:alternate {
-  background: #000A14;
-}
-
-QComboBox:disabled {
-  background-color: #000A14;
-  color: #787878;
-}
-
-QComboBox:hover {
-  border: 1px solid #148CD2;
-}
-
-QComboBox:focus {
-  border: 1px solid #1464A0;
-}
-
-QComboBox:on {
-  selection-background-color: #1464A0;
-}
-
-QComboBox::indicator {
-  border: none;
-  border-radius: 0;
-  background-color: transparent;
-  selection-background-color: transparent;
-  color: transparent;
-  selection-color: transparent;
-  /* Needed to remove indicator - fix #132 */
-}
-
-QComboBox::indicator:alternate {
-  background: #000A14;
-}
-
-QComboBox::item:alternate {
-  background: #000A14;
-}
-
-QComboBox::item:checked {
-  font-weight: bold;
-}
-
-QComboBox::item:selected {
-  border: 0px solid transparent;
-}
-
-QComboBox::drop-down {
-  subcontrol-origin: padding;
-  subcontrol-position: top right;
-  width: 12px;
-  border-left: 1px solid #19232d;
-}
-
-QComboBox::down-arrow {
-  image: url(&quot;:/qss_icons/rc/arrow_down_disabled.png&quot;);
-  height: 8px;
-  width: 8px;
-}
-
-QComboBox::down-arrow:on, QComboBox::down-arrow:hover, QComboBox::down-arrow:focus {
-  image: url(&quot;:/qss_icons/rc/arrow_down.png&quot;);
-}
-
-
-QLineEdit {
-  background-color: #19232D;
-  padding-top: 2px;
-  /* This QLineEdit fix  103, 111 */
-  padding-bottom: 2px;
-  /* This QLineEdit fix  103, 111 */
-  padding-left: 4px;
-  padding-right: 4px;
-  border-style: solid;
-  border: 1px solid #32414B;
-  border-radius: 4px;
-  color: #F0F0F0;
-}
-
-QLineEdit:disabled {
-  background-color: #19232D;
-  color: #787878;
-}
-
-QLineEdit:hover {
-  border: 1px solid #148CD2;
-  color: #F0F0F0;
-}
-
-QLineEdit:focus {
-  border: 1px solid #1464A0;
-}
-
-QLineEdit:selected {
-  background-color: #1464A0;
-  color: #32414B;
-}
-</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QPushButton" name="pbHome">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Home</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/aperture.svg</normaloff>:/icon1/aperture.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbNetPos">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Net Position</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbFolioPos">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Folio Position</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbTradeB">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Trade Book</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/book-open.svg</normaloff>:/icon1/book-open.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbOrderB">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Order Book</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbOpChain">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Option Chain</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbATMWatch">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        ATM Watch</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbDelta">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Delta Summary</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbTrdSet">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Trade Settings</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbBanned">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        BANNED Scrip</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbPreferences">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>28</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>        Preferrences</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../icons/icons.qrc">
-           <normaloff>:/icon1/layout.svg</normaloff>:/icon1/layout.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Line" name="line_25">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="Line" name="line_24">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="4" column="3">
-     <widget class="Line" name="line_3">
+    <item row="5" column="1">
+     <widget class="Line" name="line_18">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="4" rowspan="4">
-     <widget class="Line" name="line_17">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
