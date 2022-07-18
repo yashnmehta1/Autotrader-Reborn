@@ -11,6 +11,12 @@ from Application.Services.Xts.Api.servicesMD import  subscribeToken,unSubscripti
 
 def addscript(self):
     try:
+
+
+        print('dockMW',self.CFrame.dockMW.visibleRegion().isEmpty())
+        print('dockMW_basic',self.CFrame.dockMW_basic.visibleRegion().isEmpty())
+
+
         exchange = self.cbEx.currentText()
         token = int(self.LeToken.text())
         fltr = np.asarray([token])

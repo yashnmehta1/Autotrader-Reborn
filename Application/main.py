@@ -54,7 +54,7 @@ from Application.Views.FolioPosition.folioPosition  import FolioPosition
 from Application.Views.NetPosition.netPosition  import NetPosition
 from Application.Utils.basicWinOps import res_max
 
-from Application.Utils.createTables import tables_details_mw
+from Application.Utils.createTables import tables_details_mw, tables_details_mw_basic
 from Application.Services.UDP.UDPSock import Receiver
 
 
@@ -76,7 +76,7 @@ class Ui_Main(QMainWindow):
         ########################################################
         #########################################################
         loc1 = getcwd().split('Application')
-        ui_login = path.join(loc1[0],'Resourses','UI','main.ui')
+        ui_login = path.join(loc1[0],'Resourses','UI','Main.ui')
         uic.loadUi(ui_login, self)
         flags = Qt.WindowFlags(Qt.FramelessWindowHint)
         self.setWindowFlags(flags)
@@ -127,6 +127,7 @@ class Ui_Main(QMainWindow):
             self.marketW.sellw = Ui_SellW()
 
             tables_details_mw(self)
+            tables_details_mw_basic(self)
             self.FolioPos = FolioPosition()
             self.NetPos = NetPosition()
             self.Manager = Manager()
@@ -420,6 +421,7 @@ class Ui_Main(QMainWindow):
 
     def updateOnPosition(self,position):
         update_Position_Socket_NP(self, position)
+        update_Position_socket_MW(self,position)
 
     def on_new_feed_1501(self,data):
         UpdateLTP(self,data)

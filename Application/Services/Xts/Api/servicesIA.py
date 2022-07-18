@@ -192,6 +192,7 @@ def getPositionBook(self):
         aaa = data_p['result']['positionList']
 
         if(aaa!=[]):
+
             for j,i in enumerate(aaa):
                 try:
                     ins_details = get_ins_details(self,i['ExchangeSegment'],i['ExchangeInstrumentId'])
@@ -204,12 +205,22 @@ def getPositionBook(self):
                         [clientId], [i['ExchangeSegment']],[int(i['ExchangeInstrumentId'])],[ins_details[4]],[ins_details[3]],
                         [ins_details[6]],[ins_details[7]],[ins_details[8]],[int(i['Quantity'])],[float(i['MTM'])],
                         [0],[float(i['RealizedMTM'])],[float(i['NetAmount'])],[avgp],[ins_details [11]],
-                        [ins_details[14]],[ins_details[9]],[j]]).to_numpy()
+                        [ins_details[14]],[ins_details[9]],[j],[0],[0],[0],[0] ]).to_numpy()
 
+
+                    updateGetPositionTable(self, pos, j )
+
+
+            # ins_details[8] = C/P
+            # ins_details[7] = Stike_price
+            # ins_details[6] = expiry
+            # ins_details[4] = symbol
+            # ins_details[3] = TradingSymbol
                 except:
                     print(traceback.print_exc(),'error in getPOs i',i)
 
-            PosionW_datachanged_full(self)
+           # PosionW_datachanged_full(self)
+            return pos[:ser_no+1,:]
     except:
         print(traceback.print_exc())
 

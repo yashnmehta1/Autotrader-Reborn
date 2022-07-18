@@ -421,7 +421,7 @@ def updateGetPendingOrderTable(self,order,rowNo):
     self.PendingW.modelO.rowCount()
     self.PendingW.modelO.insertRows()
 
-def updateGetPositionTable(self,pos,rowNo):
+def updateGetPositionTable(self,pos, rowNo):
     self.NetPos.Apipos[rowNo, :] = pos
     self.NetPos.lastSerialNo += 1
     self.NetPos.modelP.lastSerialNo += 1

@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="`initial`">
+    <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Autotrader-Reborn.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Autotrader-Reborn.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/createTables.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/createTables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/dbConnection.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/dbConnection.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/scriptSearch.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/scriptSearch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/updation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/updation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/Banned/bannedScript.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/Banned/bannedScript.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/Models/tableNP.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/Models/tableNP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/cframe.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/cframe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,18 +49,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "/Users/yashnmehta/Autotrader-Reborn/Application/Views",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;/Users/yashnmehta/Autotrader-Reborn/Application/Views&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Application/Views" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.getMasters">
     <configuration name="addW" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Autotrader-Reborn" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -156,8 +168,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.getMasters" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.sManager" />
         <item itemvalue="Python.modifyW" />
         <item itemvalue="Python.addW" />
@@ -383,21 +395,7 @@
       <option name="project" value="LOCAL" />
       <updated>1658120896169</updated>
     </task>
-    <task id="LOCAL-00031" summary="initial">
-      <created>1658147464534</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1658147464534</updated>
-    </task>
-    <task id="LOCAL-00032" summary="`initial`">
-      <created>1658147560773</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1658147560773</updated>
-    </task>
-    <option name="localTasksCounter" value="33" />
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -415,8 +413,7 @@
     <MESSAGE value="2" />
     <MESSAGE value="2&#10;2" />
     <MESSAGE value="initial" />
-    <MESSAGE value="`initial`" />
-    <option name="LAST_COMMIT_MESSAGE" value="`initial`" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -428,7 +425,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Utils/scriptSearch.py</url>
-          <line>74</line>
+          <line>80</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -453,7 +450,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Utils/createTables.py</url>
-          <line>133</line>
+          <line>171</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

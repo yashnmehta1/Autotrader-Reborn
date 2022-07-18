@@ -35,7 +35,7 @@ class OrderBook(QMainWindow):
             #####################################################################
 
             loc1 = getcwd().split('Application')
-            ui_login = os.path.join(loc1[0] ,'Resourses','UI','OrderBook.ui')
+            ui_login = os.path.join(loc1[0] ,'Resourses','UI','orderBook.ui')
             uic.loadUi(ui_login, self)
 
             flags = Qt.WindowFlags( Qt.FramelessWindowHint)

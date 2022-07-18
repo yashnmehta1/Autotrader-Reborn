@@ -23,11 +23,10 @@ class Ui_CFrame(QMainWindow):
         uic.loadUi(ui_login, self)
         flags = Qt.WindowFlags(Qt.FramelessWindowHint)
 
-        # self.tabifyDockWidget(self.dockPB, self.dockOP)
         self.tabifyDockWidget(self.dockOP, self.dockMGR)
         self.tabifyDockWidget(self.dockMW, self.dockMW_basic)
-        # print( dir(self.dockPB))
-        # self.tabifyDockWidget(self.dockWidget, self.dockWidget_5)
+        a=QDockWidget()
+        a.visibleRegion().isEmpty()
 
 if __name__ == "__main__":
     import sys

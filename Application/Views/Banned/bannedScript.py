@@ -24,7 +24,7 @@ class Ui_Banned(QMainWindow):
             self.listInstrument = {}
 
 
-            ui_login = path.join(loc1[0] , 'Resourses','UI','Banned.ui')
+            ui_login = path.join(loc1[0] , 'Resourses','UI','BANNED.ui')
             uic.loadUi(ui_login, self)
 
             flags = Qt.WindowFlags( Qt.FramelessWindowHint )

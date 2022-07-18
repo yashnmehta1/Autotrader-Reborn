@@ -51,6 +51,44 @@ def tables_details_mw(self):
     except:
         print(traceback.print_exc())
 
+
+def tables_details_mw_basic(self):
+    try:
+        self.marketWB.heads = ['Token',
+                      'Exchange', 'Segment', 'symbol', 'exp', 'strike_price',
+                      'C/P', 'Bid', 'Ask', 'LTP', 'CHNG',
+                      '%CH', 'OPEN', 'HIGH', 'LOW', 'CLOSE',
+                      'IV', 'tick_size', 'Lot_size', 'FreezQ', 'FToken',
+                      'AToken', 'SerialNo','StockName']
+
+        #############################################################################################################
+        self.marketWB.table = np.zeros((500, 24), dtype=object)
+        self.marketWB.model = tableMW.ModelPosition(self.marketWB.table, self.marketWB.heads)
+        self.marketWB.model.setDta(self.marketWB.table)
+        self.marketWB.smodel = QSortFilterProxyModel()
+        self.marketWB.smodel.setSourceModel(self.marketWB.model)
+        self.marketWB.tableView.setModel(self.marketWB.smodel)
+
+        self.marketWB.smodel.setDynamicSortFilter(False)
+        self.marketWB.smodel.setFilterKeyColumn(3)
+        self.marketWB.smodel.setFilterCaseSensitivity(False)
+        #############################################
+        self.marketWB.tableView.horizontalHeader().setSectionsMovable(True)
+        self.marketWB.tableView.verticalHeader().setSectionsMovable(True)
+        self.marketWB.tableView.verticalHeader().setFixedWidth(30)
+        self.marketWB.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.marketWB.tableView.setDragDropMode(self.marketWB.tableView.InternalMove)
+        self.marketWB.tableView.setDragDropOverwriteMode(False)
+        self.marketWB.tableView.setColumnWidth(0, 0)
+        self.marketWB.tableView.setColumnWidth(1, 0)
+        self.marketWB.tableView.setColumnWidth(2, 0)
+        self.marketWB.tableView.setColumnWidth(4, 85)
+        self.marketWB.tableView.setColumnWidth(5, 75)
+        self.marketWB.tableView.setColumnWidth(6, 40)
+        self.marketWB.tableView.horizontalHeader().moveSection(28, 0)
+    except:
+        print(traceback.print_exc())
+
 def tables_details_tb(self):
     try:
         #############################################################################################################
