@@ -25,7 +25,7 @@ from Application.Utils.getMasters import  *
 from Application.Utils.banned import *
 from Application.Utils.supMethods import *
 from Application.Utils.configReader import all_refresh_config,refresh
-from Application.Utils.updation import UpdateLTP,updateCashIndex,updateSocketTB,update_Position_socket_MW,update_Position_Socket_NP
+from Application.Utils.updation import UpdateLTP_MW,UpdateLTP_MW_basic,UpdateLTP_NP,updateCashIndex,updateSocketTB,update_Position_socket_MW,update_Position_Socket_NP
 
 from Application.Services.Xts.Sockets.Trade.interactiveApi import Interactive
 from Application.Services.Xts.Sockets.Feeds.marketData import MarketFeeds
@@ -97,6 +97,9 @@ class Ui_Main(QMainWindow):
         self.scriptBar.layout().addWidget(self.toggleUDP,20)
         setShortcuts(self)
         refresh(self)
+
+        self.addFolio('abc')
+        self.addFolio('parth')
 
     def objectCreation(self):
         try:
@@ -213,11 +216,11 @@ class Ui_Main(QMainWindow):
             self.IAS.sgGetOrder.connect(self.on_get_orderBook)
             # self.IAS.sgPendSoc.connect(self.OrderBook.updateSocketOB)
 
-            self.IAS.sgPendSoc.connect(self.PendingW.updateSocketOB)
+         #   self.IAS.sgPendSoc.connect(self.PendingW.updateSocketOB)
             self.IAS.sgPendSoc.connect(self.OrderBook.updateSocketOB)
             self.IAS.sgGetTrd.connect(lambda: updateGetTradeApi(self.TradeW))
             self.IAS.sgGetTrd.connect(self.FolioPos.updateGetApitrd)
-            self.IAS.sgTrdSoc.connect(self.FolioPos.updateSocketTB)
+            # self.IAS.sgTrdSoc.connect(self.FolioPos.updateSocketTB)
 
             self.IAS.sgGetAPIpos.connect(lambda: updateGetPosition(self))
             # self.IAS.sgGetAPIposD.connect(self.PositionW.updateGetApiD)
@@ -384,7 +387,7 @@ class Ui_Main(QMainWindow):
         self.listBannedSymbol = []
         self.listBannedIns = []
         self.isOverOTRFIndex = True  #check its use
-
+        self.openPosDict ={}
 
     def proceed2login(self):
         servicesMD.login(self)
@@ -409,6 +412,8 @@ class Ui_Main(QMainWindow):
 
     def on_get_tradeBook(self,tradeBook):
         updateGetTradeBook(self,tradeBook)
+        print("Gere-----------------")
+        self.FolioPos.updateGetApitrd(tradeBook)
 
     def on_get_positionBook(self,positionBook):
         updateGetPostionBook(self, positionBook)
@@ -418,13 +423,18 @@ class Ui_Main(QMainWindow):
 
     def updateOnTrade(self,trade):
         updateSocketTB(self,trade)
+        self.FolioPos.updateSocketTB(trade)
+
+
 
     def updateOnPosition(self,position):
         update_Position_Socket_NP(self, position)
         update_Position_socket_MW(self,position)
 
     def on_new_feed_1501(self,data):
-        UpdateLTP(self,data)
+        UpdateLTP_MW(self,data)
+        UpdateLTP_MW_basic(self, data)
+        UpdateLTP_NP(self,data)
     def on_new_feed_1502(self,data):
         self.snapW.sock1502(data)
     def on_new_feed_Index(self,data):
@@ -440,6 +450,13 @@ class Ui_Main(QMainWindow):
             folioName = str(x) +'_TSpecial'
             newStretegy.addW.leFolioName.setText(folioName)
             newStretegy.addW.show()
+
+
+    def addFolio(self,folio):
+        self.buyW.cbStretegyNo.addItem(folio)
+        self.sellW.cbStretegyNo.addItem(folio)
+        self.FolioPos.folioList.append(folio)
+
 
 if __name__ == "__main__":
     import sys

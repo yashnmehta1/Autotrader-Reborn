@@ -1,0 +1,15 @@
+./*/__pycache__
+Logs/*
+Theme/__pycache__
+Application/Views/*/__pycache__
+.idea/
+Application/Services/Xts/*/__pycache__
+Application/Stretegies/*/__pycache__/
+Resourses/*/__pycache__/
+Application/*/__pycache__/
+Application/*/__pycache__/
+Application/Stretegies/*/*/__pycache__
+Application/Services/*/*/*/__pycache__/
+Application/Services/*/__pycache__/
+.idea/Autotrader-Reborn.iml
+

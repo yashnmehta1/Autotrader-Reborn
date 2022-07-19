@@ -48,12 +48,7 @@ class FolioPosition(QMainWindow):
         super(FolioPosition, self).__init__()
         try:
 
-            self.subToken=[]
-            self.MDFsubscribed=[]
             self.onlyPoss = False
-            self.ii = 0
-            self.uid =0
-            self.istableEmpty = True
             self.list1 = []
             self.filterStr = ''
             self.DayNet = 'NET'
@@ -61,6 +56,8 @@ class FolioPosition(QMainWindow):
             self.sortOrderD=0
             self.sortColumn=0
             self.sortOrder=0
+
+            self.folioList = ['MANUAL']
 
             # self.contract_df = load_contract1()
 
@@ -75,10 +72,6 @@ class FolioPosition(QMainWindow):
             dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
             self.setStyleSheet(dt1)
             tables_details_fp(self)
-
-            # a=QHeaderView().sectionMoved()
-            # self.tableView.horizontalHeader().sectionMoved.connect(print)
-
             # self.CreateToolBar()
         except:
             print(traceback.print_exc())
@@ -445,13 +438,15 @@ class FolioPosition(QMainWindow):
         self.smodelFPD.setFilterFixedString('')
 
     def updateGetApitrd(self,trades):
+        print("--------------------------------------------------------")
         try:
             for i in trades:
-                isRecordExist = False
+                print('updateGetApitrd',trades)
                 token =i[2]
                 clientid= i[1]
                 exchange= i[20]
                 #check token
+                ouid = i[15]
                 fltr0 = np.asarray([token])
                 filteredArray0 = self.table[np.in1d(self.table[:, 5], fltr0)]
                 isRecordExist = False
@@ -462,6 +457,10 @@ class FolioPosition(QMainWindow):
                         fltr = np.asarray([clientid])
                         filteredArray2 = filteredArray1[np.in1d(filteredArray1[:, 1], fltr)]
                         if (filteredArray2.size != 0):
+                            fltr = np.asarray([ouid])
+                            filteredArray21 = filteredArray2[np.in1d(filteredArray2[:, 3], fltr)]
+
+                        if (filteredArray21.size != 0):
                             isRecordExist = True
 
                 if(isRecordExist ==False):

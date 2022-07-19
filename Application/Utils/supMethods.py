@@ -153,9 +153,14 @@ def ShowPending(self):
     self.sgShowPending.emit(str(token))
 
 def get_ins_details(self,exchange,token):
+    # print(self.fo_contract)
     if (exchange == 'NSEFO'):
-        ins_details = self.fo_contract[int(token) - 35000]
-    elif (i['ExchangeSegment'] == 'NSECM'):
-        ins_details = self.eq_contract[int(i['ExchangeInstrumentID'])]
-    elif (i['ExchangeSegment'] == 'NSECD'):
-        ins_details = self.cd_contract[int(i['ExchangeInstrumentID'])]
+        ins_details = self.fo_contract[int(token) - 35000,:]
+    elif (exchange == 'NSECM'):
+        ins_details = self.eq_contract[int(token),:]
+    elif (exchange == 'NSECD'):
+        ins_details = self.cd_contract[int(token),:]
+    return ins_details
+
+
+

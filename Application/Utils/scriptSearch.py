@@ -1,3 +1,5 @@
+from builtins import int
+
 import numpy as np
 import logging
 import sys
@@ -19,57 +21,108 @@ def addscript(self):
 
         exchange = self.cbEx.currentText()
         token = int(self.LeToken.text())
-        fltr = np.asarray([token])
-        filteredArray = self.marketW.table[np.in1d(self.marketW.table[:, 0], fltr)]
-        isRecordExist = False
-        if (filteredArray.size != 0):
-            fltr = np.asarray([exchange])
-            filteredArray1 = filteredArray[np.in1d(filteredArray[:, 1], fltr)]
-            if (filteredArray1.size != 0):
-                fltr = np.asarray([self.DefaultClient])
-                filteredArray2 = filteredArray[np.in1d(filteredArray[:, 26], fltr)]
-                if (filteredArray2.size != 0):
-                    isRecordExist = True
+        if self.CFrame.dockMW.visibleRegion().isEmpty() == False:
 
-        if (isRecordExist == False):
-            if (exchange == 'NSEFO'):
-                ins_detail = self.fo_contract[token - 35000]
-            elif (exchange == 'NSECD'):
-                ins_detail = self.cd_contract[token]
-            elif (exchange == 'NSECM'):
-                ins_detail = self.eq_contract[token]
-            assetToken = ins_detail[9]
-            print(token,token-3500+1,ins_detail)
-            anm = dt.Frame(
-                [
-                    [token],
-                    [exchange], [ins_detail[5]], [ins_detail[3]], [ins_detail[6]], [ins_detail[7]],
-                    [ins_detail[8]], [0.0], [0.00], [0.00], ['+0.00'],
-                    ['+0.00'], [0], [0], [0], [0.0],
-                    [0.0], [0.0],
-                    [0.0], [0.0], [0.0],
-                    [0.0], [0.0], [0.0], [0], [0],
-                    [0], [assetToken], [self.DClient], [self.userID], [self.marketW.lastSerialNo],
-                    [0.00], [ins_detail[4]]
-                ]).to_numpy()
+            fltr = np.asarray([token])
+            filteredArray = self.marketW.table[np.in1d(self.marketW.table[:, 0], fltr)]
+            isRecordExist = False
+            if (filteredArray.size != 0):
+                fltr = np.asarray([exchange])
+                filteredArray1 = filteredArray[np.in1d(filteredArray[:, 1], fltr)]
+                if (filteredArray1.size != 0):
+                    fltr = np.asarray([self.DefaultClient])
+                    filteredArray2 = filteredArray[np.in1d(filteredArray[:, 26], fltr)]
+                    if (filteredArray2.size != 0):
+                        isRecordExist = True
 
-            self.marketW.table[self.marketW.lastSerialNo, :] = anm
-            self.marketW.lastSerialNo += 1
-            self.marketW.model.lastSerialNo += 1
-            self.marketW.model.rowCount()
-            self.marketW.model.insertRows()
-            self.marketW.model.dta1.append([0, 0, 0])
+            if (isRecordExist == False):
+                if (exchange == 'NSEFO'):
+                    ins_detail = self.fo_contract[token - 35000]
+                elif (exchange == 'NSECD'):
+                    ins_detail = self.cd_contract[token]
+                elif (exchange == 'NSECM'):
+                    ins_detail = self.eq_contract[token]
+                assetToken = ins_detail[9]
+                print(token,token-3500+1,ins_detail)
+                anm = dt.Frame(
+                    [
+                        [token],
+                        [exchange], [ins_detail[5]], [ins_detail[3]], [ins_detail[6]], [ins_detail[7]],
+                        [ins_detail[8]], [0.0], [0.00], [0.00], ['+0.00'],
+                        ['+0.00'], [0], [0], [0], [0.0],
+                        [0.0], [0.0], [0.0], [0.0], [0.0],
+                        [0.0], [0.0], [ins_detail[19]], [ins_detail[11]], [ins_detail[14]],
+                        [ins_detail[17]], [assetToken], [self.DClient], [self.userID], [self.marketW.lastSerialNo],
+                        [0.00], [ins_detail[4]]
+                    ]).to_numpy()
 
-            self.marketW.model.color.append(['transparent', 'transparent', 'transparent'])
-            # self.marketW.smodel.sort(self.marketW.sortColumn, self.marketW.sortOrder)
+                self.marketW.table[self.marketW.lastSerialNo, :] = anm
+                self.marketW.lastSerialNo += 1
+                self.marketW.model.lastSerialNo += 1
+                self.marketW.model.rowCount()
+                self.marketW.model.insertRows()
+                self.marketW.model.dta1.append([0, 0, 0])
 
-            ind = self.marketW.model.index(0, 0)
-            ind1 = self.marketW.model.index(0, 27)
-            self.marketW.model.dataChanged.emit(ind, ind1)
+                self.marketW.model.color.append(['transparent', 'transparent', 'transparent'])
+                # self.marketW.smodel.sort(self.marketW.sortColumn, self.marketW.sortOrder)
 
-            th1 = threading.Thread(target=subscribeToken,
-                                   args=(self,int(self.LeToken.text()), self.cbEx.currentText(), 1501))
-            th1.start()
+                ind = self.marketW.model.index(0, 0)
+                ind1 = self.marketW.model.index(0, 27)
+                self.marketW.model.dataChanged.emit(ind, ind1)
+
+                th1 = threading.Thread(target=subscribeToken,
+                                       args=(self,int(self.LeToken.text()), self.cbEx.currentText(), 1501))
+                th1.start()
+        elif self.CFrame.dockMW_basic.visibleRegion().isEmpty() == False:
+            fltr = np.asarray([token])
+            filteredArray = self.marketWB.table[np.in1d(self.marketWB.table[:, 0], fltr)]
+            isRecordExist = False
+            if (filteredArray.size != 0):
+                fltr = np.asarray([exchange])
+                filteredArray1 = filteredArray[np.in1d(filteredArray[:, 1], fltr)]
+                if (filteredArray1.size != 0):
+                    fltr = np.asarray([self.DefaultClient])
+                    filteredArray2 = filteredArray[np.in1d(filteredArray[:, 26], fltr)]
+                    if (filteredArray2.size != 0):
+                        isRecordExist = True
+
+            if (isRecordExist == False):
+                if (exchange == 'NSEFO'):
+                    ins_detail = self.fo_contract[token - 35000]
+                elif (exchange == 'NSECD'):
+                    ins_detail = self.cd_contract[token]
+                elif (exchange == 'NSECM'):
+                    ins_detail = self.eq_contract[token]
+                assetToken = ins_detail[9]
+                print(token, token - 3500 + 1, ins_detail)
+                anm = dt.Frame(
+                    [
+                        [token],
+                        [exchange], [ins_detail[5]], [ins_detail[3]], [ins_detail[6]], [ins_detail[7]],
+                        [ins_detail[8]], [0.0], [0.00], [0.00], ['+0.00'],
+                        ['+0.00'], [0.0],[0.0], [0.0],[0.0],
+                        [0.0], [ins_detail[10]], [ins_detail[11]], [ins_detail[14]], [ins_detail[17]],
+                         [assetToken], [self.marketWB.lastSerialNo], [ins_detail[4]]
+                    ]).to_numpy()
+
+                self.marketWB.table[self.marketWB.lastSerialNo, :] = anm
+                self.marketWB.lastSerialNo += 1
+                self.marketWB.model.lastSerialNo += 1
+                self.marketWB.model.rowCount()
+                self.marketWB.model.insertRows()
+                self.marketWB.model.dta1.append([0, 0, 0])
+
+                self.marketWB.model.color.append(['transparent', 'transparent', 'transparent'])
+                # self.marketWB.smodel.sort(self.marketWB.sortColumn, self.marketWB.sortOrder)
+
+                ind = self.marketWB.model.index(0, 0)
+                ind1 = self.marketWB.model.index(0, 27)
+                self.marketWB.model.dataChanged.emit(ind, ind1)
+
+                th1 = threading.Thread(target=subscribeToken,
+                                       args=(self, int(self.LeToken.text()), self.cbEx.currentText(), 1501))
+                th1.start()
+
 
     except:
         print(traceback.print_exc(), sys.exc_info())

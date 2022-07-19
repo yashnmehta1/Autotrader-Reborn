@@ -66,7 +66,7 @@ class MarketFeeds(QObject):
     def on_message1501_json_partial(self, data):
         # print(sys.getsizeof(data))
         # print(type(data))
-        # print(data)
+        #print(data)
         # print(data)
 
         try:

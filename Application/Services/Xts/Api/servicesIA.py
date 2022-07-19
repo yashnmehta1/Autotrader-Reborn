@@ -11,8 +11,8 @@ from Application.Views.Models.tableOrder import ModelOB
 from Application.Utils.configReader import readDefaultClient,writeITR,refresh,all_refresh_config
 from Application.Utils.supMethods import get_ins_details
 
-from Application.Utils.updation import updateGetOrderTable,updateGetPendingOrderTable,pendingW_datachanged_full,\
-    orderW_datachanged_full,PosionW_datachanged_full,updateGetPositionTable,tradeW_datachanged_full,updateGetTradeTable
+from Application.Utils.updation import updateGetADVMWTable,updateGetOrderTable,updateGetPendingOrderTable,pendingW_datachanged_full,\
+    orderW_datachanged_full,PosionW_datachanged_full,updateGetPositionTable,tradeW_datachanged_full,updateGetTradeTable,updateGetPosition_AMW
 
 
 
@@ -181,6 +181,8 @@ def getOpenPosition(self):
 def getPositionBook(self):
     try:
         getOpenPosition(self)
+        self.IAS.openPosDict = self.openPosDict
+        print("open pos disk", self.openPosDict)
         self.NetPos.lastSerialNo = 0
         if(self.Source=='TWSAPI'):
             url = self.URL + '/interactive/portfolio/dealerpositions?dayOrNet=NetWise'
@@ -190,26 +192,37 @@ def getPositionBook(self):
         data_p = req.json()
 
         aaa = data_p['result']['positionList']
-
+        print(aaa)
         if(aaa!=[]):
 
             for j,i in enumerate(aaa):
                 try:
-                    ins_details = get_ins_details(self,i['ExchangeSegment'],i['ExchangeInstrumentId'])
+                    token  = int(i['ExchangeInstrumentId'])
+                    clientId = '*****' if ('PRO' in i['AccountID']) else i['AccountID']
+                    print("i['ExchangeSegment'],i['ExchangeInstrumentId']",i['ExchangeSegment'],i['ExchangeInstrumentId'])
+                    ins_details = get_ins_details(self,i['ExchangeSegment'],token)
+                    print('ins_details in get pos',ins_details)
                     qty = int(i['Quantity'])
                     amt =  float(i['NetAmount'])
                     avgp =  amt/qty if (qty != 0) else 0.0
-                    clientId = '*****'  if ('PRO' in i['AccountID']) else i['AccountID']
+                    openQty = self.openPosDict[clientId][token][0]
+                    openAmount = self.openPosDict[clientId][token][1]
+
+                    dayQty = qty - openQty
+                    dayAmount = amt - openAmount
+
+
                     pos = dt.Frame([
                         [self.userID],
                         [clientId], [i['ExchangeSegment']],[int(i['ExchangeInstrumentId'])],[ins_details[4]],[ins_details[3]],
                         [ins_details[6]],[ins_details[7]],[ins_details[8]],[int(i['Quantity'])],[float(i['MTM'])],
                         [0],[float(i['RealizedMTM'])],[float(i['NetAmount'])],[avgp],[ins_details [11]],
-                        [ins_details[14]],[ins_details[9]],[j],[0],[0],[0],[0] ]).to_numpy()
+                        [ins_details[14]],[ins_details[9]],[j],[openQty],[openAmount],
+                        [dayQty],[dayAmount] ]).to_numpy()
 
 
                     updateGetPositionTable(self, pos, j )
-
+                    updateGetPosition_AMW(self, pos[0])
 
             # ins_details[8] = C/P
             # ins_details[7] = Stike_price
@@ -220,7 +233,7 @@ def getPositionBook(self):
                     print(traceback.print_exc(),'error in getPOs i',i)
 
            # PosionW_datachanged_full(self)
-            return pos[:ser_no+1,:]
+         #   return pos[:ser_no+1,:]
     except:
         print(traceback.print_exc())
 
@@ -231,12 +244,14 @@ def getOrderBook(self,ifFlush = False):
             req = requests.request("GET", url, headers=self.IAheaders)
             data_p = req.json()
             noOfPendingOrder = 0
+            print("data+p:",data_p)
 
             if(data_p['result']!=[]):
                 for j,i in enumerate(data_p['result']):
-
+                    exchange = i["ExchangeSegment"]
+                    token = i["ExchangeInstrumentID"]
                     ######################################## contract working ##########################################
-                    ins_details = get_ins_details(self, i )
+                    ins_details = get_ins_details(self, exchange, token )
                     Qty1 = i['LeavesQuantity'] if(i['OrderSide'].upper()=='BUY') else -i['LeavesQuantity']
                     orderSide = i['OrderSide'].replace('BUY','Buy').replace('SELL','Sell')
                     order =dt.Frame([[i['ClientID']],
@@ -306,7 +321,7 @@ def get_Trades(self):
                     tradedQty = i['LastTradedQuantity']
                     qty = tradedQty if (orderSide == 'Buy') else -tradedQty
                     netValue = qty * i['LastTradedPrice']
-
+                    trades = np.zeros((0,24),dtype=object)
                     trade = dt.Frame([
                         [i['ClientID']],
                         [i['ClientID']], [i['ExchangeInstrumentID']],[ins_details[4]],[ins_details[3]], [ins_details[6]],
@@ -315,8 +330,11 @@ def get_Trades(self):
                         [i['ExchangeOrderID']],[i['LastTradedPrice']],[qty],[netValue],[ins_details[0]],
                         [ins_details[11]],[ins_details[14]],['openValue']
                         ]).to_numpy()
-                    updateGetTradeTable(self,trade,j)
+                    trades = np.vstack([trades,trade])
 
+
+                    updateGetTradeTable(self,trade,j)
+                    self.FolioPos.updateGetApitrd(trades)
         else:
             jk = 0
             ApiTrade = np.empty((0, 24))
@@ -410,16 +428,17 @@ def login(self):
 
                 refresh(self)
 
-
+                th3 = threading.Thread(target=getPositionBook, args=(self,))
+                th3.start()
                 th1 = threading.Thread(target=get_Trades, args=(self,))
                 self.IAS.start_socket_io()
-
-                th2 = threading.Thread(target=get_Pending, args=(self, ))
-                th3 = threading.Thread(target=get_position, args=(self,))
-
+                #
+                th2 = threading.Thread(target=getOrderBook, args=(self, ))
+                #
+                #
                 th1.start()
                 th2.start()
-                th3.start()
+
                 all_refresh_config(self)
 
                 self.login.pbNext.show()

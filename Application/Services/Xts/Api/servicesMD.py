@@ -21,10 +21,12 @@ def subscribeToken(self, token, seg='NSEFO', streamType=1501):
         sub_url = self.URL + '/marketdata/instruments/subscription'
         payloadsub = {"instruments": [{"exchangeSegment": segment, "exchangeInstrumentID": token}],
                       "xtsMessageCode": streamType}
+
         payloadsubjson = json.dumps(payloadsub)
+
+        print(payloadsubjson)
         req = requests.request("POST", sub_url, data=payloadsubjson, headers=self.MDheaders)
 
-        logging.info(req.text)
         print(req.text)
 
         if ('subscribed successfully' in req.text or 'Already Subscribed' in req.text):

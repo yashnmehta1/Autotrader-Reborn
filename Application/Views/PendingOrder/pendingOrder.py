@@ -358,13 +358,13 @@ class PendingOrder(QMainWindow):
 
     def tables_details(self):
         try:
-            self.ApiOrder = np.empty((5000,22),dtype=object)
+            self.ApiOrder = np.empty((5000,23),dtype=object)
             self.heads = ['ClientID',
                   'ExchangeInstrumentID', 'Instrument','Symbol','Expiry','Strike_price',
                   'C/P','OrderSide', 'AppOrderID', 'OrderType','OrderStatus',
                 'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
                   'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
-                          'AvgPrice']
+                          'AvgPrice', 'Qty1']
 
             #############################################################################################################
 

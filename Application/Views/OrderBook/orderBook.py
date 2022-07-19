@@ -94,16 +94,30 @@ class OrderBook(QMainWindow):
 
     def updateSocketOB(self,ord):
         try:
-            self.ApiOrder[self.lastSerialNo, :] = ord
-            self.lastSerialNo += 1
-            self.modelO.lastSerialNo += 1
-            self.modelO.rowCount()
-            self.modelO.insertRows()
+            print("ord : ", ord)
+            orderStatus = ord[0][10]
+            appOrderId = ord[0][8]
+            #PendingNew
+            print("apporderId:",appOrderId)
+            if(orderStatus !='PendingNew'):
 
-            if(self.isVisible()):
-                ind = self.modelO.index(0, 0)
-                ind1 = self.modelO.index(0, 1)
-                self.modelO.dataChanged.emit(ind, ind1)
+                if(appOrderId not in self.ApiOrder[:,8]):
+                    self.ApiOrder[self.lastSerialNo, :] = ord
+                    self.lastSerialNo += 1
+                    self.modelO.lastSerialNo += 1
+                    self.modelO.rowCount()
+                    self.modelO.insertRows()
+                else:
+                    filter = np.asarray([appOrderId])
+                    self.ApiOrder[np.in1d(self.ApiOrder[:, 8], filter),[10,12]] = [orderStatus,ord[0][12]]
+
+                if(self.isVisible()):
+                    ind = self.modelO.index(0, 0)
+                    ind1 = self.modelO.index(0, 1)
+                    self.modelO.dataChanged.emit(ind, ind1)
+
+
+
         except:
             print(traceback.print_exc())
             logging.error(sys.exc_info())
@@ -112,13 +126,13 @@ class OrderBook(QMainWindow):
         try:
             #############################################################################################################
 
-            self.ApiOrder = np.empty((15000,22),dtype=object)
+            self.ApiOrder = np.empty((15000,23),dtype=object)
             self.heads = ['ClientID',
                           'ExchangeInstrumentID', 'Instrument','Symbol','Expiry','Strike_price',
                           'C/P','OrderSide', 'AppOrderID', 'OrderType','OrderStatus',
                             'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
                           'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
-                          'AvgPrice']
+                          'AvgPrice',"Qty1"]
 
             #############################################################################################################
 

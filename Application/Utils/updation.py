@@ -4,6 +4,9 @@ import numpy as np
 import  datatable as dt
 import threading
 import logging
+from Application.Services.Xts.Api.servicesMD import subscribeToken
+
+
 
 def updateCashIndex(self, token, ltp):
     # print('in updateCashIndex',token)
@@ -15,34 +18,136 @@ def updateCashIndex(self, token, ltp):
     elif (token == 26002):
         self.PrcVIX.setText('%.2f' % ltp)
 
-def UpdateLTP(self, a):
+def UpdateLTP_MW(self, a):
     try:
         # print('in marketwatch update' ,a)
         if (self.marketW.table.size != 0):
+            #print("1")
             x = (np.unique(self.marketW.table[:, 0]))
-            if(a['Exch']==2):
-                pass
+
             if (a['Token'] in x):
+             #   print("2")
                 fltr = np.asarray([a['Token']])
                 self.marketW.model.dta1 = self.marketW.table[:, [7, 8, 9]].tolist()
                 x = self.marketW.table[np.in1d(self.marketW.table[:, 0], fltr), 30]
-                editableList = [9, 7, 8, 10, 11, 15]
+                editableList = [9, 7, 8, 10, 11, 15, 18, 19, 20, 21]
                 for i in x:
                     netValue = self.marketW.table[i, 16]
                     qty = self.marketW.table[i, 14]
                     mtm = (qty * a['LTP']) + netValue
                     ch = a['LTP'] - a['CLOSE']
 
-                    self.marketW.table[i, editableList] = [a['LTP'], a['Bid'], a['Ask'], ch, a['%CH'], mtm]
+                    self.marketW.table[i, editableList] = [a['LTP'], a['Bid'], a['Ask'], ch, a['%CH'], mtm,a['OPEN'],a['HIGH'],a['LOW'],a['CLOSE']]
                     for j in editableList:
                         ind = self.marketW.model.index(i, j)
                         # ind1 = self.marketW.model.index(i,1)
                         self.marketW.model.dataChanged.emit(ind, ind)
                 # print(self.marketW.table)
+        totaolmtm=np.sum(self.marketW.table[:,15])
+        self.label.setText('%.2f'%totaolmtm)
 
     except:
 
         print(traceback.print_exc())
+
+def UpdateLTP_MW_basic(self, a):
+    try:
+        # print('in marketwatch update' ,a)
+        if (self.marketWB.table.size != 0):
+            x = (np.unique(self.marketWB.table[:, 0]))
+
+            if (a['Token'] in x):
+                fltr = np.asarray([a['Token']])
+                self.marketWB.model.dta1 = self.marketWB.table[:, [7, 8, 9]].tolist()
+                x = self.marketWB.table[np.in1d(self.marketWB.table[:, 0], fltr), 22]
+                editableList = [9, 7, 8, 10, 11, 12, 13, 14, 15]
+                for i in x:
+                    netValue = self.marketWB.table[i, 16]
+                    qty = self.marketWB.table[i, 14]
+                    mtm = (qty * a['LTP']) + netValue
+                    ch = a['LTP'] - a['CLOSE']
+
+                    self.marketWB.table[i, editableList] = [a['LTP'], a['Bid'], a['Ask'], ch, a['%CH'],a['OPEN'],a['HIGH'],a['LOW'],a['CLOSE']]
+                    for j in editableList:
+                        ind = self.marketWB.model.index(i, j)
+                        # ind1 = self.marketWB.model.index(i,1)
+                        self.marketWB.model.dataChanged.emit(ind, ind)
+                # print(self.marketWB.table)
+
+    except:
+
+        print(traceback.print_exc())
+
+def UpdateLTP_NP(self, data):
+    try:
+        # print('in positon up' ,data)
+        if (self.NetPos.Apipos.size != 0):
+            #print("1")
+            x = (np.unique(self.NetPos.Apipos[:, 3]))
+            # print("NP : ",x)
+            if (data['Token'] in x):
+                fltr = np.asarray([data['Token']])
+                #self.marketW.model.dta1 = self.NetPos.Apipos[:, [7, 8, 9]].tolist()
+                serialNos = self.NetPos.Apipos[np.in1d(self.NetPos.Apipos[:, 3], fltr), 18]
+                editableList = [11, 10]
+
+                for i in serialNos:
+                    netValue = self.NetPos.Apipos[i, 13]
+                    qty = self.NetPos.Apipos[i, 9]
+                    mtm = (qty * data['LTP']) + netValue
+                    self.NetPos.Apipos[i, editableList] = [data['LTP'],  mtm]
+                    for j in editableList:
+                        ind = self.NetPos.modelP.index(i, j)
+                        self.NetPos.modelP.dataChanged.emit(ind, ind)
+
+    except:
+        print(traceback.print_exc())
+
+def updateGetPosition_AMW(self,pos):
+    try:
+        i =pos
+
+        print('updateGetPosition_AMW',i)
+        exchange = i[2]
+        token = i[3]
+        if(exchange == 'NSEFO'):
+            ins_detail = self.fo_contract[token - 35000]
+        elif(exchange == 'NSECD'):
+            ins_detail = self.cd_contract[token]
+        elif(exchange == 'NSECM'):
+            ins_detail = self.eq_contract[token]
+        assetToken = ins_detail[9]
+        anm = dt.Frame(
+            [[token],
+            [exchange], [ins_detail[5]], [ins_detail[3]],[ins_detail[6]], [ins_detail[7]],
+            [ins_detail[8]], [0.0], [0.00], [0.00], ['+0.00'],
+             ['+0.00'], [i[19]],[i[21]], [i[9]], [0.0],
+             [i[13]], [0.0],[0.0], [0.0], [0.0],
+             [0.0], [0.0],[ins_detail[10]], [ins_detail[11]], [ins_detail[14]],
+             [ins_detail[17]], [assetToken],[i[1]], [self.userID], [self.marketW.lastSerialNo],
+             [i[20]],[ins_detail[4]]
+            ]).to_numpy()
+
+        self.marketW.table[self.marketW.lastSerialNo, :] = anm
+        self.marketW.lastSerialNo +=1
+        self.marketW.model.lastSerialNo += 1
+
+        self.marketW.model.rowCount()
+        self.marketW.model.insertRows()
+        self.marketW.model.dta1.append([0, 0, 0])
+
+        self.marketW.model.color.append(['transparent', 'transparent', 'transparent'])
+        ind = self.marketW.model.index(0, 0)
+        ind1 = self.marketW.model.index(0, 31)
+
+        self.marketW.model.dataChanged.emit(ind, ind1)
+        th1 = threading.Thread(target=subscribeToken,
+                               args=(self,token, exchange, 1501))
+        th1.start()
+
+    except:
+        print(traceback.print_exc(), sys.exc_info())
+
 
 def updateGetPosition(self,ApiPos):
     for i in ApiPos:
@@ -195,21 +300,19 @@ def update_Position_socket_MW(self,pos):
 
 
             print('serialNo',serialNo)
-            if(self.source == 'TWSAPI'):
-                # openValue = filteredArray2[serialNo,31]
+            if(self.Source == 'TWSAPI'):
                 openQty = self.marketW.table[serialNo,12]
-                day =  i[4] - openQty
-                net =   i[4]
-                netValue =  i[8]
+                day =  i[21] - openQty
+                net =   i[9]
+                netValue =  i[13]
 
-            elif(self.source == 'WEBAPI'):
+            elif(self.Source == 'WEBAPI'):
                 openValue = self.marketW.table[serialNo,31]
-                openQty = self.marketW.table[serialNo,14]
-                day =  i[4]
-                net =   i[4] + openQty
-                netValue =  i[8] + openValue
+                openQty = self.marketW.table[serialNo,12]
+                day =  i[9]
+                net =   i[9] + openQty
+                netValue =  i[13] + openValue
 
-            self.marketW.table[serialNo,[13,14,16]] = [day,net,netValue]
             self.marketW.table[serialNo,[13,14,16]] = [day,net,netValue]
 
             ind = self.marketW.model.index(0, 0)
@@ -271,22 +374,20 @@ def update_Position_Socket_NP(self,pos):
 
             print('serialNo',serialNo)
             if(self.Source == 'TWSAPI'):
-                openQty = self.NetPos.Apipos[serialNo,12]
-                day =  i[4] - openQty
-                net =   i[4]
-                netValue =  i[8]
+                openValue = i[20]
+                openQty = i[19]
+                day =  i[9] - openQty
+                net =   i[9]
+                netValue =  i[13]
 
             elif(self.Source == 'WEBAPI'):
-                # openValue = self.NetPos.Apipos[serialNo,31]
-                # openQty = self.NetPos.Apipos[serialNo,14]
-                # day =  i[4]
-                # net =   i[4] + openQty
-                net =   i[4]
-                # netValue =  i[8] + openValue
-                netValue =  i[8]
+                openValue = i[20]
+                openQty = i[19]
+                day =  i[9]
+                net =   i[9] + openQty
+                netValue =  i[13]+openValue
 
-            self.NetPos.Apipos[serialNo,[13,14,16]] = [day,net,netValue]
-            self.NetPos.Apipos[serialNo,[13,14,16]] = [day,net,netValue]
+            self.NetPos.Apipos[serialNo,[21,9,13]] = [day,net,netValue]
 
             ind = self.NetPos.modelP.index(0, 0)
             ind1 = self.NetPos.modelP.index(0, 1)
@@ -405,12 +506,17 @@ def updateGetOrderTable(self,order,rowNo):
     self.OrderBook.modelO.rowCount()
     self.OrderBook.modelO.insertRows()
     #############################################################################################
+
+
 def updateGetTradeTable(self,trade,rowNo):
     self.TradeW.ApiTrade[rowNo, :] = trade
     self.TradeW.lastSerialNo += 1
     self.TradeW.modelT.lastSerialNo += 1
     self.TradeW.modelT.rowCount()
     self.TradeW.modelT.insertRows()
+
+
+
 
 
 def updateGetPendingOrderTable(self,order,rowNo):
@@ -428,6 +534,12 @@ def updateGetPositionTable(self,pos, rowNo):
     self.NetPos.modelP.insertRows()
     self.NetPos.modelP.rowCount()
 
+def updateGetADVMWTable(self,pos, rowNo):
+    self.marketW.table[rowNo, :] = pos
+    self.marketW.lastSerialNo += 1
+    self.marketW.model.lastSerialNo += 1
+    self.marketW.model.insertRows()
+    self.marketW.model.rowCount()
 
 def pendingW_datachanged_full(self):
     ind = self.PendingW.modelO.index(0, 0)

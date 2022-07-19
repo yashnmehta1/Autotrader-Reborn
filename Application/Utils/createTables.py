@@ -128,7 +128,7 @@ def tables_details_np(self):
                       'maxQ','AssetToken','SerialNo','OpenQty','OpenAmt',
                       'DayQ','DayAmt']
 
-        self.Apipos =  np.empty((1000, 23),dtype=object)
+        self.Apipos =  np.zeros((1000, 23),dtype=object)
         self.sectionDict={}
         for j,i in enumerate(self.heads):
             self.sectionDict[j]=i

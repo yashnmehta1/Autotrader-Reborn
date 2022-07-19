@@ -58,12 +58,18 @@ def update_on_position(self, data):
             avgp = 0.0
         mtm = float((data1['MTM']).replace(',', ''))
 
+        openQty = self.openPosDict[data1['AccountID']][token][0]
+        openAmt = self.openPosDict[data1['AccountID']][token][1]
+        dayQty = qty - openQty
+        dayAmount = amt - openAmt
+
         pos = dt.Frame(
             [[data1['LoginID']],
             [data1['AccountID']], [data1['ExchangeSegment']], [token],[ins_details[4]],[ins_details[3]],
             [ins_details[6]],[ins_details[7]],[ins_details[8]],[qty], [mtm],
             [0], [rmtm], [nv],[avgp],[ins_details [11]],
-            [ins_details[14]],[ins_details[9]],[1000]]).to_numpy()
+            [ins_details[14]],[ins_details[9]],[1000],[openQty],[openAmt],
+             [dayQty],[dayAmount]]).to_numpy()
 
         self.sgAPIpos.emit(pos)
 
@@ -76,6 +82,8 @@ def update_on_order(self, data):
     try:
         data1 = json.loads(data)
         logging.info(data)
+        print("update on order:",data)
+
         try:
             if (data1['ExchangeSegment'] == 'NSEFO'):
                 ah = self.fo_contract[int(data1['ExchangeInstrumentID']) - 35000]
@@ -96,16 +104,19 @@ def update_on_order(self, data):
             logging.error(sys.exc_info()[1])
             print(traceback.print_exc())
         orderSide = data1['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')
+
+        qty1 =data1['OrderQuantity'] if orderSide == "Buy" else  -data1['OrderQuantity']
+
         n2darray =dt.Frame( [[data1['ClientID']],
                     [data1['ExchangeInstrumentID']], [ins[0]],[ins[1]], [ins[2]], [ins[3]],
                     [ins[4]],[orderSide],[data1['AppOrderID']], [data1['OrderType']], [data1['OrderStatus']],
                     [data1['OrderQuantity']],[data1['LeavesQuantity']], [data1['OrderPrice']], [data1['OrderStopPrice']],[data1['OrderUniqueIdentifier']],
                     [data1['OrderGeneratedDateTime']],[data1['ExchangeTransactTime']],[data1['CancelRejectReason']], [ins[8]], [ins[9]],
-                    [data1['OrderAverageTradedPrice']]]).to_numpy()
+                    [data1['OrderAverageTradedPrice']],[qty1]]).to_numpy()
 
 
         self.sgPendSoc.emit(n2darray)
-        self.on_pending_order_work(data1, ins)
+        # self.on_pending_order_work(data1, ins)
 
         if (data1['OrderStatus'] == 'Filled'):
             self.sgComplOrd.emit([int(data1['ExchangeInstrumentID']), data1['OrderSide'], data1['OrderQuantity'],
