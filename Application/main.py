@@ -205,28 +205,22 @@ class Ui_Main(QMainWindow):
             # self.marketW.buyw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
             # self.marketW.sellw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
             #########################################################################################3
-            self.IAS.sgGetTrd.connect(self.on_get_tradeBook)
-            self.IAS.sgGetOrder.connect(self.on_get_orderBook)
-            self.IAS.sgGetPOrder.connect(self.PendingW.updateGetApi)
-
-
+            # self.IAS.sgGetAPIpos.connect(lambda: updateGetPosition(self))
             self.IAS.sgOpenPos.connect(lambda: updateOpenPosition(self))
-
-            self.IAS.sgPendSoc.connect(self.OrderBook.updateSocketOB)
-
-            self.IAS.sgGetAPIpos.connect(lambda: updateGetPosition(self))
-
             self.IAS.sgAPIpos.connect(self.updateOnPosition)
-            self.IAS.sgStatusUp.connect(lambda:updateStatusLable(self,'x'))
+
+            self.IAS.sgGetTrd.connect(self.on_get_tradeBook)
             self.IAS.sgTrdSoc.connect(self.updateOnTrade)
 
-
+            self.IAS.sgGetOrder.connect(self.updateGetorderBook)
+            self.IAS.sgGetPOrder.connect(self.updateGetPendinOrderBook)
+            self.IAS.sgPendSoc.connect(self.updateOderSocket)
+            ############################################################################################
             self.LiveFeed.sgindexfd.connect(lambda:self.on_new_feed_Index)
             self.LiveFeed.sgNPFrec.connect(self.on_new_feed_1501)
             self.LiveFeed.sgNSQrec.connect(self.on_new_feed_1502)
-
-
-
+            #########################################################################################3
+            self.IAS.sgStatusUp.connect(lambda:updateStatusLable(self,'x'))
             #########################################################################################3
             # self.PositionW.sgTMTM.connect(self.setMTM)
             self.bt_close.clicked .connect(self.close)
@@ -382,35 +376,31 @@ class Ui_Main(QMainWindow):
     def movWin(self, x, y):
         self.move(self.pos().x() + x, self.pos().y() + y)
 
-    def update_on_position(self,pos):
-        print('update_on_position')
 
-    def on_get_orderBook(self,orderBook):
-        updateGetOrderBook(self,orderBook)
-
-    def on_get_pendinOrderBook(self,orderBook):
-        self.PendingW.updateGetApi(orderBook)
-
-    def on_get_tradeBook(self,tradeBook):
-        updateGetTradeApi(self.TradeW,tradeBook)
-        self.FolioPos.updateGetApitrd(tradeBook)
-
-
-    # def on_get_positionBook(self,positionBook):
-    #     updateGetPostionBook(self, positionBook)
-
-    def updateOnOrder(self,order):
-        pass
-
-    def updateOnTrade(self,trade):
-        updateSocketTB(self,trade)
-        self.FolioPos.updateSocketTB(trade)
-
-
-
+    #################################################################
     def updateOnPosition(self,position):
         update_Position_Socket_NP(self, position)
         update_Position_socket_MW(self,position)
+    ##################################################################
+    def updateGetorderBook(self,orderBook):
+        updateGetOrderBook(self,orderBook)
+    def updateGetPendinOrderBook(self,orderBook):
+        self.PendingW.updateGetApi(orderBook)
+
+    def updateOderSocket(self,order):
+        self.OrderBook.updateSocketOB(self,order)
+
+
+    ##################################################################
+    def on_get_tradeBook(self,tradeBook):
+        updateGetTradeApi(self.TradeW,tradeBook)
+        self.FolioPos.updateGetApitrd(tradeBook)
+    def updateOnTrade(self,trade):
+        updateSocketTB(self,trade)
+        self.FolioPos.updateSocketTB(trade)
+    ##################################################################
+
+
 
     def on_new_feed_1501(self,data):
         UpdateLTP_MW(self,data)
