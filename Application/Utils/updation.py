@@ -107,7 +107,7 @@ def updateGetPosition_AMW(self,pos):
     try:
         i =pos
 
-        print('updateGetPosition_AMW',i)
+        # print('updateGetPosition_AMW',i)
         exchange = i[2]
         token = i[3]
         if(exchange == 'NSEFO'):

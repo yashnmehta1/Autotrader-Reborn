@@ -671,7 +671,7 @@ def getMaster(validation):
 
             try:
                 sub_url = apiip + '/marketdata/instruments/indexlist?exchangeSegment=1'
-                print(sub_url)
+                # print(sub_url)
                 ###################################### NSE FNO #################################
                 payloadsub = {"exchangeSegmentList": ["NSECM"]}
                 payloadsubjson = json.dumps(payloadsub)
@@ -687,7 +687,7 @@ def getMaster(validation):
                     x =i.split('_')
                     indexDict[x[0]] = [x[1],0.0,0.0]
                     indexDict1[x[1]] = x[0]
-                print(indexDict)
+                # print(indexDict)
                 ####################################################################################
             except:
                 print(traceback.print_exc())
@@ -731,10 +731,10 @@ def getMaster(validation):
 
 
 
-a,b,c,d = getMaster(False)
-xx=a[np.where(a[:,3] =='BANKNIFTY')][0,17]
-
-
-futureToken = a[xx-35000, 36]
-
-print(futureToken)
+# a,b,c,d = getMaster(False)
+# xx=a[np.where(a[:,3] =='BANKNIFTY')][0,17]
+#
+#
+# futureToken = a[xx-35000, 36]
+#
+# print(futureToken)

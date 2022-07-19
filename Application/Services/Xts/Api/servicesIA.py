@@ -71,7 +71,7 @@ def PlaceOrder( self,exchange, clientID, token,  orderSide, qty, limitPrice,  va
 
         resJson = place_order_url.json()
         aoid = resJson['result']['AppOrderID']
-        print('resJson',aoid,resJson,)
+        # print('resJson',aoid,resJson,)
         logging.info(place_order_url.text)
     except:
         print(traceback.print_exc(),resJson)
@@ -81,7 +81,7 @@ def PlaceOrder( self,exchange, clientID, token,  orderSide, qty, limitPrice,  va
 
 def getOpenPosition(self):
     try:
-        print('in get_open_pos')
+        # print('in get_open_pos')
         if (self.Source == 'TWSAPI'):
             url = self.URL + '/interactive/portfolio/dealerpositions?dayOrNet=DayWise'
         elif (self.Source == 'WEBAPI'):
@@ -89,7 +89,7 @@ def getOpenPosition(self):
         req = requests.request("GET", url, headers=self.IAheaders)
         data_p = req.json()
         dailyPos = data_p['result']['positionList']
-        print(dailyPos)
+        # print(dailyPos)
         if (self.Source == 'TWSAPI'):
             Neturl = self.URL + '/interactive/portfolio/dealerpositions?dayOrNet=NetWise'
         elif (self.Source == 'WEBAPI'):
@@ -132,9 +132,9 @@ def getOpenPosition(self):
                     dpos = np.vstack([dpos, dpos1])
 
 
-                print('dpos',dpos)
+                # print('dpos',dpos)
                 for i2, i1 in enumerate(NetPos):
-                    print('i1',i1)
+                    # print('i1',i1)
                     rmtm = float((i1['RealizedMTM']).replace(',', ''))
                     nv1 = float((i1['NetAmount']).replace(',', ''))
                     nv = rmtm if (nv1 == 0) else nv1
@@ -155,7 +155,7 @@ def getOpenPosition(self):
 
                             if (filteredArry1.size > 0):
                                 serialNo = filteredArry1[0,4]
-                                print(clientId,'filteredArry1',filteredArry1,'qty',qty,'serialNo',serialNo)
+                                # print(clientId,'filteredArry1',filteredArry1,'qty',qty,'serialNo',serialNo)
                                 fnv = nv - dpos[serialNo,3]
                                 Open_Quantity = qty - dpos[serialNo,2]
                             else:
@@ -182,7 +182,7 @@ def getPositionBook(self):
     try:
         getOpenPosition(self)
         self.IAS.openPosDict = self.openPosDict
-        print("open pos disk", self.openPosDict)
+        # print("open pos disk", self.openPosDict)
         self.NetPos.lastSerialNo = 0
         if(self.Source=='TWSAPI'):
             url = self.URL + '/interactive/portfolio/dealerpositions?dayOrNet=NetWise'
@@ -192,16 +192,16 @@ def getPositionBook(self):
         data_p = req.json()
 
         aaa = data_p['result']['positionList']
-        print(aaa)
+        # print(aaa)
         if(aaa!=[]):
 
             for j,i in enumerate(aaa):
                 try:
                     token  = int(i['ExchangeInstrumentId'])
                     clientId = '*****' if ('PRO' in i['AccountID']) else i['AccountID']
-                    print("i['ExchangeSegment'],i['ExchangeInstrumentId']",i['ExchangeSegment'],i['ExchangeInstrumentId'])
+                    # print("i['ExchangeSegment'],i['ExchangeInstrumentId']",i['ExchangeSegment'],i['ExchangeInstrumentId'])
                     ins_details = get_ins_details(self,i['ExchangeSegment'],token)
-                    print('ins_details in get pos',ins_details)
+                    # print('ins_details in get pos',ins_details)
                     qty = int(i['Quantity'])
                     amt =  float(i['NetAmount'])
                     avgp =  amt/qty if (qty != 0) else 0.0
@@ -244,7 +244,7 @@ def getOrderBook(self,ifFlush = False):
             req = requests.request("GET", url, headers=self.IAheaders)
             data_p = req.json()
             noOfPendingOrder = 0
-            print("data+p:",data_p)
+            # print("data+p:",data_p)
 
             if(data_p['result']!=[]):
                 for j,i in enumerate(data_p['result']):
@@ -368,7 +368,7 @@ def get_Trades(self):
                             ApiTrade = np.vstack([ApiTrade, trades])
                             jk+=1
             self.sgGetTrd.emit(ApiTrade)
-            print('get Trade signal is emitted')
+            # print('get Trade signal is emitted')
 
         tradeW_datachanged_full(self)
     except:
@@ -399,7 +399,7 @@ def login(self):
         login_url = self.URL + '/interactive/user/session'
         login_access = requests.post(login_url, json=payload)
 
-        print(login_url, login_access.text,'\n',payload)
+        # print(login_url, login_access.text,'\n',payload)
 
         if login_access.status_code == 200:
             data = login_access.json()

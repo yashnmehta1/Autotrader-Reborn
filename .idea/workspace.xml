@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="initial">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Autotrader-Reborn.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Autotrader-Reborn.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="`initial`">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesMD.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesMD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Feeds/marketData.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Feeds/marketData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Trade/IA_socket_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Trade/IA_socket_services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/createTables.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/createTables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/scriptSearch.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/scriptSearch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Trade/interactiveApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Trade/interactiveApi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/getMasters.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/getMasters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Utils/supMethods.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/supMethods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/updation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/updation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Views/FolioPosition/folioPosition.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/FolioPosition/folioPosition.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
     </list>
@@ -85,7 +78,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="getMasters" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="getMasters" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Autotrader-Reborn" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -113,9 +106,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="/usr/local/opt/python@3.8/bin/python3" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Application" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Application/main.py" />
@@ -399,13 +392,20 @@
       <updated>1658120896169</updated>
     </task>
     <task id="LOCAL-00031" summary="initial">
-      <created>1658150445932</created>
+      <created>1658147464534</created>
       <option name="number" value="00031" />
       <option name="presentableId" value="LOCAL-00031" />
       <option name="project" value="LOCAL" />
-      <updated>1658150445932</updated>
+      <updated>1658147464534</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="`initial`">
+      <created>1658147560773</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1658147560773</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -423,7 +423,8 @@
     <MESSAGE value="2" />
     <MESSAGE value="2&#10;2" />
     <MESSAGE value="initial" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial" />
+    <MESSAGE value="`initial`" />
+    <option name="LAST_COMMIT_MESSAGE" value="`initial`" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -432,6 +433,11 @@
           <url>file://$PROJECT_DIR$/Application/Utils/openRequstedWindow.py</url>
           <line>3</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Application/Utils/scriptSearch.py</url>
+          <line>133</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py</url>
@@ -450,7 +456,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py</url>
-          <line>297</line>
+          <line>308</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -460,7 +466,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py</url>
-          <line>295</line>
+          <line>306</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

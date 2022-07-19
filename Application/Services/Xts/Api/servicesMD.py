@@ -17,17 +17,17 @@ def subscribeToken(self, token, seg='NSEFO', streamType=1501):
             segment = 2
         elif (seg == 'NSECM'):
             segment = 1
-        print('segment',segment)
+        # print('segment',segment)
         sub_url = self.URL + '/marketdata/instruments/subscription'
         payloadsub = {"instruments": [{"exchangeSegment": segment, "exchangeInstrumentID": token}],
                       "xtsMessageCode": streamType}
 
         payloadsubjson = json.dumps(payloadsub)
 
-        print(payloadsubjson)
+        # print(payloadsubjson)
         req = requests.request("POST", sub_url, data=payloadsubjson, headers=self.MDheaders)
 
-        print(req.text)
+        # print(req.text)
 
         if ('subscribed successfully' in req.text or 'Already Subscribed' in req.text):
             pass
@@ -81,7 +81,7 @@ def login(self):
 
         login_access = requests.post(login_url, json=payload)
         logging.info(login_access.text)
-        print(login_access.text)
+        # print(login_access.text)
 
 
         if login_access.status_code == 200:

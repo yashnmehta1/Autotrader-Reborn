@@ -438,10 +438,10 @@ class FolioPosition(QMainWindow):
         self.smodelFPD.setFilterFixedString('')
 
     def updateGetApitrd(self,trades):
-        print("--------------------------------------------------------")
+        # print("--------------------------------------------------------")
         try:
             for i in trades:
-                print('updateGetApitrd',trades)
+                # print('updateGetApitrd',trades)
                 token =i[2]
                 clientid= i[1]
                 exchange= i[20]

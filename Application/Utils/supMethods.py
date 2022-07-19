@@ -29,7 +29,7 @@ def getLogPath(xclass):
     loc1 = getcwd().split('Application')
     xclass.loc1 = loc1
     logDir = path.join(loc1[0] , 'Logs','%s'%today)
-    print('logDir',logDir)
+    # print('logDir',logDir)
     try:
         makedirs(logDir)
     except OSError as e:
@@ -43,11 +43,11 @@ def getLogPath(xclass):
         if( int(y[1]) >= attempt):
             attempt=int(y[1])+1
 
-    print('attempt',attempt)
+    # print('attempt',attempt)
     xclass.logPath= path.join(logDir, '%s_%s.log'%(today,attempt))
 
 
-    print('self.logPath',xclass.logPath)
+    # print('self.logPath',xclass.logPath)
     logging.basicConfig(filename=xclass.logPath, filemode='a+', level=logging.INFO,
                         format='%(asctime)s    %(levelname)s    %(module)s  %(funcName)s   %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p')

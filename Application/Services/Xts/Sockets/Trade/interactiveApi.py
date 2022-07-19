@@ -124,10 +124,10 @@ class Interactive(QObject):
         # print('on_trade',data)
         update_on_trade(self,data)
     def on_order(self,data):
-        print('on_order',data)
+        # print('on_order',data)
         update_on_order(self,data)
     def on_position(self,data):
-        print('on_position',data)
+        # print('on_position',data)
         update_on_position(self,data)
 
     def get_emitter(self):
@@ -139,13 +139,13 @@ class Interactive(QObject):
 
     def on_connect(self):
         logging.info('Interactive socket connected successfully!1111111')
-        print('Interactive socket connected successfully!1111111')
+        # print('Interactive socket connected successfully!1111111')
         self.sgSocketConn.emit()
 
     def on_disconnect(self):
         self.sgSocConn.emit(1)
         logging.info('Interactive Socket disconnected!')
-        print('Interactive Socket disconnected!')
+        # print('Interactive Socket disconnected!')
 
     def on_message(self, data):
         try:

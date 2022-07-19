@@ -99,7 +99,7 @@ class MarketFeeds(QObject):
             print(traceback.print_exc())
     def on_connect(self):
         try:
-            print('Market Data Socket connected successfully!')
+            # print('Market Data Socket connected successfully!')
             logging.info('Market Data Socket connected successfully!')
             self.sgSocketConn.emit()
         except:

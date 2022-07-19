@@ -202,38 +202,24 @@ class Ui_Main(QMainWindow):
 
 
             ################################################################################3
-            self.marketW.buyw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
-            self.marketW.sellw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
-            # self.PositionW.sellw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
+            # self.marketW.buyw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
+            # self.marketW.sellw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
             #########################################################################################3
-            # self.DASH.LiveFeed.sgSocketConn.connect(self.DASH.refreshOpenPos)
-            # self.IAS.sgSocConn.connect(self.disconnectMDSocket)
+            self.IAS.sgGetTrd.connect(self.on_get_tradeBook)
+            self.IAS.sgGetOrder.connect(self.on_get_orderBook)
+            self.IAS.sgGetPOrder.connect(self.PendingW.updateGetApi)
 
 
             self.IAS.sgOpenPos.connect(lambda: updateOpenPosition(self))
 
-            self.IAS.sgGetPOrder.connect(self.PendingW.updateGetApi)
-            self.IAS.sgGetOrder.connect(self.on_get_orderBook)
-            # self.IAS.sgPendSoc.connect(self.OrderBook.updateSocketOB)
-
-         #   self.IAS.sgPendSoc.connect(self.PendingW.updateSocketOB)
             self.IAS.sgPendSoc.connect(self.OrderBook.updateSocketOB)
-            self.IAS.sgGetTrd.connect(lambda: updateGetTradeApi(self.TradeW))
-            self.IAS.sgGetTrd.connect(self.FolioPos.updateGetApitrd)
-            # self.IAS.sgTrdSoc.connect(self.FolioPos.updateSocketTB)
 
             self.IAS.sgGetAPIpos.connect(lambda: updateGetPosition(self))
-            # self.IAS.sgGetAPIposD.connect(self.PositionW.updateGetApiD)
-            # self.IAS.sgRejection.connect(self.rejectionWorking)
-
 
             self.IAS.sgAPIpos.connect(self.updateOnPosition)
             self.IAS.sgStatusUp.connect(lambda:updateStatusLable(self,'x'))
             self.IAS.sgTrdSoc.connect(self.updateOnTrade)
 
-            # self.IAS.sgTrdSoc.connect(self.FolioPos.updateApitrd)
-            # self.IAS.sgTrdSoc.connect(self.updateApitrd)
-            # self.IAS.sgAPQ.connect(self.updateApiOrd)
 
             self.LiveFeed.sgindexfd.connect(lambda:self.on_new_feed_Index)
             self.LiveFeed.sgNPFrec.connect(self.on_new_feed_1501)
@@ -256,24 +242,16 @@ class Ui_Main(QMainWindow):
             self.Splash.sgFin.connect(lambda:splashWork(self))
             self.btnIB.clicked.connect(lambda:showIndexBar(self))
             self.btnSB.clicked.connect(lambda:showScriptBar(self))
-            # self.btnST.clicked.connect(self.showSTBar)
             self.btnSttn.clicked.connect(lambda:showSettingMenu(self))
             self.btnMMW.clicked.connect(lambda:showM2mW(self))
-            # self.btnMrgW.clicked.connect(self.showMargins)
             self.title.sgDClick.connect(lambda:res_max(self))
             self.marketW.sgShowPending.connect(lambda:showPendingMW(self))
-            # self.PositionW.sgCallPOrderBook.connect(lambda:showPendingMW(self))
 
             self.Banned.pbAddBSym.clicked.connect(lambda:addBannedSymbol(self))
             self.Banned.pbAddBIns.clicked.connect(lambda:addBannedInstrument(self))
             self.Banned.pbRemBSym.clicked.connect(lambda:remBannedSymbol(self))
             self.Banned.pbRemBIns.clicked.connect(lambda:remBannedInstrument(self))
 
-            # self.Banned.pbAddBSym.clicked.connect(self.addBannedSymbol)
-            # self.Banned.pbAddBIns.clicked.connect(self.addBannedInstrument)
-            # self.Banned.pbRemBSym.clicked.connect(self.remBannedSymbol)
-            # self.Banned.pbRemBIns.clicked.connect(self.remBannedInstrument)
-            #
 
             self.Manager.pbAdd.clicked.connect(self.addNewStretegy)
         except:
@@ -410,13 +388,16 @@ class Ui_Main(QMainWindow):
     def on_get_orderBook(self,orderBook):
         updateGetOrderBook(self,orderBook)
 
+    def on_get_pendinOrderBook(self,orderBook):
+        self.PendingW.updateGetApi(orderBook)
+
     def on_get_tradeBook(self,tradeBook):
-        updateGetTradeBook(self,tradeBook)
-        print("Gere-----------------")
+        updateGetTradeApi(self.TradeW,tradeBook)
         self.FolioPos.updateGetApitrd(tradeBook)
 
-    def on_get_positionBook(self,positionBook):
-        updateGetPostionBook(self, positionBook)
+
+    # def on_get_positionBook(self,positionBook):
+    #     updateGetPostionBook(self, positionBook)
 
     def updateOnOrder(self,order):
         pass
