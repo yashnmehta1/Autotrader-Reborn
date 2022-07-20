@@ -107,14 +107,40 @@ def UpdateLTP_NP(self, data):
         print(traceback.print_exc())
 
 
+def UpdateLTP_FP(self, data):
+    try:
+        # print('in positon up' ,data)
+        if (self.FolioPos.table.size != 0):
+            # print("1")
+            x = (np.unique(self.FolioPos.table[:, 5]))
+            # print("NP : ",x)
+            if (data['Token'] in x):
+                fltr = np.asarray([data['Token']])
+                # self.marketW.model.dta1 = self.NetPos.table[:, [7, 8, 9]].tolist()
+                serialNos = self.FolioPos.table[np.in1d(self.FolioPos.table[:, 5], fltr), 25]  # 30 serial no
+                editableList = [20, 21]
 
-def updateGetPositionTable(self,pos, rowNo):
+                for i in serialNos:
+                    netValue = self.FolioPos.table[i, 14]
+                    qty = self.FolioPos.table[i, 13]
+                    mtm = (qty * data['LTP']) + netValue
+                    self.FolioPos.table[i, editableList] = [data['LTP'], mtm]
+                    for j in editableList:
+                        ind = self.FolioPos.modelFP.index(i, j)
+                        self.FolioPos.modelFP.dataChanged.emit(ind, ind)
+
+    except:
+        print(traceback.print_exc())
+
+
+def updateGetPosition_NP(self,pos, rowNo):
     self.NetPos.Apipos[rowNo, :] = pos
     self.NetPos.lastSerialNo += 1
     self.NetPos.modelP.lastSerialNo += 1
     self.NetPos.modelP.insertRows()
     self.NetPos.modelP.rowCount()
 
+# advance market watch -  get
 def updateGetPosition_AMW(self,pos):
     try:
 
@@ -159,6 +185,7 @@ def updateGetPosition_AMW(self,pos):
     except:
         print(traceback.print_exc(), sys.exc_info())
 
+# adavance market watch - update
 def update_Position_socket_MW(self,pos):
     for i in pos:
         isRecordExist = False
@@ -387,10 +414,6 @@ def updateOpenPosition(self,openPosArray):
             pass
     print('update open posion finished')
 
-
-
-
-
 def updateGetTradeApi(self,data):
     try:
         self.lastSerialNo = 0
@@ -479,8 +502,6 @@ def marketW_datachanged_full(self):
     ind = self.OrderBook.modelO.index(0, 0)
     ind1 = self.OrderBook.modelO.index(0, 1)
     self.OrderBook.modelO.dataChanged.emit(ind, ind1)
-
-
 
 
 

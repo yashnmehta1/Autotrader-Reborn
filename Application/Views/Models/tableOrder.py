@@ -34,15 +34,13 @@ class ModelOB(QtCore.QAbstractTableModel):
 
         except:
             print(traceback.print_exc())
-            print(sys.exc_info())
 
 
     def rowCount(self, index=''):
         return self.lastSerialNo
 
     def columnCount(self, index):
-
-            return len(self.heads)
+        return len(self.heads)
 
 
 

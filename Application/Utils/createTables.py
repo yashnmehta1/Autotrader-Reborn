@@ -11,7 +11,7 @@ from Application.Views.Models import ProxyModel
 from Application.Views.Models import tableNP
 from Application.Views.Models import tableOrder
 from PyQt5.QtCore import QSortFilterProxyModel,Qt
-
+from Application.Views.Models import ProxyModel
 
 def tables_details_mw(self):
     try:
@@ -107,7 +107,7 @@ def tables_details_tb(self):
         self.smodelT = QSortFilterProxyModel()
         self.smodelT.setSourceModel(self.modelT)
         self.smodelT.setDynamicSortFilter(False)
-        self.smodelT.setFilterKeyColumn(2)
+        self.smodelT.setFilterKeyColumn(3)
         self.smodelT.setFilterCaseSensitivity(False)
         self.tableView.setModel(self.smodelT)
         self.tableView.horizontalHeader().setSectionsMovable(True)
@@ -182,14 +182,17 @@ def tables_details_fp(self):
                                'DayValue'
                                ]
         self.lastSerialNo = 0
-        self.table = np.empty((1000, 27), dtype=object)
+        self.table = np.zeros((1000, 27), dtype=object)
         #############################################################################################################
         self.modelFP = tableFP.ModelPosition(self.table, self.heads)
-        self.smodelFP = ProxyModel.ProxyModel()
+        self.smodelFP = QSortFilterProxyModel()
         self.smodelFP.setSourceModel(self.modelFP)
         self.smodelFP.setDynamicSortFilter(False)
-        self.smodelFP.setFilterKeyColumn(4)
+        self.smodelFP.setFilterKeyColumn(3)
         self.smodelFP.setFilterCaseSensitivity(False)
+
+
+
         self.tableView.setModel(self.smodelFP)
         self.tableView.horizontalHeader().setSectionsMovable(True)
         self.tableView.verticalHeader().setSectionsMovable(True)
@@ -250,7 +253,7 @@ def tables_details_pob(self):
         #############################################################################################################
 
         #############################################
-        self.modelO = ModelOB(self.ApiOrder,self.heads)
+        self.modelO = tableOrder.ModelOB(self.ApiOrder,self.heads)
         self.smodelO = QSortFilterProxyModel()
         self.smodelO.setSourceModel(self.modelO)
         self.tableView.setModel(self.smodelO)
@@ -266,5 +269,6 @@ def tables_details_pob(self):
         # self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
 
     except:
+        print(traceback.print_exc())
         logging.error(sys.exc_info()[1])
 

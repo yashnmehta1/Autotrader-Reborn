@@ -12,7 +12,7 @@ from Application.Utils.configReader import readDefaultClient,writeITR,refresh,al
 from Application.Utils.supMethods import get_ins_details
 # from Application.Utils.createTables import ta
 from Application.Utils.updation import updateGetOrderTable,updateGetPendingOrderTable,pendingW_datachanged_full,\
-    orderW_datachanged_full,PosionW_datachanged_full,updateGetPositionTable,tradeW_datachanged_full,updateGetTradeTable,updateGetPosition_AMW
+    orderW_datachanged_full,PosionW_datachanged_full,updateGetPosition_NP,tradeW_datachanged_full,updateGetTradeTable,updateGetPosition_AMW
 
 
 
@@ -218,7 +218,7 @@ def getPositionBook(self):
                         [dayQty],[dayAmount] ]).to_numpy()
 
 
-                    updateGetPositionTable(self, pos, j )
+                    updateGetPosition_NP(self, pos, j )
                     updateGetPosition_AMW(self, pos[0])
 
                 except:
@@ -309,7 +309,7 @@ def getOrderBook(self,ifFlush = False):
         logging.error(sys.exc_info()[1])
         print(traceback.print_exc())
 
-def get_Trades(self):
+def get_Trades(self,requestClass):
     try:
         if(self.Source=='WEBAPI'):
             url = self.URL + '/interactive/orders/trades'
@@ -325,7 +325,7 @@ def get_Trades(self):
                     orderSide = i['OrderSide'].replace('BUY','Buy').replace('SELL','Sell')
                     tradedQty = i['LastTradedQuantity']
                     qty = tradedQty if (orderSide == 'Buy') else -tradedQty
-                    netValue = qty * i['LastTradedPrice']
+                    netValue =  - qty *  i['LastTradedPrice']
                     trades = np.zeros((0,24),dtype=object)
                     trade = dt.Frame([
                         [i['ClientID']],
@@ -337,9 +337,9 @@ def get_Trades(self):
                         ]).to_numpy()
                     trades = np.vstack([trades,trade])
 
-
-                    updateGetTradeTable(self,trade,j)
-                    self.FolioPos.updateGetApitrd(trades)
+                    if(requestClass=='main'):
+                        updateGetTradeTable(self,trade,j)
+                        self.FolioPos.updateGetApitrd(trades)
         else:
             jk = 0
             ApiTrade = np.empty((0, 24))
@@ -417,11 +417,19 @@ def login(self):
                 client_codes_r = result['clientCodes']
                 self.loggedInUser = result['userID']
                 self.client_list = []
+                self.clientFolios = {'A0001':[]}
+                self.FolioPos.cbClient.addItem('A0001')
+
                 for i in client_codes_r:
                     if (i[:3] == 'PRO'):
                         self.client_list.append('*****')
+                        self.FolioPos.clientFolios['*****'] = ['MANUAL_*****']
+                        self.FolioPos.cbClient.addItem('*****')
+
                     else:
                         self.client_list.append(i)
+                        self.FolioPos.clientFolios[i] = ['MANUAL_'+i]
+                        self.FolioPos.cbClient.addItem(i)
 
                 dclient = readDefaultClient()
                 if (dclient in self.client_list):
@@ -435,7 +443,7 @@ def login(self):
 
                 th3 = threading.Thread(target=getPositionBook, args=(self,))
                 th3.start()
-                th1 = threading.Thread(target=get_Trades, args=(self,))
+                th1 = threading.Thread(target=get_Trades, args=(self,'main'))
                 self.IAS.start_socket_io()
                 #
                 th2 = threading.Thread(target=getOrderBook, args=(self, ))
@@ -461,3 +469,15 @@ def login(self):
     except:
         print(traceback.print_exc())
         logging.error(sys.exc_info())
+
+def cancel_order(self,apporderid, uniqueidentifier,clientid):
+    try:
+        param1={'appOrderId':apporderid,'orderUniqueIdentifier':uniqueidentifier}
+        cancle_url = self.URL + "/interactive/orders?appOrderID=" + str(apporderid)+"&orderUniqueIdentifier="+str(uniqueidentifier) + "&clientID=" + clientid
+
+        cancle_order_r = requests.delete(cancle_url,headers = self.IAheaders)
+        print(cancle_order_r.text)
+    except:
+        print(traceback.print_exc())
+        logging.error(sys.exc_info()[1])
+

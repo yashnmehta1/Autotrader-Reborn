@@ -99,33 +99,18 @@ class PendingOrder(QMainWindow):
             print(traceback.print_exc())
             logging.error(sys.exc_info()[1])
     def CancelOrder(self):
-
         try:
-            a = self.tableView.selectedIndexes()
-            b = int(a[8].data())
-
-            print('datatype b',type(b))
-
-            d = a[0].data()
-            print('b %s , d %s'%(b,d))
-            try:
-                c = a[15].data()
-            except:
-
-                print(traceback.print_exc())
-                c = ' '
-            if (c == ''):
-                c = ' '
-            # print(b,c)
-            th1=threading.Thread(target=self.cancel_order,args=(b,c,d))
+            indexes = self.tableView.selectedIndexes()
+            AppOrderId = int(indexes[8].data())
+            clientId = indexes[0].data()
+            FolioNO = indexes[15].data()
+            if(FolioNO == ''):
+                FolioNO = ' '
+            th1=threading.Thread(target=self.cancel_order,args=(AppOrderId,FolioNO,clientId))
             th1.start()
-            # self.cancel_order(b, c)
-            # th1=threading.Thread(self.cancel_order,args=(b,c))
-            # th1.start()
         except:
             logging.error(sys.exc_info()[1])
             print(traceback.print_exc())
-
 
     def snp(self):
         # print(self.tableView.selectedIndexes()[1].data())
@@ -341,18 +326,6 @@ class PendingOrder(QMainWindow):
             self.unSubscription_feed(self.subToken)
 
 
-    def updateGetApi(self,data):
-        pass
-        # try:
-        #     # print('updateGetApi',data)
-        #     self.ApiOrder = data
-        #     self.modelO = ModelOB(self.ApiOrder,self.heads)
-        #     self.smodelO.setSourceModel(self.modelO)
-        #     self.tableView.setModel(self.smodelO)
-        #     self.rcount = self.ApiOrder.shape[0]
-        # except:
-        #     print(traceback.print_exc())
-        #     logging.error(sys.exc_info())
 
     def updateSocketOB(self,ord):
         try:
@@ -372,7 +345,7 @@ class PendingOrder(QMainWindow):
 
                 print(self.ApiOrder)
             elif (ord[0][10] == 'Rejected'):
-                newary = np.empty((1,22),dtype=object)
+                newary = np.empty((1,23),dtype=object)
                 x= np.where(self.ApiOrder[:, 8] == appOrderId)
                 self.ApiOrder[x, :] = newary
                 self.lastSerialNo -= 1
@@ -386,7 +359,7 @@ class PendingOrder(QMainWindow):
                 ind1 = self.modelO.index(0, 1)
                 self.modelO.dataChanged.emit(ind, ind1)
             elif(ord[0][10] in ['Cancelled','PendingCancel','Filled']):
-                newary = np.empty((1,22),dtype=object)
+                newary = np.zeros((1,23),dtype=object)
                 x= np.where(self.ApiOrder[:, 8] == appOrderId)
                 self.ApiOrder[x, :] = newary
                 self.lastSerialNo -= 1
@@ -416,7 +389,6 @@ class PendingOrder(QMainWindow):
                 ind1 = self.modelO.index(0, 1)
                 self.modelO.dataChanged.emit(ind, ind1)
 
-            self.modelO.setDta(self.ApiOrder)
             ind = self.modelO.index(0, 0)
             ind1 = self.modelO.index(0, 1)
             self.modelO.dataChanged.emit(ind, ind1)

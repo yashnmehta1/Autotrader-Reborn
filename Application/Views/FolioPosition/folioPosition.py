@@ -24,7 +24,7 @@ import logging
 
 
 
-class ProxyModel (QSortFilterProxyModel): #Custom Proxy Model
+class ProxyModel_FP (QSortFilterProxyModel): #Custom Proxy Model
     def __init__(self):
         super(ProxyModel,self).__init__()
         self.onlyPoss = False
@@ -56,7 +56,7 @@ class FolioPosition(QMainWindow):
             self.sortOrderD=0
             self.sortColumn=0
             self.sortOrder=0
-
+            self.clientFolios = {}
             self.folioList = ['MANUAL']
 
             # self.contract_df = load_contract1()
@@ -72,10 +72,25 @@ class FolioPosition(QMainWindow):
             dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
             self.setStyleSheet(dt1)
             tables_details_fp(self)
-            # self.CreateToolBar()
+            self.pbShow.clicked.connect(self.filterData)
+            self.cbClient.currentIndexChanged.connect(self.cbClientChange)
+
         except:
             print(traceback.print_exc())
             logging.error(sys.exc_info()[1])
+
+    def cbClientChange(self):
+        self.cbUID.clear()
+        clientId = self.cbClient.currentText()
+
+
+        for i in self.clientFolios[clientId]:
+            self.cbUID.addItem(i)
+
+
+    def ppp(self):
+        print(self.tableView.selectedIndexes()[0].data())
+
 
     def changeDayNet(self):
         if(self.rb1.isChecked()):
@@ -96,13 +111,6 @@ class FolioPosition(QMainWindow):
         token = int(self.tableView.selectedIndexes()[3].data())
         self.sgCallTB.emit(token)
 
-
-    def filtr(self):
-        try:
-            self.smodelFP.setFilterFixedString(self.listView.selectedIndexes()[0].data())
-        except:
-            print(traceback.print_exc())
-            logging.error(sys.exc_info()[1])
 
     def CreateToolBar(self):
         try:
@@ -428,14 +436,16 @@ class FolioPosition(QMainWindow):
             logging.error(sys.exc_info()[1])
             print(traceback.print_exc())
 
-    def filterData(self,a):
-        self.filterStr = a
+    def filterData(self):
+        self.filterStr = self.cbUID.currentText()
+        print('self.cbUID.currentIndex()',self.cbUID.currentIndex())
+        if(self.cbUID.currentIndex()==-1):
+            self.filterStr = 'zzzzz'
         self.smodelFP.setFilterFixedString(self.filterStr)
-        self.smodelFPD.setFilterFixedString(self.filterStr)
 
     def clearFilter(self):
         self.filterStr = ''
-        self.smodelFPD.setFilterFixedString('')
+        self.smodelFP.setFilterFixedString('')
 
     def updateGetApitrd(self,trades):
         # print("--------------------------------------------------------")
@@ -447,6 +457,11 @@ class FolioPosition(QMainWindow):
                 exchange= i[20]
                 #check token
                 ouid = i[15]
+                if(clientid not in self.clientFolios.keys()):
+                    self.clientFolios[clientid] = []
+                if(ouid not in self.clientFolios[clientid]):
+                    self.clientFolios[clientid].append(ouid)
+
                 fltr0 = np.asarray([token])
                 filteredArray0 = self.table[np.in1d(self.table[:, 5], fltr0)]
                 isRecordExist = False
@@ -485,15 +500,34 @@ class FolioPosition(QMainWindow):
                     self.modelFP.insertRows()
 
                 else:
-                    serialNo = filteredArray2[0][25]
+                    serialNo = filteredArray21[0][25]
                     openValue = self.table[serialNo, 24]
                     openQty = self.table[serialNo, 11]
                     dayQ = self.table[serialNo, 12] + i[18]
                     dayAmt = self.table[serialNo, 26] + i[19]
+
                     netQ = dayQ + openQty
+
                     netAmt = dayAmt + openValue
 
-                    self.table[serialNo, [12, 13, 14]] = [dayQ, netQ, netAmt]
+                    netAvg = netAmt / netQ if netQ != 0 else 0
+
+                    if(i[18]>0):
+                        buyQ = self.table[serialNo, 16] + i[18]
+                        sellQ = self.table[serialNo, 18]
+                        buyAvg =(( self.table[serialNo, 17] * self.table[serialNo, 16] ) +(-i[19]))/buyQ
+                        sellA = self.table[serialNo, 18]
+                    else:
+                        buyQ = self.table[serialNo, 16]
+                        sellQ = self.table[serialNo, 18] - i[18]
+                        buyAvg = self.table[serialNo, 17]
+                        sellA =(( self.table[serialNo, 19] * self.table[serialNo, 18] ) + (i[19])) / sellQ
+
+
+                    self.table[serialNo, [12, 13, 14,15,16,17,18,19,26]] = [dayQ, netQ, netAmt,netAvg,buyQ,buyAvg,sellQ,sellA,dayAmt]
+
+                    print('perv',self.table[serialNo,:],'\n',i,"\n",self.table[serialNo,:],'\n\n\n')
+
 
                 ind = self.modelFP.index(0, 0)
                 ind1 = self.modelFP.index(0, 26)
@@ -553,10 +587,21 @@ class FolioPosition(QMainWindow):
                     dayAmt = self.table[serialNo, 26]+i[19]
                     netQ = dayQ + openQty
                     netAmt = dayAmt +openValue
+                    netAvg = netAmt / netQ if netQ != 0 else 0
+
+                    if(i[18]>0):
+                        buyQ = self.table[serialNo, 16] + i[18]
+                        sellQ = self.table[serialNo, 18]
+                        buyAvg =(( self.table[serialNo, 17] * self.table[serialNo, 16] ) +(-i[19]))/buyQ
+                        sellA = self.table[serialNo, 18]
+                    else:
+                        buyQ = self.table[serialNo, 16]
+                        sellQ = self.table[serialNo, 18] - i[18]
+                        buyAvg = self.table[serialNo, 17]
+                        sellA =(( self.table[serialNo, 19] * self.table[serialNo, 18] ) + (i[19])) / sellQ
 
 
-
-                    self.table[serialNo, [12, 13, 14]] = [dayQ, netQ, netAmt]
+                    self.table[serialNo, [12, 13, 14,15,16,17,18,19]] = [dayQ, netQ, netAmt,netAvg,buyQ,buyAvg,sellQ,sellA]
 
                 ind = self.modelFP.index(0, 0)
                 ind1 = self.modelFP.index(0, 26)

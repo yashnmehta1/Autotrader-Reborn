@@ -22,16 +22,7 @@ def update_on_position(self, data):
         qty = int(data1['NetPosition'])
         amt = nv
         mtm = float((data1['MTM']).replace(',', ''))
-        openQty = self.openPosDict[data1['AccountID']][token][0]
-        openAmt = self.openPosDict[data1['AccountID']][token][1]
-        dayQty = qty - openQty
-        dayAmount = amt - openAmt
-
         clientId = '*****' if ('PRO' in data1['AccountID']) else data1['AccountID']
-        if (qty != 0):
-            avgp = amt / qty
-        else:
-            avgp = 0.0
 
         if (clientId not in self.openPosDict.keys()):
             self.openPosDict[clientId] = {}
@@ -39,6 +30,18 @@ def update_on_position(self, data):
         if (token not in self.openPosDict[clientId].keys()):
             self.openPosDict[clientId][token] = [0, 0.0]
 
+
+        openQty = self.openPosDict[data1['AccountID']][token][0]
+        openAmt = self.openPosDict[data1['AccountID']][token][1]
+        dayQty = qty - openQty
+        dayAmount = amt - openAmt
+
+        if (qty != 0):
+            avgp = amt / qty
+        else:
+            avgp = 0.0
+        # print("open pos dict",token,clientId, self.openPosDict)
+        #     print("open pos dict - token", self.openPosDict)
         pos = dt.Frame(
             [[data1['LoginID']],
             [data1['AccountID']], [data1['ExchangeSegment']], [token],[ins_details[4]],[ins_details[3]],
@@ -95,14 +98,13 @@ def update_on_trade(self, data):
         orderSide = data1['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')
         tradedQty = data1['LastTradedQuantity']
         qty = tradedQty if (orderSide == 'Buy') else -tradedQty
-        netValue = qty * data1['LastTradedPrice']
+        netValue = -qty * data1['LastTradedPrice']
         #####################################################################################################################
         trades = dt.Frame([
             [data1['LoginID']],
             [data1['ClientID']], [data1['ExchangeInstrumentID']], [ins_details[4]], [ins_details[3]], [ins_details[6]],
             [ins_details[7]], [ins_details[8]], [orderSide], [data1['AppOrderID']], [data1['OrderType']],
-            [tradedQty], [data1['OrderStatus']], [data1['OrderAverageTradedPrice']], [data1['ExchangeTransactTime']],
-            [data1['OrderUniqueIdentifier']],
+            [tradedQty], [data1['OrderStatus']], [data1['OrderAverageTradedPrice']], [data1['ExchangeTransactTime']],[data1['OrderUniqueIdentifier']],
             [data1['ExchangeOrderID']], [data1['LastTradedPrice']], [qty], [netValue], [ins_details[0]],
             [ins_details[11]], [ins_details[14]], ['openValue']]).to_numpy()
 

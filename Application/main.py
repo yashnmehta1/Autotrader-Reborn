@@ -25,7 +25,7 @@ from Application.Utils.getMasters import  *
 from Application.Utils.banned import *
 from Application.Utils.supMethods import *
 from Application.Utils.configReader import all_refresh_config,refresh
-from Application.Utils.updation import UpdateLTP_MW,UpdateLTP_MW_basic,UpdateLTP_NP,updateCashIndex,updateSocketTB,update_Position_socket_MW,update_Position_Socket_NP
+from Application.Utils.updation import UpdateLTP_FP, UpdateLTP_MW,UpdateLTP_MW_basic,UpdateLTP_NP,updateCashIndex,updateSocketTB,update_Position_socket_MW,update_Position_Socket_NP
 
 from Application.Services.Xts.Sockets.Trade.interactiveApi import Interactive
 from Application.Services.Xts.Sockets.Feeds.marketData import MarketFeeds
@@ -82,6 +82,7 @@ class Ui_Main(QMainWindow):
         self.setWindowFlags(flags)
         self.title = tBar('ANV TRADER')
         self.headerFrame.layout().addWidget(self.title,0,1)
+
         self.title.setStyleSheet('  border-radius: 4px;')
         QSizeGrip(self.frame_5)
         self.setStyleSheet(dt1)
@@ -369,6 +370,7 @@ class Ui_Main(QMainWindow):
         self.login.hide()
         self.show()
         self.showMaximized()
+        self.FolioPos.filterData()
         servicesMD.subscribeToken(self, 26000, 'NSECM')
         servicesMD.subscribeToken(self, 26001, 'NSECM')
         servicesMD.subscribeToken(self, 26002, 'NSECM')
@@ -379,7 +381,9 @@ class Ui_Main(QMainWindow):
 
     #################################################################
     def updateOnPosition(self,position):
+        print("update on position")
         update_Position_Socket_NP(self, position)
+
         update_Position_socket_MW(self,position)
     ##################################################################
     def updateGetorderBook(self,orderBook):
@@ -390,7 +394,7 @@ class Ui_Main(QMainWindow):
 
     def updateOderSocket(self,order):
         self.OrderBook.updateSocketOB(order)
-        self.PendingW.updateGetApi(order)
+        self.PendingW.updateSocketOB(order)
 
     ##################################################################
     def on_get_tradeBook(self,tradeBook):
@@ -407,6 +411,9 @@ class Ui_Main(QMainWindow):
         UpdateLTP_MW(self,data)
         UpdateLTP_MW_basic(self, data)
         UpdateLTP_NP(self,data)
+        UpdateLTP_FP(self,data)
+
+
     def on_new_feed_1502(self,data):
         self.snapW.sock1502(data)
     def on_new_feed_Index(self,data):
@@ -428,7 +435,7 @@ class Ui_Main(QMainWindow):
         self.buyW.cbStretegyNo.addItem(folio)
         self.sellW.cbStretegyNo.addItem(folio)
         self.FolioPos.folioList.append(folio)
-
+        self.FolioPos.cbUID.addItem(folio)
 
 if __name__ == "__main__":
     import sys
