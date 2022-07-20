@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="`initial`">
+      <change afterPath="$PROJECT_DIR$/Application/Views/SellWindow/support.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Trade/IA_socket_services.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Trade/IA_socket_services.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Trade/interactiveApi.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Sockets/Trade/interactiveApi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/createTables.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/createTables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/openRequstedWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/openRequstedWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/shortcuts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/shortcuts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/updation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/updation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/SellWindow/sellWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/SellWindow/sellWindow.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
     </list>
@@ -49,28 +60,7 @@
       <recent name="$PROJECT_DIR$/Application/Views" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="addW" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Autotrader-Reborn" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Application/Stretegies/TSpecial/Views" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Application/Stretegies/TSpecial/Views/addW.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.lischeck">
     <configuration name="getMasters" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Autotrader-Reborn" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -84,6 +74,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Application/Utils/getMasters.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="lischeck" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Autotrader-Reborn" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/local/opt/python@3.8/bin/python3" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Woking" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Woking/lischeck.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -113,19 +124,19 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="modifyW" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="orderBook" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Autotrader-Reborn" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Application/Stretegies/TSpecial/Views" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="SDK_HOME" value="/usr/local/opt/python@3.8/bin/python3" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Application/Views/OrderBook" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Application/Stretegies/TSpecial/Views/modifyW.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -157,11 +168,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.lischeck" />
+        <item itemvalue="Python.orderBook" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.getMasters" />
         <item itemvalue="Python.sManager" />
-        <item itemvalue="Python.modifyW" />
-        <item itemvalue="Python.addW" />
       </list>
     </recent_temporary>
   </component>
@@ -405,7 +416,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658255453231</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="`initial`">
+      <created>1658256238913</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1658256238913</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -431,7 +449,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Utils/openRequstedWindow.py</url>
-          <line>3</line>
+          <line>5</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -441,38 +459,43 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Views/OrderBook/orderBook.py</url>
-          <line>94</line>
+          <line>96</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py</url>
-          <line>316</line>
+          <line>300</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py</url>
-          <line>489</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py</url>
-          <line>308</line>
+          <line>313</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Application/Utils/createTables.py</url>
-          <line>171</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py</url>
-          <line>306</line>
+          <line>311</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Stretegies/TSpecial/TSpecial.py</url>
           <line>54</line>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Application/Utils/updation.py</url>
+          <line>55</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Application/Utils/updation.py</url>
+          <line>248</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Application/Utils/updation.py</url>
+          <line>436</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

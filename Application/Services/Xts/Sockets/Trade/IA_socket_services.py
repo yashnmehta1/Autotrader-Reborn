@@ -48,7 +48,6 @@ def update_on_position(self, data):
              [dayQty],[dayAmount]]).to_numpy()
 
         self.sgAPIpos.emit(pos)
-
     except:
         print(sys.exc_info(), 'on_position')
         print(traceback.print_exc())
@@ -64,12 +63,13 @@ def update_on_order(self, data):
         orderSide = data1['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')
         qty1 =data1['OrderQuantity'] if orderSide == "Buy" else  -data1['OrderQuantity']
         n2darray =dt.Frame( [[data1['ClientID']],
-                    [data1['ExchangeInstrumentID']], [ins[4]],[ins[3]], [ins[6]], [ins[7]],
-                    [ins[8]],[orderSide],[data1['AppOrderID']], [data1['OrderType']], [data1['OrderStatus']],
+                    [data1['ExchangeInstrumentID']], [ins_details[4]],[ins_details[3]], [ins_details[6]], [ins_details[7]],
+                    [ins_details[8]],[orderSide],[data1['AppOrderID']], [data1['OrderType']], [data1['OrderStatus']],
                     [data1['OrderQuantity']],[data1['LeavesQuantity']], [data1['OrderPrice']], [data1['OrderStopPrice']],[data1['OrderUniqueIdentifier']],
-                    [data1['OrderGeneratedDateTime']],[data1['ExchangeTransactTime']],[data1['CancelRejectReason']], [ins[11]], [ins[14]],
+                    [data1['OrderGeneratedDateTime']],[data1['ExchangeTransactTime']],[data1['CancelRejectReason']], [ins_details[11]], [ins_details[14]],
                     [data1['OrderAverageTradedPrice']],[qty1]]).to_numpy()
         self.sgPendSoc.emit(n2darray)
+
         if (data1['OrderStatus'] == 'Filled'):
             self.sgComplOrd.emit([int(data1['ExchangeInstrumentID']), data1['OrderSide'], data1['OrderQuantity'],
                                   float(data1['OrderAverageTradedPrice'].replace(',', '')), data1['AppOrderID'],

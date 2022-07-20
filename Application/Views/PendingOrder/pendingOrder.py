@@ -18,7 +18,7 @@ import requests
 import logging
 import sys
 import numpy as np
-
+from Application.Utils.createTables import tables_details_pob
 import threading
 
 class PendingOrder(QMainWindow):
@@ -53,24 +53,15 @@ class PendingOrder(QMainWindow):
         self.modifyOIDList =[]
         self.sortOrder = 0
         self.sortColumn = 0
-        self.tableView.horizontalHeader().sectionClicked.connect(self.llp)
 
         self.createShortcuts()
         self.createSlots()
 
 
     def createObjects(self):
-        self.tables_details()
-        self.buyw = Ui_BuyW(self)
-        self.sellw = Ui_SellW(self)
-        self.buyw.cbStretegyNo.clear()
-        self.sellw.cbStretegyNo.clear()
+        tables_details_pob(self)
 
-    def llp(self,a):
-        # print(a,self.smodel.sortOrder(),self.smodel.sortColumn())
-        self.sortOrder = self.smodelO.sortOrder()
-        self.sortColumn =self.smodelO.sortColumn()
-        self.smodelO.setFilterKeyColumn(self.sortColumn)
+
 
 
     def createShortcuts(self):
@@ -143,9 +134,7 @@ class PendingOrder(QMainWindow):
 
 
     def sock1502(self,a):
-        # print(b)
         b = a.split(',')
-        # print('b',b)
         token = int(b[0].split('_')[1])
         if(token==self.subToken):
             for i in b:
@@ -155,10 +144,6 @@ class PendingOrder(QMainWindow):
                 elif(i[:2]=='bi'):
                     bids = i.split(':')[1].split('|')
 
-            # bids = b[17].split(':')[1].split('|')
-            # ask = b[16].split(':')[1].split('|')
-            # print('bids',bids)
-            # print('ask',ask)
 
             self.bq1.setText(bids[1])
             self.bq2.setText(bids[5])
@@ -171,7 +156,6 @@ class PendingOrder(QMainWindow):
             self.bp1.setText(bids[10])
             self.bp1.setText(bids[14])
             self.bp1.setText(bids[18])
-
 
             self.nb1.setText(bids[3])
             self.nb2.setText(bids[7])
@@ -356,41 +340,6 @@ class PendingOrder(QMainWindow):
             self.isSnapQuotOpen = False
             self.unSubscription_feed(self.subToken)
 
-    def tables_details(self):
-        try:
-            self.ApiOrder = np.empty((5000,23),dtype=object)
-            self.heads = ['ClientID',
-                  'ExchangeInstrumentID', 'Instrument','Symbol','Expiry','Strike_price',
-                  'C/P','OrderSide', 'AppOrderID', 'OrderType','OrderStatus',
-                'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
-                  'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
-                          'AvgPrice', 'Qty1']
-
-            #############################################################################################################
-
-            #############################################
-            self.modelO = ModelOB(self.ApiOrder,self.heads)
-            self.smodelO = QSortFilterProxyModel()
-            self.smodelO.setSourceModel(self.modelO)
-            self.tableView.setModel(self.smodelO)
-            self.smodelO.setDynamicSortFilter(False)
-            self.smodelO.setFilterCaseSensitivity(False)
-            self.smodelO.setFilterKeyColumn(1)
-
-            self.tableView.horizontalHeader().setSectionsMovable(True)
-            self.tableView.verticalHeader().setSectionsMovable(True)
-            # self.tableView.setStyleSheet(
-            #     'background-color: rgb(50, 50, 50);selection-background-color: transparent;color: rgb(245, 245, 245);')
-            self.tableView.setDragDropMode(self.tableView.InternalMove)
-            # self.tableView.horizontalHeader().setStyleSheet('color : black')
-            self.tableView.setDragDropOverwriteMode(False)
-            # self.tableView.clicked.connect(self.tvs6)
-            self.tableView.verticalHeader().setMaximumSectionSize(8)
-            self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
-
-        except:
-            logging.error(sys.exc_info()[1])
-
 
     def updateGetApi(self,data):
         pass
@@ -407,18 +356,10 @@ class PendingOrder(QMainWindow):
 
     def updateSocketOB(self,ord):
         try:
-
-
-            print('ord',type(ord),ord)
-            print(self.ApiOrder)
-
-
             appOrderId = ord[0][8]
-            # print('appOrderId',appOrderId)
             fltr = np.asarray([int(ord[0][8]),str(ord[0][8])])
             if (ord[0][10] == 'New'):
                 self.ApiOrder[self.lastSerialNo,:]=ord
-
                 self.lastSerialNo += 1
                 self.modelO.lastSerialNo += 1
                 self.modelO.insertRows()
@@ -430,7 +371,6 @@ class PendingOrder(QMainWindow):
                 self.modelO.dataChanged.emit(ind, ind1)
 
                 print(self.ApiOrder)
-
             elif (ord[0][10] == 'Rejected'):
                 newary = np.empty((1,22),dtype=object)
                 x= np.where(self.ApiOrder[:, 8] == appOrderId)
@@ -445,8 +385,6 @@ class PendingOrder(QMainWindow):
                 ind = self.modelO.index(0, 0)
                 ind1 = self.modelO.index(0, 1)
                 self.modelO.dataChanged.emit(ind, ind1)
-
-
             elif(ord[0][10] in ['Cancelled','PendingCancel','Filled']):
                 newary = np.empty((1,22),dtype=object)
                 x= np.where(self.ApiOrder[:, 8] == appOrderId)
@@ -487,121 +425,7 @@ class PendingOrder(QMainWindow):
             logging.error(sys.exc_info()[1])
             print(traceback.print_exc())
 
-    def subscription_feed(self,token, seg=2,  streamType = 1502):
-        try:
-            sub_url = self.URL + '/marketdata/instruments/subscription'
-            payloadsub = {"instruments": [{"exchangeSegment": seg,"exchangeInstrumentID": token}],"xtsMessageCode": streamType}
-            # payloadsub = {"instruments": [{"exchangeSegment": 1,"exchangeInstrumentID": 26000}],"xtsMessageCode": 1501}
-            payloadsubjson = json.dumps(payloadsub)
-            req = requests.request("POST", sub_url, data=payloadsubjson, headers=self.MDheaders)
 
-            logging.info(req.text)
-            resp = req.json()
-            # print(resp)
-            #'Instrument subscribed successfully!',
-            #"Instrument Already Subscribed !"
-            if(resp['description']=='Instrument subscribed successfully!'):
-                # print(json.loads(resp['result']['listQuotes'][0]))
-                # print(json.loads(resp['result']['listQuotes'][0])['Bids'][0]['Size'])
-                packet =json.loads(resp['result']['listQuotes'][0])
-                bids= packet['Bids']
-                asks= packet['Asks']
-                # print(bids)
-                # print(asks)
-            elif(resp['description']=='Instrument Already Subscribed !'):
-                packet = self.getQuote(token)
-                bids = packet['Bids']
-                asks = packet['Asks']
-                # print(bids)
-                # print(asks)
-
-
-            #######################################################################
-
-            self.bq1.setText(str(bids[0]['Size']))
-            self.bq2.setText(str(bids[1]['Size']))
-            self.bq3.setText(str(bids[2]['Size']))
-            self.bq4.setText(str(bids[3]['Size']))
-            self.bq5.setText(str(bids[4]['Size']))
-
-            self.bp1.setText(str(bids[0]['Price']))
-            self.bp2.setText(str(bids[1]['Price']))
-            self.bp3.setText(str(bids[2]['Price']))
-            self.bp4.setText(str(bids[3]['Price']))
-            self.bp5.setText(str(bids[4]['Price']))
-
-            self.nb1.setText(str(bids[0]['TotalOrders']))
-            self.nb2.setText(str(bids[1]['TotalOrders']))
-            self.nb3.setText(str(bids[2]['TotalOrders']))
-            self.nb4.setText(str(bids[3]['TotalOrders']))
-            self.nb5.setText(str(bids[4]['TotalOrders']))
-
-            self.sq1.setText(str(asks[0]['Size']))
-            self.sq2.setText(str(asks[1]['Size']))
-            self.sq3.setText(str(asks[2]['Size']))
-            self.sq4.setText(str(asks[3]['Size']))
-            self.sq5.setText(str(asks[4]['Size']))
-
-            self.sp1.setText(str(asks[0]['Price']))
-            self.sp2.setText(str(asks[1]['Price']))
-            self.sp3.setText(str(asks[2]['Price']))
-            self.sp4.setText(str(asks[3]['Price']))
-            self.sp5.setText(str(asks[4]['Price']))
-
-            self.ns1.setText(str(asks[0]['TotalOrders']))
-            self.ns2.setText(str(asks[1]['TotalOrders']))
-            self.ns3.setText(str(asks[2]['TotalOrders']))
-            self.ns4.setText(str(asks[3]['TotalOrders']))
-            self.ns5.setText(str(asks[4]['TotalOrders']))
-        #######################################################################
-
-            if('subscribed successfully' in req.text or 'Already Subscribed' in req.text ):
-                pass
-            else:
-                logging.error(req.text)
-
-            ####################### database working passage deleted if required retrive from backup ##################
-        except:
-            print(req.text)
-            logging.error(sys.exc_info()[1])
-            print(traceback.print_exc())
-
-
-
-    def unSubscription_feed(self,token, seg=2,  streamType = 1502):
-        try:
-            sub_url = self.URL + '/marketdata/instruments/subscription'
-            payloadsub = {"instruments": [{"exchangeSegment": seg,"exchangeInstrumentID": token}],"xtsMessageCode": streamType}
-            payloadsubjson = json.dumps(payloadsub)
-            req = requests.request("PUT", sub_url, data=payloadsubjson, headers=self.MDheaders)
-
-            logging.info(req.text)
-            print(req.text)
-
-            if('subscribed successfully' in req.text or 'Already Subscribed' in req.text ):
-                pass
-            else:
-                logging.error(req.text)
-            ####################### database working passage deleted if required retrive from backup ##################
-        except:
-            logging.error(sys.exc_info()[1])
-            print(traceback.print_exc())
-
-    def getQuote(self, token,seg=2,streamType=1502):
-        try:
-            quote_url = self.URL + '/marketdata/instruments/quotes'
-            payload_quote = {"instruments": [{"exchangeSegment": seg,"exchangeInstrumentID": token}],"xtsMessageCode": streamType,"publishFormat": "JSON"}
-            quote_json = json.dumps(payload_quote)
-            data = requests.request("POST", quote_url, data=quote_json, headers=self.MDheaders)
-            # print(data.text)
-            data1 = data.json()
-            d = data1['result']['listQuotes'][0]
-            d = json.loads(d)
-            # ltp = [d['Touchline']['BidInfo']['Price'],d['Touchline']['AskInfo']['Price']]
-            return d
-
-        except:
-            print(sys.exc_info(),'get Quote')
 
     def ModifyOrderX(self):
         abc = self.tableView.selectedIndexes()

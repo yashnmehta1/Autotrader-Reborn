@@ -26,7 +26,6 @@ class Interactive(QObject):
     sgSocketConn = pyqtSignal()
     sgSocConn = pyqtSignal(int)
 
-    # sgOpenPos = pyqtSignal(dict)
     sgGetAPIpos = pyqtSignal(object)
     sgGetAPIposD = pyqtSignal(object)
     sgAPIpos = pyqtSignal(object)
@@ -51,36 +50,22 @@ class Interactive(QObject):
     sgRemainingDetail = pyqtSignal(list)
     sgStatusUp = pyqtSignal(str)
     sgLoggedinUser = pyqtSignal(str)
+
+
+
     def __init__(self):
         super(Interactive, self).__init__()
-
-        # self.exchangeList = {"NSECM": 1, "NSEFO": 2, "NSECD": 3, "BSECM": 11, "BSEFO": 12, "MCXFO": 51}
-        # self.client_list = []
-        # self.FolioNo = 'HMT'
-
         self.ApiOrderSummary = np.empty(shape=[0,2],dtype='int')
         self.ApiOrderList = np.empty(shape=[0,3],dtype='int')
         self.openPosDict = {}
-        self.TWPQ = np.asarray([])
 
 
 
-
-################################################################################
-
-
-################################################################################
-
-################################################################################
-
-#####################################################################################
     def start_socket_io(self):
         try:
             refresh(self)
-
             self.interactiveEmitters(self.IAToken,self.userID)
             Thread(target=self.connectIA).start()
-            # print('inr api soc connct')
         except:
             print(traceback.print_exc())
             logging.error(sys.exc_info()[1])
@@ -110,8 +95,8 @@ class Interactive(QObject):
             self.sid.on('trade',self.on_trade)
             self.sid.on('order',self.on_order)
             self.sid.on('logout',self.on_messagelogout)
-
             self.sid.on('disconnect',self.on_disconnect)
+
             self.userID = userID
             self.token = token
             port = f'{self.URL}/?token='
@@ -120,63 +105,38 @@ class Interactive(QObject):
             logging.error(sys.exc_info()[1])
             print(traceback.print_exc())
 
+
     def on_trade(self,data):
-        # print('on_trade',data)
         update_on_trade(self,data)
     def on_order(self,data):
-        # print('on_order',data)
         update_on_order(self,data)
     def on_position(self,data):
-        # print('on_position',data)
         update_on_position(self,data)
 
     def get_emitter(self):
-        try:
-            return self.eventlistener
-        except:
-            print(traceback.print_exc())
-            logging.error(sys.exc_info()[1])
+        return self.eventlistener
 
     def on_connect(self):
         logging.info('Interactive socket connected successfully!1111111')
-        # print('Interactive socket connected successfully!1111111')
         self.sgSocketConn.emit()
 
     def on_disconnect(self):
         self.sgSocConn.emit(1)
         logging.info('Interactive Socket disconnected!')
-        # print('Interactive Socket disconnected!')
 
     def on_message(self, data):
-        try:
-            logging.info('received a message! : ' + data)
-            # print('I received a message! %s'%data)
-        except:
-            logging.error(sys.exc_info()[1])
-            print(traceback.print_exc())
-
+        logging.info('received a message! : ' + data)
+        self.sgStatusUp.emit(data)
     def on_joined(self, data):
-        try:
-            # print('Interactive socket joined successfully! %s' % data)
-            logging.info('%s' % data)
-        except:
-            print(traceback.print_exc())
-            logging.error(sys.exc_info()[1])
+        logging.info('%s' % data)
 
     def on_error(self, data):
-        try:
-            logging.error('Interactive socket error!' + data)
-        except:
-            logging.error(sys.exc_info()[1])
-            print(traceback.print_exc())
+        logging.error('Interactive socket error!' + data)
 
     def on_messagelogout(self, data):
-        try:
-            logging.info("User logged out!" + data)
-        except:
-            print(traceback.print_exc())
-            logging.error(sys.exc_info()[1])
-#####################################################################################
+        logging.info("User logged out!" + data)
+
+
 
 ###################################################  Concerns  ####################################################################
 """

@@ -21,6 +21,9 @@ from Application.Views.Models.tableOrder import ModelOB
 from Theme.dt2 import dt1
 import logging
 from Application.Views.titlebar import tBar
+from Application.Utils.createTables import tables_details_ob
+
+
 
 class OrderBook(QMainWindow):
     # sgTmSubd=pyqtSignal(dict)
@@ -47,7 +50,7 @@ class OrderBook(QMainWindow):
             self.title.sgPoss.connect(self.movWin)
             dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
             self.setStyleSheet(dt1)
-            self.tables_details()
+            tables_details_ob(self)
             self.actionCSV.triggered.connect(self.create_trade_csv)
             self.leSearch = QLineEdit()
             self.leSearch.setPlaceholderText('Search')
@@ -67,7 +70,6 @@ class OrderBook(QMainWindow):
     def createShortcuts(self):
         self.quitSc = QShortcut(QKeySequence('Esc'), self)
         self.quitSc.activated.connect(self.hide)
-
 
     def movWin(self, x, y):
         self.move(self.pos().x() + x, self.pos().y() + y)
@@ -121,39 +123,6 @@ class OrderBook(QMainWindow):
         except:
             print(traceback.print_exc())
             logging.error(sys.exc_info())
-
-    def tables_details(self):
-        try:
-            #############################################################################################################
-
-            self.ApiOrder = np.empty((15000,23),dtype=object)
-            self.heads = ['ClientID',
-                          'ExchangeInstrumentID', 'Instrument','Symbol','Expiry','Strike_price',
-                          'C/P','OrderSide', 'AppOrderID', 'OrderType','OrderStatus',
-                            'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
-                          'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
-                          'AvgPrice',"Qty1"]
-
-            #############################################################################################################
-
-            #############################################
-            self.modelO = ModelOB(self.ApiOrder,self.heads)
-            self.smodelO = QSortFilterProxyModel()
-            self.smodelO.setSourceModel(self.modelO)
-            self.tableView.setModel(self.smodelO)
-            self.smodelO.setFilterCaseSensitivity(True)
-            self.smodelO.setFilterKeyColumn(1)
-
-
-
-            self.tableView.horizontalHeader().setSectionsMovable(True)
-            self.tableView.verticalHeader().setSectionsMovable(True)
-            self.tableView.setDragDropMode(self.tableView.InternalMove)
-            self.tableView.setDragDropOverwriteMode(False)
-            self.tableView.verticalHeader().setMaximumSectionSize(8)
-            self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
-        except:
-            logging.error(sys.exc_info()[1])
 
 
     def refresh_config(self):

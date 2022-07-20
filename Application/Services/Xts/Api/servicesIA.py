@@ -10,8 +10,8 @@ import threading
 from Application.Views.Models.tableOrder import ModelOB
 from Application.Utils.configReader import readDefaultClient,writeITR,refresh,all_refresh_config
 from Application.Utils.supMethods import get_ins_details
-
-from Application.Utils.updation import updateGetADVMWTable,updateGetOrderTable,updateGetPendingOrderTable,pendingW_datachanged_full,\
+# from Application.Utils.createTables import ta
+from Application.Utils.updation import updateGetOrderTable,updateGetPendingOrderTable,pendingW_datachanged_full,\
     orderW_datachanged_full,PosionW_datachanged_full,updateGetPositionTable,tradeW_datachanged_full,updateGetTradeTable,updateGetPosition_AMW
 
 
@@ -199,15 +199,12 @@ def getPositionBook(self):
                 try:
                     token  = int(i['ExchangeInstrumentId'])
                     clientId = '*****' if ('PRO' in i['AccountID']) else i['AccountID']
-                    # print("i['ExchangeSegment'],i['ExchangeInstrumentId']",i['ExchangeSegment'],i['ExchangeInstrumentId'])
                     ins_details = get_ins_details(self,i['ExchangeSegment'],token)
-                    # print('ins_details in get pos',ins_details)
                     qty = int(i['Quantity'])
                     amt =  float(i['NetAmount'])
                     avgp =  amt/qty if (qty != 0) else 0.0
                     openQty = self.openPosDict[clientId][token][0]
                     openAmount = self.openPosDict[clientId][token][1]
-
                     dayQty = qty - openQty
                     dayAmount = amt - openAmount
 
@@ -224,11 +221,6 @@ def getPositionBook(self):
                     updateGetPositionTable(self, pos, j )
                     updateGetPosition_AMW(self, pos[0])
 
-            # ins_details[8] = C/P
-            # ins_details[7] = Stike_price
-            # ins_details[6] = expiry
-            # ins_details[4] = symbol
-            # ins_details[3] = TradingSymbol
                 except:
                     print(traceback.print_exc(),'error in getPOs i',i)
 
@@ -244,7 +236,10 @@ def getOrderBook(self,ifFlush = False):
             req = requests.request("GET", url, headers=self.IAheaders)
             data_p = req.json()
             noOfPendingOrder = 0
-            # print("data+p:",data_p)
+
+
+            ApiOrder = np.empty((15000, 23), dtype=object)
+            PendingOrder = np.empty((15000, 23), dtype=object)
 
             if(data_p['result']!=[]):
                 for j,i in enumerate(data_p['result']):
@@ -260,11 +255,21 @@ def getOrderBook(self,ifFlush = False):
                             [i['OrderQuantity']],[i['LeavesQuantity']],[i['OrderPrice']],[i['OrderStopPrice']], [i['OrderUniqueIdentifier']],
                             [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']],[i['CancelRejectReason']],[ins_details[0]],[ins_details[5]],
                             [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
-                    updateGetOrderTable(self,order,j)
+
+                    ApiOrder[j, :] =order
                     #############################################################################################
+
                     if(i['OrderStatus'] in ['PartiallyFilled','New','Replaced'] ):              #and i['OrderUniqueIdentifier']==self.FolioNo
-                        updateGetPendingOrderTable(self,order,noOfPendingOrder)
+                        PendingOrder[noOfPendingOrder,:] = order
                         noOfPendingOrder += 1
+
+
+            """ 
+            check what should be returt with apiorder j or j+1
+            """
+
+
+            return ApiOrder,j+1,PendingOrder,noOfPendingOrder+1
 
         else:
             jk = 0

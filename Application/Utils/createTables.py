@@ -9,6 +9,7 @@ from Application.Views.Models import tableTB
 from Application.Views.Models import tableFP
 from Application.Views.Models import ProxyModel
 from Application.Views.Models import tableNP
+from Application.Views.Models import tableOrder
 from PyQt5.QtCore import QSortFilterProxyModel,Qt
 
 
@@ -198,5 +199,72 @@ def tables_details_fp(self):
         self.tableView.setDragDropOverwriteMode(False)
     except:
         print(traceback.print_exc())
+        logging.error(sys.exc_info()[1])
+
+
+def tables_details_ob(self):
+    try:
+        #############################################################################################################
+
+        self.ApiOrder = np.empty((15000,23),dtype=object)
+        self.heads = ['ClientID',
+                      'ExchangeInstrumentID', 'Instrument','Symbol','Expiry','Strike_price',
+                      'C/P','OrderSide', 'AppOrderID', 'OrderType','OrderStatus',
+                        'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
+                      'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
+                      'AvgPrice',"Qty1"]
+
+        #############################################################################################################
+
+        #############################################
+        self.modelO = tableOrder.ModelOB(self.ApiOrder,self.heads)
+        self.smodelO = QSortFilterProxyModel()
+        self.smodelO.setSourceModel(self.modelO)
+        self.tableView.setModel(self.smodelO)
+        self.smodelO.setFilterCaseSensitivity(True)
+        self.smodelO.setFilterKeyColumn(1)
+
+
+
+        self.tableView.horizontalHeader().setSectionsMovable(True)
+        self.tableView.verticalHeader().setSectionsMovable(True)
+        self.tableView.setDragDropMode(self.tableView.InternalMove)
+        self.tableView.setDragDropOverwriteMode(False)
+        self.tableView.verticalHeader().setMaximumSectionSize(8)
+        self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
+    except:
+        logging.error(sys.exc_info()[1])
+
+
+
+def tables_details_pob(self):
+    try:
+        self.ApiOrder = np.empty((5000,23),dtype=object)
+        self.heads = ['ClientID',
+              'ExchangeInstrumentID', 'Instrument','Symbol','Expiry','Strike_price',
+              'C/P','OrderSide', 'AppOrderID', 'OrderType','OrderStatus',
+            'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
+              'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
+                      'AvgPrice', 'Qty1']
+
+        #############################################################################################################
+
+        #############################################
+        self.modelO = ModelOB(self.ApiOrder,self.heads)
+        self.smodelO = QSortFilterProxyModel()
+        self.smodelO.setSourceModel(self.modelO)
+        self.tableView.setModel(self.smodelO)
+        self.smodelO.setDynamicSortFilter(False)
+        self.smodelO.setFilterCaseSensitivity(False)
+        self.smodelO.setFilterKeyColumn(1)
+
+        self.tableView.horizontalHeader().setSectionsMovable(True)
+        self.tableView.verticalHeader().setSectionsMovable(True)
+        self.tableView.setDragDropMode(self.tableView.InternalMove)
+        self.tableView.setDragDropOverwriteMode(False)
+        self.tableView.verticalHeader().setMaximumSectionSize(8)
+        # self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
+
+    except:
         logging.error(sys.exc_info()[1])
 

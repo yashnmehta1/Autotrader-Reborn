@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from Application.Utils.openRequstedWindow import *
 from Application.Utils.scriptSearch import *
 from Application.Views import BuyWindow
-
+from Application.Views import SellWindow
 
 def setWindowShortcuts(self):
     self.quitSc = QShortcut(QKeySequence('Esc'), self)
@@ -51,6 +51,25 @@ def setShortcuts(self):
     self.marketW.tableView.shortcut_sell1.activated.connect(lambda:requestSellWindow(self,'MarketWatch'))
 
 
+
+
+    self.marketWB.tableView.shortcut_buy = QShortcut(QKeySequence('F1'), self.marketWB.tableView)
+    self.marketWB.tableView.shortcut_buy.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.shortcut_buy.activated.connect(lambda:requestBuyWindow(self,'MarketWatch_basic'))
+
+    self.marketWB.tableView.shortcut_buy1 = QShortcut(QKeySequence('+'), self)
+    self.marketWB.tableView.shortcut_buy1.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.shortcut_buy1.activated.connect(lambda:requestBuyWindow(self,'MarketWatch_basic'))
+
+    self.marketWB.tableView.shortcut_sell = QShortcut(QKeySequence('-'), self.marketWB.tableView)
+    self.marketWB.tableView.shortcut_sell.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.shortcut_sell.activated.connect(lambda:requestSellWindow(self,'MarketWatch_basic'))
+
+    self.marketWB.tableView.shortcut_sell1 = QShortcut(QKeySequence('F2'), self.marketWB.tableView)
+    self.marketWB.tableView.shortcut_sell1.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.shortcut_sell1.activated.connect(lambda:requestSellWindow(self,'MarketWatch_basic'))
+
+
     self.snapW.shortcut_buy = QShortcut(QKeySequence('F1'), self.snapW)
     self.snapW.shortcut_buy.setContext(Qt.WidgetWithChildrenShortcut)
     self.snapW.shortcut_buy.activated.connect(lambda:requestBuyWindow(self,'SnapQuote'))
@@ -78,10 +97,22 @@ def setShortcuts(self):
 
     self.marketW.tableView.shortcut_snapQuote = QShortcut(QKeySequence('F5'), self.marketW.tableView)
     self.marketW.tableView.shortcut_snapQuote.setContext(Qt.WidgetWithChildrenShortcut)
-    self.marketW.tableView.shortcut_snapQuote.activated.connect(lambda:snapQuoteRequested(self))
+    self.marketW.tableView.shortcut_snapQuote.activated.connect(lambda:snapQuoteRequested(self,'MarketWatch'))
+
+    self.marketWB.tableView.shortcut_snapQuote = QShortcut(QKeySequence('F5'), self.marketWB.tableView)
+    self.marketWB.tableView.shortcut_snapQuote.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.shortcut_snapQuote.activated.connect(lambda:snapQuoteRequested(self,'MarketWatch_basic'))
 
     self.buyW.PlaceOrdSc1 = QShortcut(QKeySequence('Return'), self.buyW)
     self.buyW.PlaceOrdSc1.activated.connect(lambda:BuyWindow.support.placeOrd(self))
     self.buyW.PlaceOrdSc2 = QShortcut(QKeySequence('Enter'), self.buyW)
     self.buyW.PlaceOrdSc2.activated.connect(lambda:BuyWindow.support.placeOrd(self))
     self.buyW.pbSubmit.clicked.connect(lambda:BuyWindow.support.placeOrd(self))
+
+
+
+    self.sellW.PlaceOrdSc1 = QShortcut(QKeySequence('Return'), self.sellW)
+    self.sellW.PlaceOrdSc1.activated.connect(lambda:SellWindow.support.placeOrd(self))
+    self.sellW.PlaceOrdSc2 = QShortcut(QKeySequence('Enter'), self.sellW)
+    self.sellW.PlaceOrdSc2.activated.connect(lambda:SellWindow.support.placeOrd(self))
+    self.sellW.pbSubmit.clicked.connect(lambda:SellWindow.support.placeOrd(self))

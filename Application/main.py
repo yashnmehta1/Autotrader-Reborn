@@ -387,9 +387,10 @@ class Ui_Main(QMainWindow):
     def updateGetPendinOrderBook(self,orderBook):
         self.PendingW.updateGetApi(orderBook)
 
-    def updateOderSocket(self,order):
-        self.OrderBook.updateSocketOB(self,order)
 
+    def updateOderSocket(self,order):
+        self.OrderBook.updateSocketOB(order)
+        self.PendingW.updateGetApi(order)
 
     ##################################################################
     def on_get_tradeBook(self,tradeBook):

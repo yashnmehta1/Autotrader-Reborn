@@ -1,16 +1,23 @@
 import numpy as np
 from Application.Views import BuyWindow
+from Application.Views import SellWindow
 
-def snapQuoteRequested(self):
+
+def snapQuoteRequested(self,superClass):
+
+
     if(self.snapW.isVisible()):
         self.snapW.hideWindow()
 
-    token = int(self.marketW.tableView.selectedIndexes()[0].data())
+    if(superClass == 'MarketWatch'):
+        token = int(self.marketW.tableView.selectedIndexes()[0].data())
+    elif(superClass=='MarketWatch_basic'):
+        token = int(self.marketWB.tableView.selectedIndexes()[0].data())
+
+
 
     if(token!=self.snapW.token):
-
         self.snapW.Token = token
-
         self.ins_details = self.fo_contract[token-35000]
         lua = self.ins_details
 
@@ -33,6 +40,12 @@ def requestBuyWindow(self,sourceClass):
 
     if(sourceClass == 'MarketWatch'):
         selectedIndexes = self.marketW.tableView.selectedIndexes()
+
+        token = int(selectedIndexes[0].data())
+        exchange = selectedIndexes[1].data()
+        price = '%.2f' % selectedIndexes[8].data()
+    elif(sourceClass == 'MarketWatch_basic'):
+        selectedIndexes = self.marketWB.tableView.selectedIndexes()
 
         token = int(selectedIndexes[0].data())
         exchange = selectedIndexes[1].data()
@@ -74,6 +87,12 @@ def requestSellWindow(self,sourceClass):
         exchange = selectedIndexes[1].data()
         price = '%.2f' % selectedIndexes[7].data()
 
+    elif(sourceClass == 'MarketWatch_basic'):
+        selectedIndexes = self.marketWB.tableView.selectedIndexes()
+        token = int(selectedIndexes[0].data())
+        exchange = selectedIndexes[1].data()
+        price = '%.2f' % selectedIndexes[7].data()
+
     elif(sourceClass == 'NetPosition'):
         pass
     elif(sourceClass == 'SnapQuote'):
@@ -99,7 +118,4 @@ def requestSellWindow(self,sourceClass):
     lot = ins_details[11]
     max = ins_details[14]
 
-
-    self.sellW.showWindow(exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)
-
-
+    SellWindow.support.showWindow(self.sellW,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)
