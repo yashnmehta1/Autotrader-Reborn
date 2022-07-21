@@ -349,39 +349,39 @@ class PendingOrder(QMainWindow):
                 ind1 = self.modelO.index(0, 1)
                 self.modelO.dataChanged.emit(ind, ind1)
 
-            # elif (orderStatus in ['Rejected','Cancelled','PendingCancel','Filled']):
-            #     self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,8] != appOrderId)]
-            #
-            #
-            #     self.modelO = tableOrder.ModelOB(self.ApiOrder, self.heads)
-            #     self.smodelO = QSortFilterProxyModel()
-            #     self.smodelO.setSourceModel(self.modelO)
-            #     self.tableView.setModel(self.smodelO)
-            #     self.modelO.lastSerialNo -=1
-            #     self.modelO.rowCount()
-            #     self.modelO.DelRows()
-            #
-            #
-            #     ind = self.modelO.index(0, 0)
-            #     ind1 = self.modelO.index(0,1)
-            #     self.modelO.dataChanged.emit(ind, ind1)
-            #
-            #     ######################################################################################################
-            # elif (orderStatus == 'PartiallyFilled'):
-            #     try:
-            #         self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,12]] = [ord[10],ord[12]]
-            #     except:
-            #         print(sys.exc_info())
-            #     ind = self.modelO.index(0, 0)
-            #     ind1 = self.modelO.index(0, 1)
-            #     self.modelO.dataChanged.emit(ind, ind1)
-            # elif (orderStatus == 'Replaced'):
-            #     self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,11,12,13]] = [ord[10],ord[11],ord[12],ord[13]]
-            #     ind = self.modelO.index(0, 0)
-            #     ind1 = self.modelO.index(0, 1)
-            #     self.modelO.dataChanged.emit(ind, ind1)
-            #
-            #
+            elif (orderStatus in ['Rejected','Cancelled','PendingCancel','Filled']):
+                self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,8] != appOrderId)]
+
+
+                self.modelO = tableOrder.ModelOB(self.ApiOrder, self.heads)
+                self.smodelO = QSortFilterProxyModel()
+                self.smodelO.setSourceModel(self.modelO)
+                self.tableView.setModel(self.smodelO)
+                # self.modelO.lastSerialNo -=1
+                self.modelO.rowCount()
+                # self.modelO.DelRows()
+
+
+                ind = self.modelO.index(0, 0)
+                ind1 = self.modelO.index(0,1)
+                self.modelO.dataChanged.emit(ind, ind1)
+
+                ######################################################################################################
+            elif (orderStatus == 'PartiallyFilled'):
+                try:
+                    self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,12]] = [ord[10],ord[12]]
+                except:
+                    print(sys.exc_info())
+                ind = self.modelO.index(0, 0)
+                ind1 = self.modelO.index(0, 1)
+                self.modelO.dataChanged.emit(ind, ind1)
+            elif (orderStatus == 'Replaced'):
+                self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,11,12,13]] = [ord[10],ord[11],ord[12],ord[13]]
+                ind = self.modelO.index(0, 0)
+                ind1 = self.modelO.index(0, 1)
+                self.modelO.dataChanged.emit(ind, ind1)
+
+
 
             ind = self.modelO.index(0, 0)
             ind1 = self.modelO.index(0, 1)
