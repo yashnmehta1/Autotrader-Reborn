@@ -10,6 +10,7 @@ from Application.Views.Models import tableFP
 from Application.Views.Models import ProxyModel
 from Application.Views.Models import tableNP
 from Application.Views.Models import tableOrder
+from Application.Views.Models import tableO
 from PyQt5.QtCore import QSortFilterProxyModel,Qt
 from Application.Views.Models import ProxyModel
 
@@ -242,7 +243,7 @@ def tables_details_ob(self):
 
 def tables_details_pob(self):
     try:
-        self.ApiOrder = np.empty((5000,23),dtype=object)
+        self.ApiOrder = np.zeros((0,23),dtype=object)
         self.heads = ['ClientID',
               'ExchangeInstrumentID', 'Instrument','Symbol','Expiry','Strike_price',
               'C/P','OrderSide', 'AppOrderID', 'OrderType','OrderStatus',
@@ -253,7 +254,7 @@ def tables_details_pob(self):
         #############################################################################################################
 
         #############################################
-        self.modelO = tableOrder.ModelOB(self.ApiOrder,self.heads)
+        self.modelO = tableO.ModelOB(self.ApiOrder,self.heads)
         self.smodelO = QSortFilterProxyModel()
         self.smodelO.setSourceModel(self.modelO)
         self.tableView.setModel(self.smodelO)

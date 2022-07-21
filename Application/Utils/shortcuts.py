@@ -22,6 +22,9 @@ def setShortcuts(self):
     self.selExch = QShortcut(QKeySequence('Ctrl+S'), self)
     self.selExch.activated.connect(lambda:selExchange(self))
 
+
+
+
     self.scriptBar.addScript = QShortcut(QKeySequence('Enter'), self.scriptBar)
     self.scriptBar.addScript.setContext(Qt.WidgetWithChildrenShortcut)
     self.scriptBar.addScript.activated.connect(lambda:addscript(self))
@@ -33,6 +36,11 @@ def setShortcuts(self):
 
     self.focusMW = QShortcut(QKeySequence('F4'),self)
     self.focusMW.activated.connect(self.marketW.tableView.setFocus)
+    self.focusMW.activated.connect(self.CFrame.dockMW.raise_)
+
+    self.focusMW = QShortcut(QKeySequence('Ctrl+F4'),self)
+    self.focusMW.activated.connect(self.marketWB.tableView.setFocus)
+    self.focusMW.activated.connect(self.CFrame.dockMW_basic.raise_)
 
     self.marketW.tableView.shortcut_buy = QShortcut(QKeySequence('F1'), self.marketW.tableView)
     self.marketW.tableView.shortcut_buy.setContext(Qt.WidgetWithChildrenShortcut)

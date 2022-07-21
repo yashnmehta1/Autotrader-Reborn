@@ -9,7 +9,7 @@ import qdarkstyle
 from Theme.dt2 import dt1
 from Application.Views.titlebar import tBar
 import time
-from Application.Views.Models.tableOrder import ModelOB
+from Application.Views.Models import tableOrder
 from Application.Utils.configReader import *
 from Application.Views.BuyWindow.buyWindow import Ui_BuyW
 from Application.Views.SellWindow.sellWindow import Ui_SellW
@@ -330,52 +330,46 @@ class PendingOrder(QMainWindow):
     def updateSocketOB(self,ord):
         try:
             appOrderId = ord[0][8]
-            fltr = np.asarray([int(ord[0][8]),str(ord[0][8])])
-            if (ord[0][10] == 'New'):
-                self.ApiOrder[self.lastSerialNo,:]=ord
-                self.lastSerialNo += 1
+            orderStatus = ord[0][10]
+            print(orderStatus,'appOrderId',appOrderId,type(appOrderId))
+            fltr = np.asarray([ord[0][8]])
+            if (orderStatus == 'New'):
+
+                self.ApiOrder = np.vstack([self.ApiOrder,ord])
+
+                self.modelO.lastSerialNo = self.ApiOrder.shape
+                self.modelO = tableOrder.ModelOB(self.ApiOrder, self.heads)
+                self.smodelO = QSortFilterProxyModel()
+                self.smodelO.setSourceModel(self.modelO)
+                self.tableView.setModel(self.smodelO)
                 self.modelO.lastSerialNo += 1
-                self.modelO.insertRows()
                 self.modelO.rowCount()
-                self.smodelO.setFilterFixedString(self.filterStr)
+                self.modelO.insertRows()
+
+                ind = self.modelO.index(0, 0)
+                ind1 = self.modelO.index(0,1)
+                self.modelO.dataChanged.emit(ind, ind1)
+                print('self.ApiOrder',self.ApiOrder)
+
+            elif (orderStatus in ['Rejected','Cancelled','PendingCancel','Filled']):
+                self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,8] != appOrderId)]
+
+
+                self.modelO = tableOrder.ModelOB(self.ApiOrder, self.heads)
+                self.smodelO = QSortFilterProxyModel()
+                self.smodelO.setSourceModel(self.modelO)
+                self.tableView.setModel(self.smodelO)
+                self.modelO.lastSerialNo -=1
+                self.modelO.rowCount()
+                self.modelO.DelRows()
+
 
                 ind = self.modelO.index(0, 0)
                 ind1 = self.modelO.index(0,1)
                 self.modelO.dataChanged.emit(ind, ind1)
 
-                print(self.ApiOrder)
-            elif (ord[0][10] == 'Rejected'):
-                newary = np.empty((1,23),dtype=object)
-                x= np.where(self.ApiOrder[:, 8] == appOrderId)
-                self.ApiOrder[x, :] = newary
-                self.lastSerialNo -= 1
-                self.modelO.lastSerialNo -= 1
-                self.modelO._data = self.ApiOrder
-                self.modelO.DelRows()
-                self.modelO.rowCount()
-                self.modelO.modelReset()
-                self.smodelO.setFilterFixedString(self.filterStr)
-                ind = self.modelO.index(0, 0)
-                ind1 = self.modelO.index(0, 1)
-                self.modelO.dataChanged.emit(ind, ind1)
-            elif(ord[0][10] in ['Cancelled','PendingCancel','Filled']):
-                newary = np.zeros((1,23),dtype=object)
-                x= np.where(self.ApiOrder[:, 8] == appOrderId)
-                self.ApiOrder[x, :] = newary
-                self.lastSerialNo -= 1
-                self.modelO.lastSerialNo -= 1
-                self.modelO._data = self.ApiOrder
-                self.modelO.DelRows()
-                self.modelO.rowCount()
-                self.modelO.modelReset.emit()
-                self.smodelO.setFilterFixedString(self.filterStr)
-
-                ind = self.modelO.index(0, 0)
-                ind1 = self.modelO.index(0, 1)
-                self.modelO.dataChanged.emit(ind, ind1)
-
                 ######################################################################################################
-            elif (ord[0][10] == 'PartiallyFilled'):
+            elif (orderStatus == 'PartiallyFilled'):
                 try:
                     self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,12]] = [ord[10],ord[12]]
                 except:
@@ -383,15 +377,12 @@ class PendingOrder(QMainWindow):
                 ind = self.modelO.index(0, 0)
                 ind1 = self.modelO.index(0, 1)
                 self.modelO.dataChanged.emit(ind, ind1)
-            elif (ord[0][10] == 'Replaced'):
+            elif (orderStatus == 'Replaced'):
                 self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,11,12,13]] = [ord[10],ord[11],ord[12],ord[13]]
                 ind = self.modelO.index(0, 0)
                 ind1 = self.modelO.index(0, 1)
                 self.modelO.dataChanged.emit(ind, ind1)
 
-            ind = self.modelO.index(0, 0)
-            ind1 = self.modelO.index(0, 1)
-            self.modelO.dataChanged.emit(ind, ind1)
 
         except:
             logging.error(sys.exc_info()[1])
