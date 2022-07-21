@@ -14,14 +14,11 @@ class ModelOB(QtCore.QAbstractTableModel):
         self._data = data
         # self._data1 = data
         self.heads=heads
-        self.lastSerialNo = 0
-
-
+        self.lastSerialNo = data.shape[0]
 
     def data(self, index, role):
         try:
             value = self._data[index.row(), index.column()]
-
             if role == Qt.DisplayRole:
                 return str(value)
 
@@ -34,28 +31,17 @@ class ModelOB(QtCore.QAbstractTableModel):
 
         except:
             print(traceback.print_exc())
-
-
     def rowCount(self, index=''):
-        return self.lastSerialNo
-
+        return self._data.shape[0]
     def columnCount(self, index):
         return len(self.heads)
 
-
-
     def headerData(self, section, orientation, role):
-        # section is the index of the column/row.
-
         if role == Qt.DisplayRole:
             if orientation == Qt.Horizontal:
-                # print(self._data.names[section])
                 return str(self.heads[section])
 
-
     def insertRows(self, position=0, rows=1, index=QModelIndex()):
-        # print("\n\t\t ...insertRows() Starting position: '%s'" % position, 'with the total rows to be inserted: ', rows)
-
         try:
             self.beginInsertRows(QModelIndex(), position, position + rows - 1)
             self.endInsertRows()

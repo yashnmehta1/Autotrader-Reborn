@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="`initial`">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/createTables.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/createTables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/shortcuts.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/shortcuts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Views/Models/tableO.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/Models/tableO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
@@ -422,7 +420,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658312299545</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="`initial`">
+      <created>1658400033415</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1658400033415</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -495,6 +500,11 @@
           <url>file://$PROJECT_DIR$/Application/Utils/updation.py</url>
           <line>459</line>
           <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py</url>
+          <line>351</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
