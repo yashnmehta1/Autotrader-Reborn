@@ -56,8 +56,12 @@ class PendingOrder(QMainWindow):
 
         self.createShortcuts()
         self.createSlots()
+        # self.tableView.columnCountChanged.connect(print)
+        # self.tableView.doublesClicked.connect(self.pppi)
 
 
+    def pppi(self):
+        self.tableView.setColumnHidden(10, True)
     def createObjects(self):
         tables_details_pob(self)
 
@@ -353,7 +357,7 @@ class PendingOrder(QMainWindow):
                 self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,8] != appOrderId)]
 
 
-                self.modelO = tableOrder.ModelOB(self.ApiOrder, self.heads)
+                self.modelO = tableO.ModelOB(self.ApiOrder, self.heads)
                 self.smodelO = QSortFilterProxyModel()
                 self.smodelO.setSourceModel(self.modelO)
                 self.tableView.setModel(self.smodelO)

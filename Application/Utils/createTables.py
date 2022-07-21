@@ -267,6 +267,8 @@ def tables_details_pob(self):
         self.tableView.setDragDropMode(self.tableView.InternalMove)
         self.tableView.setDragDropOverwriteMode(False)
         self.tableView.verticalHeader().setMaximumSectionSize(8)
+        self.tableView.setColumnHidden(1, True)
+
         # self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
 
     except:
