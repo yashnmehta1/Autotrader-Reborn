@@ -53,6 +53,7 @@ class PendingOrder(QMainWindow):
         self.modifyOIDList =[]
         self.sortOrder = 0
         self.sortColumn = 0
+        self.visibleColumns = 23
 
         self.createShortcuts()
         self.createSlots()
@@ -92,25 +93,41 @@ class PendingOrder(QMainWindow):
         # self.bt_close.clicked.connect(self.hide)
         self.tableView.doubleClicked.connect(self.snp)
 
-    def cancel_order(self,apporderid, uniqueidentifier,clientid):
+    def cancel_order(self,cancledOrderist):
         try:
-            param1={'appOrderId':apporderid,'orderUniqueIdentifier':uniqueidentifier}
-            cancle_url = self.URL + "/interactive/orders?appOrderID=" + str(apporderid)+"&orderUniqueIdentifier="+str(uniqueidentifier) + "&clientID=" + clientid
 
-            cancle_order_r = requests.delete(cancle_url,headers = self.IAheaders)
-            print(cancle_order_r.text)
+
+            for i in cancledOrderist:
+                cancle_url = self.URL + "/interactive/orders?appOrderID=" + str(
+                i['AppOrderId']) + "&orderUniqueIdentifier=" + str(i['FolioNO']) + "&clientID=" + i['clientId']
+
+                cancle_order_r = requests.delete(cancle_url,headers = self.IAheaders)
+                print(cancle_order_r.text)
         except:
             print(traceback.print_exc())
             logging.error(sys.exc_info()[1])
+
     def CancelOrder(self):
         try:
+            print("column length : ")
             indexes = self.tableView.selectedIndexes()
-            AppOrderId = int(indexes[8].data())
-            clientId = indexes[0].data()
-            FolioNO = indexes[15].data()
-            if(FolioNO == ''):
-                FolioNO = ' '
-            th1=threading.Thread(target=self.cancel_order,args=(AppOrderId,FolioNO,clientId))
+            selectedLen = len(indexes)
+            # rows
+            noOfSelectedRecord = selectedLen/self.visibleColumns;
+            startingPoint  = 0
+            cancledOrderist = []
+            for i in range(noOfSelectedRecord):
+
+                AppOrderId = int(indexes[startingPoint+8].data())
+                clientId = indexes[startingPoint+0].data()
+                FolioNO = indexes[startingPoint+15].data()
+                startingPoint += self.visibleColumns
+                if (FolioNO == ''):
+                    FolioNO = ' '
+
+                cancledOrderist.append({'AppOrderId':AppOrderId, 'clientId': clientId,'FolioNO' :FolioNO })
+            # List of array will be passed in thread for cancle in fuuture
+            th1=threading.Thread(target=self.cancel_order,args=(cancledOrderist, )
             th1.start()
         except:
             logging.error(sys.exc_info()[1])

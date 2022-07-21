@@ -100,6 +100,7 @@ def tables_details_tb(self):
                       'LastTradedQuantity', 'OrderStatus', 'OrderAverageTradedPrice','ExchangeTransactTime', 'OrderUniqueIdentifier',
                       'ExchangeOrderID','TradedPrice']
 
+        self.visibleColumns = len(self.heads)
         self.ApiTrade =  np.empty((20000, 24),dtype=object)
         #############################################################################################################
         self.lastSerialNo = 0
