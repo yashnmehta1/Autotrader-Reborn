@@ -11,8 +11,7 @@ from Application.Views.Models.tableOrder import ModelOB
 from Application.Utils.configReader import readDefaultClient,writeITR,refresh,all_refresh_config
 from Application.Utils.supMethods import get_ins_details
 # from Application.Utils.createTables import ta
-from Application.Utils.updation import updateGetOrderTable,updateGetPendingOrderTable,pendingW_datachanged_full,\
-    orderW_datachanged_full,PosionW_datachanged_full,updateGetPosition_NP,tradeW_datachanged_full,updateGetTradeTable,updateGetPosition_AMW
+from Application.Utils.updation import *
 
 
 
@@ -31,7 +30,6 @@ def getOrderPayloadWEBApi(exchange,clientID, token,orderSide, qty,limitPrice,val
         "stopPrice": triggerPrice,
         "orderUniqueIdentifier": uid
     }
-
     return payload_order_place
 
 

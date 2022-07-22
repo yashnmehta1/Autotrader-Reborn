@@ -417,6 +417,10 @@ def updateOpenPosition(self,openPosArray):
             pass
     print('update open posion finished')
 
+
+
+
+#check which one in use
 def updateGetTradeApi(self,data):
     try:
         self.lastSerialNo = 0
@@ -436,6 +440,182 @@ def updateGetTradeApi(self,data):
         print(traceback.print_exc())
         logging.error(sys.exc_info())
 
+def updateGetTrade_TB(self,trade,rowNo):
+    self.TradeW.ApiTrade[rowNo, :] = trade
+    self.TradeW.lastSerialNo += 1
+    self.TradeW.modelT.lastSerialNo += 1
+    self.TradeW.modelT.rowCount()
+    self.TradeW.modelT.insertRows()
+
+
+
+def updateGetTrade_FP(self,trades):
+    # print("--------------------------------------------------------")
+    try:
+        for i in trades:
+            # print('updateGetApitrd',trades)
+            token =i[2]
+            clientid= i[1]
+            exchange= i[20]
+            #check token
+            ouid = i[15]
+            if(clientid not in self.clientFolios.keys()):
+                self.clientFolios[clientid] = []
+            if(ouid not in self.clientFolios[clientid]):
+                self.clientFolios[clientid].append(ouid)
+
+            fltr0 = np.asarray([token])
+            filteredArray0 = self.table[np.in1d(self.table[:, 5], fltr0)]
+            isRecordExist = False
+            if (filteredArray0.size != 0):
+                fltr = np.asarray([exchange])
+                filteredArray1 = filteredArray0[np.in1d(filteredArray0[:, 4], fltr)]
+                if (filteredArray1.size != 0):
+                    fltr = np.asarray([clientid])
+                    filteredArray2 = filteredArray1[np.in1d(filteredArray1[:, 1], fltr)]
+                    if (filteredArray2.size != 0):
+                        fltr = np.asarray([ouid])
+                        filteredArray21 = filteredArray2[np.in1d(filteredArray2[:, 3], fltr)]
+
+                    if (filteredArray21.size != 0):
+                        isRecordExist = True
+
+            if(isRecordExist ==False):
+                buyQ = i[18] if(i[18] > 0) else 0
+                buyA = i[17] if(i[18] > 0) else 0.0
+                sellQ = - i[18] if(i[18] < 0) else 0
+                sellA = - i[17] if(i[18] < 0) else 0.0
+                anm = dt.Frame([
+                    [i[0]],
+                    [i[1]],['Stretegy_type'],[i[15]],[i[20]],[i[2]],
+                    [i[3]],[i[4]],[i[5]],[i[6]],[i[7]],
+                    [0],[i[18]],[i[18]],[i[19]],[i[17]],
+                    [buyQ],[buyA],[sellQ],[sellA],[i[17]],
+                    [0.0],[i[20]],[i[21]],[0.0],[self.lastSerialNo],
+                    [i[19]]
+                                ]).to_numpy()
+
+                self.table[self.modelFP.lastSerialNo]=anm
+                self.modelFP.lastSerialNo +=1
+                self.lastSerialNo +=1
+                self.modelFP.rowCount()
+                self.modelFP.insertRows()
+
+            else:
+                serialNo = filteredArray21[0][25]
+                openValue = self.table[serialNo, 24]
+                openQty = self.table[serialNo, 11]
+                dayQ = self.table[serialNo, 12] + i[18]
+                dayAmt = self.table[serialNo, 26] + i[19]
+
+                netQ = dayQ + openQty
+
+                netAmt = dayAmt + openValue
+
+                netAvg = netAmt / netQ if netQ != 0 else 0
+
+                if(i[18]>0):
+                    buyQ = self.table[serialNo, 16] + i[18]
+                    sellQ = self.table[serialNo, 18]
+                    buyAvg =(( self.table[serialNo, 17] * self.table[serialNo, 16] ) +(-i[19]))/buyQ
+                    sellA = self.table[serialNo, 18]
+                else:
+                    buyQ = self.table[serialNo, 16]
+                    sellQ = self.table[serialNo, 18] - i[18]
+                    buyAvg = self.table[serialNo, 17]
+                    sellA =(( self.table[serialNo, 19] * self.table[serialNo, 18] ) + (i[19])) / sellQ
+
+
+                self.table[serialNo, [12, 13, 14,15,16,17,18,19,26]] = [dayQ, netQ, netAmt,netAvg,buyQ,buyAvg,sellQ,sellA,dayAmt]
+
+                print('perv',self.table[serialNo,:],'\n',i,"\n",self.table[serialNo,:],'\n\n\n')
+
+
+            ind = self.modelFP.index(0, 0)
+            ind1 = self.modelFP.index(0, 26)
+            self.modelFP.dataChanged.emit(ind, ind1)
+
+    except:
+        print(traceback.print_exc())
+
+def updateTradeSocket_FP(self, trades):
+    try:
+        for i in trades:
+            isRecordExist = False
+            token = i[2]
+            clientid = i[1]
+            exchange = i[20]
+            # check token
+            fltr0 = np.asarray([token])
+            filteredArray0 = self.table[np.in1d(self.table[:, 5], fltr0)]
+            isRecordExist = False
+            if (filteredArray0.size != 0):
+                fltr = np.asarray([exchange])
+                filteredArray1 = filteredArray0[np.in1d(filteredArray0[:, 4], fltr)]
+                if (filteredArray1.size != 0):
+                    fltr = np.asarray([clientid])
+                    filteredArray2 = filteredArray1[np.in1d(filteredArray1[:, 1], fltr)]
+                    if (filteredArray2.size != 0):
+                        isRecordExist = True
+
+            if (isRecordExist == False):
+                buyQ = i[18] if (i[18] > 0) else 0
+                buyA = i[17] if (i[18] > 0) else 0.0
+                sellQ = - i[18] if (i[18] < 0) else 0
+                sellA = - i[17] if (i[18] < 0) else 0.0
+                # openValue =
+                anm = dt.Frame([
+                    [i[0]],
+                    [i[1]], ['Stretegy_type'], [i[15]], [i[20]], [i[2]],
+                    [i[3]], [i[4]], [i[5]], [i[6]], [i[7]],
+                    [0], [i[18]], [i[18]], [i[19]], [i[17]],
+                    [buyQ], [buyA], [sellQ], [sellA], [i[17]],
+                    [0.0], [i[20]], [i[21]], [0.0], [self.lastSerialNo],
+                    [i[19]]
+                ]).to_numpy()
+
+                self.table[self.modelFP.lastSerialNo] = anm
+                self.modelFP.lastSerialNo += 1
+                self.lastSerialNo += 1
+
+                self.modelFP.rowCount()
+                self.modelFP.insertRows()
+
+            else:
+                serialNo = filteredArray2[0][25]
+                openValue = self.table[serialNo, 24]
+                openQty = self.table[serialNo, 11]
+                dayQ = self.table[serialNo, 12]+i[18]
+                dayAmt = self.table[serialNo, 26]+i[19]
+                netQ = dayQ + openQty
+                netAmt = dayAmt +openValue
+                netAvg = netAmt / netQ if netQ != 0 else 0
+
+                if(i[18]>0):
+                    buyQ = self.table[serialNo, 16] + i[18]
+                    sellQ = self.table[serialNo, 18]
+                    buyAvg =(( self.table[serialNo, 17] * self.table[serialNo, 16] ) +(-i[19]))/buyQ
+                    sellA = self.table[serialNo, 18]
+                else:
+                    buyQ = self.table[serialNo, 16]
+                    sellQ = self.table[serialNo, 18] - i[18]
+                    buyAvg = self.table[serialNo, 17]
+                    sellA =(( self.table[serialNo, 19] * self.table[serialNo, 18] ) + (i[19])) / sellQ
+
+
+                self.table[serialNo, [12, 13, 14,15,16,17,18,19]] = [dayQ, netQ, netAmt,netAvg,buyQ,buyAvg,sellQ,sellA]
+
+            ind = self.modelFP.index(0, 0)
+            ind1 = self.modelFP.index(0, 26)
+            self.modelFP.dataChanged.emit(ind, ind1)
+
+    except:
+        print(traceback.print_exc())
+
+
+
+
+
 def updateTradeSocket_TB(self,trd):
     try:
         self.TradeW.ApiTrade[self.TradeW.modelT.lastSerialNo,:] =  trd
@@ -452,14 +632,6 @@ def updateTradeSocket_TB(self,trd):
         print(traceback.print_exc())
         logging.error(sys.exc_info())
 
-def updateGetTrade_TB(self,trade,rowNo):
-    self.TradeW.ApiTrade[rowNo, :] = trade
-    self.TradeW.lastSerialNo += 1
-    self.TradeW.modelT.lastSerialNo += 1
-    self.TradeW.modelT.rowCount()
-    self.TradeW.modelT.insertRows()
-
-
 def updateGetOrder_OB(self,order,rowNo):
     self.OrderBook.ApiOrder[rowNo, :] = order
     self.OrderBook.lastSerialNo += 1
@@ -468,8 +640,7 @@ def updateGetOrder_OB(self,order,rowNo):
     self.OrderBook.modelO.insertRows()
     #############################################################################################
 
-
-def updateGetOrder_POB(self,order,rowNo):
+def updateGetOrder_POB(self,orderBook,rowNo1,PendingOrder,rowNo2):
 
     """
     first flush data
@@ -477,12 +648,12 @@ def updateGetOrder_POB(self,order,rowNo):
     restore
     """
 
-    self.PendingW.ApiOrder = data
-    self.PendingW.modelO = ModelOB(self.PendingW.ApiOrder,self.PendingW.heads)
-    self.PendingW.smodelO.setSourceModel(self.PendingW.modelO)
-    self.PendingW.tableView.setModel(self.PendingW.smodelO)
-    self.PendingW.rcount = self.PendingW.ApiOrder.shape[0]
-
+    self.PendingW.ApiOrder[:rowNo2,:] = PendingOrder
+    self.PendingW.lastSerialNo += rowNo2
+    self.PendingW.modelO.lastSerialNo += rowNo2
+    self.PendingW.modelO.rowCount()
+    self.PendingW.modelO.insertRows()
+    pendingW_datachanged_full(self)
 
 ###############################################
 def pendingW_datachanged_full(self):

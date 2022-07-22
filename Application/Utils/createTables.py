@@ -199,7 +199,6 @@ def tables_details_fp(self):
         self.tableView.horizontalHeader().setSectionsMovable(True)
         self.tableView.verticalHeader().setSectionsMovable(True)
         self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.tableView.customContextMenuRequested.connect(self.rightClickMenu)
         self.tableView.setDragDropMode(self.tableView.InternalMove)
         self.tableView.setDragDropOverwriteMode(False)
     except:

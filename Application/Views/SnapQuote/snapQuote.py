@@ -395,8 +395,6 @@ class Ui_snapQ(QMainWindow):
             logging.error(sys.exc_info()[1])
             print(traceback.print_exc())
 
-
-
     def getQuote(self, token,seg=2,streamType=1502):
         try:
             quote_url = self.URL + '/marketdata/instruments/quotes'

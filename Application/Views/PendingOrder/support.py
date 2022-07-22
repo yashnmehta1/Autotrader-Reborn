@@ -4,7 +4,7 @@ import sys
 import traceback
 import threading
 from Application.Services.Xts.Api.servicesIA import cancel_order
-
+from PyQt5.QtWidgets import QMessageBox
 from Application.Utils.animations import showSnapFrame1
 
 
@@ -152,11 +152,6 @@ def ModifyOrder(self):
         self.sellw.show()
 
 
-
-
-
-
-
 def ModifyOrderX(self):
     abc = self.tableView.selectedIndexes()
     noOfcolumnsinNetPoss = self.ApiOrder.shape[1]
@@ -234,10 +229,3 @@ def clearFilter(self):
     self.smodelO.setFilterKeyColumn(2)
 
 
-
-def refresh_config(self):
-    try:
-        self.MDheaders, self.IAheaders, self.MDToken, self.IAToken, self.URL, self.userID, self.source ,self.MDKey,self.MDSecret,self.IAKey,self.IASecret,self.client_list,DClient,broadcastMode= readConfig_All()
-    except:
-        print(traceback.print_exc())
-        logging.error(sys.exc_info()[1])

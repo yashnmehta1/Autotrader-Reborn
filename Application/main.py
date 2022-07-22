@@ -399,10 +399,11 @@ class Ui_Main(QMainWindow):
     ##################################################################
     def on_get_tradeBook(self,tradeBook):
         updateGetTradeApi(self.TradeW,tradeBook)
-        self.FolioPos.updateGetApitrd(tradeBook)
+        updateGetTrade_FP(self.FolioPos,tradeBook)
+
     def updateOnTrade(self,trade):
         updateTradeSocket_TB(self,trade)
-        self.FolioPos.updateSocketTB(trade)
+        updateGetTrade_FP(self,trade)
     ##################################################################
 
 
