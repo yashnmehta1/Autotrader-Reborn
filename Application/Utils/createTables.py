@@ -152,7 +152,6 @@ def tables_details_np(self):
         self.tableView.horizontalHeader().setSectionsMovable(True)
         self.tableView.verticalHeader().setSectionsMovable(True)
         self.tableView.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.tableView.customContextMenuRequested.connect(self.rightClickMenu)
         # self.tableView.setStyleSheet(
         #     'background-color: rgb(50, 50, 50);selection-background-color: transparent;color: rgb(245, 245, 245);')
         self.tableView.setDragDropMode(self.tableView.InternalMove)

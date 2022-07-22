@@ -24,7 +24,7 @@ from Application.Views.Models.tableNP import ModelPosition
 
 from Theme.dt2 import dt1
 
-
+from .support import *
 
 
 class ProxyModel (QSortFilterProxyModel): #Custom Proxy Model
@@ -68,6 +68,7 @@ class NetPosition(QMainWindow):
             tables_details_np(self)
             # self.tables_details()
             self.tableView.horizontalHeader().sectionMoved.connect(print)
+            self.tableView.customContextMenuRequested.connect(lambda:rightClickMenu(self))
 
             # self.CreateToolBar()
 
