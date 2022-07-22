@@ -9,8 +9,10 @@ import qdarkstyle
 from Theme.dt2 import dt1
 from Application.Views.titlebar import tBar
 import time
+from Application.Services.Xts.Api.servicesIA import cancel_order
 from Application.Views.Models import tableO
 from Application.Utils.configReader import *
+from Application.Utils.createTables import tables_details_pob
 from Application.Views.BuyWindow.buyWindow import Ui_BuyW
 from Application.Views.SellWindow.sellWindow import Ui_SellW
 import json
@@ -18,7 +20,6 @@ import requests
 import logging
 import sys
 import numpy as np
-from Application.Utils.createTables import tables_details_pob
 import threading
 
 class PendingOrder(QMainWindow):
@@ -93,19 +94,6 @@ class PendingOrder(QMainWindow):
         # self.bt_close.clicked.connect(self.hide)
         self.tableView.doubleClicked.connect(self.snp)
 
-    def cancel_order(self,cancledOrderist):
-        try:
-
-
-            for i in cancledOrderist:
-                cancle_url = self.URL + "/interactive/orders?appOrderID=" + str(
-                i['AppOrderId']) + "&orderUniqueIdentifier=" + str(i['FolioNO']) + "&clientID=" + i['clientId']
-
-                cancle_order_r = requests.delete(cancle_url,headers = self.IAheaders)
-                print(cancle_order_r.text)
-        except:
-            print(traceback.print_exc())
-            logging.error(sys.exc_info()[1])
 
     def CancelOrder(self):
         try:
@@ -125,7 +113,7 @@ class PendingOrder(QMainWindow):
                 if (FolioNO == ''):
                     FolioNO = ' '
                 cancledOrderist.append({'AppOrderId':AppOrderId, 'clientId': clientId,'FolioNO' :FolioNO })
-            th1=threading.Thread(target=self.cancel_order,args=(cancledOrderist, ))
+            th1=threading.Thread(target=cancel_order,args=(self,cancledOrderist, ))
             th1.start()
         except:
             logging.error(sys.exc_info()[1])

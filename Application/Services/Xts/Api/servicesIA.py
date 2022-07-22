@@ -240,7 +240,7 @@ def getOrderBook(self,ifFlush = False):
 
             ApiOrder = np.empty((15000, 23), dtype=object)
             PendingOrder = np.empty((15000, 23), dtype=object)
-
+            j=0
             if(data_p['result']!=[]):
                 for j,i in enumerate(data_p['result']):
                     exchange = i["ExchangeSegment"]
@@ -418,6 +418,7 @@ def login(self):
                 self.loggedInUser = result['userID']
                 self.client_list = []
                 self.clientFolios = {'A0001':[]}
+                self.FolioPos.clientFolios = {'A0001':[]}
                 self.FolioPos.cbClient.addItem('A0001')
 
                 for i in client_codes_r:
@@ -470,13 +471,15 @@ def login(self):
         print(traceback.print_exc())
         logging.error(sys.exc_info())
 
-def cancel_order(self,apporderid, uniqueidentifier,clientid):
+def cancel_order(self,cancledOrderist):
     try:
-        param1={'appOrderId':apporderid,'orderUniqueIdentifier':uniqueidentifier}
-        cancle_url = self.URL + "/interactive/orders?appOrderID=" + str(apporderid)+"&orderUniqueIdentifier="+str(uniqueidentifier) + "&clientID=" + clientid
 
-        cancle_order_r = requests.delete(cancle_url,headers = self.IAheaders)
-        print(cancle_order_r.text)
+        for i in cancledOrderist:
+            cancle_url = self.URL + "/interactive/orders?appOrderID=" + str(
+                i['AppOrderId']) + "&orderUniqueIdentifier=" + str(i['FolioNO']) + "&clientID=" + i['clientId']
+
+            cancle_order_r = requests.delete(cancle_url, headers=self.IAheaders)
+            print(cancle_order_r.text)
     except:
         print(traceback.print_exc())
         logging.error(sys.exc_info()[1])
