@@ -2,6 +2,9 @@ import numpy as np
 from Application.Views import BuyWindow
 from Application.Views import SellWindow
 
+import traceback
+
+
 
 def snapQuoteRequested(self,superClass):
 
@@ -35,6 +38,36 @@ def snapQuoteRequested(self,superClass):
         if(self.snapW.isVisible()):
             self.snapW.hideWindow()
     self.snapW.show()
+
+
+def requestBuyModification(self,appOrderID, exchange, token, price, orderType, validity, productType):
+
+    try:
+        print('pppppppppp')
+        if(exchange == 'NSEFO'):
+            ins_details = self.fo_contract[token-35000]
+        else:
+            ins_details = self.fo_contract[token]
+        instrumentType = ins_details[5]
+        symbol = ins_details[3]
+        exp = ins_details[6]
+        strk = ins_details[7]
+        opt = ins_details[8]
+        tick = ins_details[10]
+        lot = ins_details[11]
+        max = ins_details[14]
+        self.buyW.appOrderIdFprModification = appOrderID
+
+        print('path no appOrderID',appOrderID)
+        price = '%.2f' %price
+
+        BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick, validity, productType, orderType,False)
+        #self.buyW.show()
+    except:
+        print(traceback.print_exc())
+
+def requestSellModification(self,appOrderID, exchange, token, price, orderType, validity, productType):
+    pass
 
 def requestBuyWindow(self,sourceClass):
 
@@ -118,4 +151,4 @@ def requestSellWindow(self,sourceClass):
     lot = ins_details[11]
     max = ins_details[14]
 
-    SellWindow.support.showWindow(self.sellW,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)
+    SellWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)

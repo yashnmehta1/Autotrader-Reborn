@@ -5,7 +5,7 @@ from Application.Utils.openRequstedWindow import *
 from Application.Utils.scriptSearch import *
 from Application.Views import BuyWindow
 from Application.Views import SellWindow
-
+from Application.Views import PendingOrder
 def setWindowShortcuts(self):
     self.quitSc = QShortcut(QKeySequence('Esc'), self)
     self.quitSc.activated.connect(self.hide)
@@ -57,6 +57,11 @@ def setShortcuts(self):
     self.marketW.tableView.shortcut_sell1 = QShortcut(QKeySequence('F2'), self.marketW.tableView)
     self.marketW.tableView.shortcut_sell1.setContext(Qt.WidgetWithChildrenShortcut)
     self.marketW.tableView.shortcut_sell1.activated.connect(lambda:requestSellWindow(self,'MarketWatch'))
+
+
+    self.PendingW.tableView.shortcut_modify = QShortcut(QKeySequence('M'), self.PendingW.tableView)
+    self.PendingW.tableView.shortcut_modify.setContext(Qt.WidgetWithChildrenShortcut)
+    self.PendingW.tableView.shortcut_modify.activated.connect(lambda: PendingOrder.support.ModifyOrder(self))
 
 
 

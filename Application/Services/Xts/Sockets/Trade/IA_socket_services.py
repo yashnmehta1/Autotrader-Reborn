@@ -69,7 +69,7 @@ def update_on_order(self, data):
                             [data1['ClientID']],[data1['ExchangeInstrumentID']], [ins_details[4]],[ins_details[3]], [ins_details[6]],
                             [ins_details[7]],[ins_details[8]],[orderSide], [data1['OrderType']], [data1['OrderStatus']],
                             [data1['OrderQuantity']],[data1['LeavesQuantity']], [data1['OrderPrice']], [data1['OrderStopPrice']],[data1['OrderUniqueIdentifier']],
-                            [data1['OrderGeneratedDateTime']],[data1['ExchangeTransactTime']],[data1['CancelRejectReason']], [ins_details[11]], [ins_details[14]],
+                            [data1['OrderGeneratedDateTime']],[data1['ExchangeTransactTime']],[data1['CancelRejectReason']], [ins_details[0]], [ins_details[5]],
                             [data1['OrderAverageTradedPrice']],[qty1]]).to_numpy()
         self.sgPendSoc.emit(n2darray)
 

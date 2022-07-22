@@ -6,7 +6,7 @@ import traceback
 import logging
 import time
 
-from Application.Services.Xts.Api.servicesIA import PlaceOrder
+from Application.Services.Xts.Api.servicesIA import PlaceOrder, modifyOrder
 
 import sys
 
@@ -101,25 +101,14 @@ def placeOrd(self):
                                     limitPrice,  validity, disQty,triggerPrice,uid,
                                      orderType,productType))
                     th1.start()
-            # else:
-            #     if(len(buyW.modifyOIDList)>1):
-            #         print(len(buyW.modifyOIDList),'len(self.modifyOIDList)')
-            #         for i in buyW.modifyOIDList:
-            #             th1 = Thread(target=buyW.modify,
-            #                          args=(i[0], self.cbOrdType.currentText(),  i[1],self.leDiscQ.text(),
-            #                                self.leRate.text(), self.leTrigger.text(), self.cbStretegyNo.currentText() ,
-            #                                  self.leClient.text()))
-            #             th1.start()
-            #
-            #     else:
-            #         th1 = Thread(target=self.modify,
-            #                      args=(self.modifyOIDList[0][0], self.cbOrdType.currentText(), self.modifyOIDList[0][1], self.leDiscQ.text(),
-            #                            self.leRate.text(), self.leTrigger.text(), self.cbStretegyNo.currentText(),
-            #                            self.leClient.text()))
-            #         th1.start()
+            else:
+
+                th1 = Thread(target=modifyOrder,
+                             args=(self,buyW.appOrderIdFprModification, exchange, clientID,token, orderSide, qty, limitPrice, disQty, triggerPrice, uid, orderType,productType,validity))
+                th1.start()
 
         hideWindow(self.buyW)
-
+        # buyW.appOrderIdFprModification=0
     except:
         print(traceback.print_exc())
 
@@ -159,35 +148,37 @@ def modify(self,apporderid,orderType,qty,discQty,Mprice,MStopPrice,OrderUniqueID
         print(traceback.print_exc())
         logging.error(sys.exc_info()[1])
 
-def showWindow(self, exchange,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty,lotSize,tickSize):
+def showWindow(self, exchange,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty,lotSize,tickSize,validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
     if(self.buyW.isVisible()):
         hideWindow(self.buyW)
+    try:
+        self.buyW.cbEx.clear()
+        self.buyW.cbEx.addItem(exchange)
 
-    self.buyW.cbEx.clear()
-    self.buyW.cbEx.addItem(exchange)
+        self.buyW.leToken.setText(str(token))
+        self.buyW.leInsType.setText(instrument)
+        self.buyW.leSymbol.setText(symbol)
+        self.buyW.cbExp.clear()
+        self.buyW.cbExp.addItem(exp)
+        self.buyW.cbStrike.clear()
+        self.buyW.cbStrike.addItem(strk)
+        self.buyW.cbOpt.clear()
+        self.buyW.cbOpt.addItem(opt)
+        self.buyW.leQty.setText(str(lotSize))
+        self.buyW.leRate.setText(price)
+        self.buyW.cbOrdType.setCurrentText(orderType)
+        self.buyW.cbProduct.setCurrentText(productType)
+        self.buyW.cbValidity.setCurrentText(validity)
+        self.buyW.isFresh = isFreshOrd
+        self.buyW.leMLT.setText('1')
 
-    self.buyW.leToken.setText(str(token))
-    self.buyW.leInsType.setText(instrument)
-    self.buyW.leSymbol.setText(symbol)
-    self.buyW.cbExp.clear()
-    self.buyW.cbExp.addItem(exp)
-    self.buyW.cbStrike.clear()
-    self.buyW.cbStrike.addItem(strk)
-    self.buyW.cbOpt.clear()
-    self.buyW.cbOpt.addItem(opt)
-    self.buyW.leQty.setText(str(lotSize))
-    self.buyW.leRate.setText(price)
+        self.buyW.lotsize=lotSize
+        self.buyW.ticksize =tickSize
+        self.buyW.freezeQty = freezeQty
 
-
-    self.buyW.leMLT.setText('1')
-
-
-    self.buyW.show()
-
-    self.buyW.lotsize=lotSize
-    self.buyW.ticksize =tickSize
-    self.buyW.freezeQty = freezeQty
-
+        self.buyW.show()
+    except:
+        print(traceback.print_exc())
 def setAllShortcuts(self):
 
     self.bt_min.clicked.connect(lambda: hideWindow(self))

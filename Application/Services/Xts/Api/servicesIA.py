@@ -51,6 +51,38 @@ def getOrderPayloadTWSApi(exchange, clientID, token,  orderSide, qty,limitPrice,
     }
     return payload_order_place
 
+def getOrderModifyPayloadWEBApi(apporderid, productType,orderType, qty,limitPrice, MStopPrice, disQty, validity, OrderUniqueID):
+
+    payload_order_place = {
+        "appOrderID": apporderid,
+        "modifiedProductType": productType,
+        "modifiedOrderType": orderType,
+        "modifiedOrderQuantity": qty,
+        "modifiedDisclosedQuantity": disQty,
+        "modifiedLimitPrice": limitPrice,
+        "modifiedStopPrice": MStopPrice,
+        "modifiedTimeInForce": validity,
+        "orderUniqueIdentifier": OrderUniqueID
+    }
+    return payload_order_place
+
+
+def getOrderModifyPayloadTWSApi(clientID,apporderid, productType,orderType, qty,limitPrice, MStopPrice, disQty, validity, OrderUniqueID):
+    payload_order_place = {
+        "clientID": clientID,
+        "exchangeSegment": exchange,
+        "exchangeInstrumentID": token,
+        "productType": productType,
+        "orderType": orderType,
+        "orderSide": orderSide,
+        "timeInForce": validity,
+        "disclosedQuantity": disQty,
+        "orderQuantity": qty,
+        "limitPrice": limitPrice,
+        "stopPrice": triggerPrice,
+        "orderUniqueIdentifier": uid
+    }
+    return payload_order_place
 
 def PlaceOrder( self,exchange, clientID, token,  orderSide, qty, limitPrice,  validity,
                disQty, triggerPrice,uid,orderType="LIMIT", productType="NRML",):
@@ -76,7 +108,28 @@ def PlaceOrder( self,exchange, clientID, token,  orderSide, qty, limitPrice,  va
         logging.error(sys.exc_info()[1])
 
 ##############################################################################################################
+def modifyOrder( self,appOrderId,exchange, clientID, token,  orderSide, qty, limitPrice,
+               disQty, triggerPrice,uid,orderType="LIMIT", productType="NRML",validity='DAY'):
 
+
+    try:
+        if(self.Source == 'TWSAPI'):
+            payload = getOrderModifyPayloadTWSApi(clientID,appOrderId,productType,orderType,qty,limitPrice,triggerPrice,disQty,validity,uid)
+        else:
+            # exchange, clientID, token, orderSide, qty, limitPrice, validity, disQty, triggerPrice, uid,
+            # orderType, productType
+            payload = getOrderModifyPayloadWEBApi(appOrderId,productType,orderType,qty,limitPrice,triggerPrice,disQty,validity,uid)
+        print(payload)
+        place_order_url = requests.put(self.URL + '/interactive/orders', json=payload,
+                                       headers=self.IAheaders)
+        data_p_order = place_order_url.json()
+        print('Order Modification request', data_p_order)
+
+        logging.info(place_order_url.text)
+    except:
+        print(traceback.print_exc(),resJson)
+        logging.error(sys.exc_info()[1])
+########################################################
 def getOpenPosition(self):
     try:
         # print('in get_open_pos')
@@ -469,7 +522,7 @@ def login(self):
         print(traceback.print_exc())
         logging.error(sys.exc_info())
 
-def cancel_order(self,cancledOrderist):
+def cancle_order(self,cancledOrderist):
     try:
 
         for i in cancledOrderist:

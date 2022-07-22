@@ -9,7 +9,7 @@ import qdarkstyle
 from Theme.dt2 import dt1
 from Application.Views.titlebar import tBar
 import time
-from Application.Services.Xts.Api.servicesIA import cancel_order
+from Application.Services.Xts.Api.servicesIA import cancle_order
 from Application.Views.Models import tableO
 from Application.Utils.configReader import *
 from Application.Utils.createTables import tables_details_pob
@@ -75,11 +75,8 @@ class PendingOrder(QMainWindow):
 
         self.tableView.delt = QShortcut(QKeySequence('Del'), self.tableView)
         self.tableView.delt.setContext(Qt.WidgetWithChildrenShortcut)
-        self.tableView.delt.activated.connect(lambda:CancelOrder(self))
+        self.tableView.delt.activated.connect(lambda:CancleOrder(self))
 
-        # self.tableView.shortcut_modify = QShortcut(QKeySequence('Shift+F2'), self.tableView)
-        # self.tableView.shortcut_modify.setContext(Qt.WidgetWithChildrenShortcut)
-        # self.tableView.shortcut_modify.activated.connect(self.ModifyOrder)
 
 
     def createSlots(self):

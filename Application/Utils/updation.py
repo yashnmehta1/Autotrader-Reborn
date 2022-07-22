@@ -832,10 +832,11 @@ def sock1502(self, a):
 
 def updateSocketPOB(self,ord):
     try:
-        appOrderId = ord[0][8]
+        appOrderId = ord[0][0]
         orderStatus = ord[0][10]
         print(orderStatus,'appOrderId',appOrderId,type(appOrderId))
-        fltr = np.asarray([ord[0][8]])
+        fltr = np.asarray([appOrderId])
+        print("filter:", fltr, "\n\n\n\n", self.ApiOrder)
         if (orderStatus == 'New'):
 
             self.ApiOrder = np.vstack([self.ApiOrder,ord])
@@ -853,7 +854,7 @@ def updateSocketPOB(self,ord):
             self.modelO.dataChanged.emit(ind, ind1)
 
         elif (orderStatus in ['Rejected','Cancelled','PendingCancel','Filled']):
-            self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,8] != appOrderId)]
+            self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,0] != appOrderId)]
 
 
             self.modelO = tableO.ModelOB(self.ApiOrder, self.heads)
@@ -872,14 +873,15 @@ def updateSocketPOB(self,ord):
             ######################################################################################################
         elif (orderStatus == 'PartiallyFilled'):
             try:
-                self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,12]] = [ord[10],ord[12]]
+                self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr), [10,12]] = [ord[0][10],ord[0][12]]
             except:
                 print(sys.exc_info())
             ind = self.modelO.index(0, 0)
             ind1 = self.modelO.index(0, 1)
             self.modelO.dataChanged.emit(ind, ind1)
         elif (orderStatus == 'Replaced'):
-            self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,11,12,13]] = [ord[10],ord[11],ord[12],ord[13]]
+            print("yyyy----",self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr)])
+            self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr), [10,11,12,13]] = [ord[0][10],ord[0][11],ord[0][12],ord[0][13]]
             ind = self.modelO.index(0, 0)
             ind1 = self.modelO.index(0, 1)
             self.modelO.dataChanged.emit(ind, ind1)

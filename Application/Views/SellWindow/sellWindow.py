@@ -32,7 +32,7 @@ class Ui_SellW(QMainWindow):
         super(Ui_SellW, self).__init__(parent=None)
         self.ticksize = 0.05
         self.lotsize = 0
-
+        self.appOrderIdFprModification = 0
         self.clist = []
 
         try:

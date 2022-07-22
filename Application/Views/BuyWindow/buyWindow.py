@@ -44,7 +44,7 @@ class Ui_BuyW(QMainWindow):
             self.title.sgPoss.connect(self.movWin)
             ####################################################
             self.initVariables()
-
+            self.appOrderIdFprModification = 0
 
 
             setAllShortcuts(self)

@@ -6,7 +6,7 @@ import traceback
 import logging
 import time
 
-from Application.Services.Xts.Api.servicesIA import PlaceOrder
+from Application.Services.Xts.Api.servicesIA import PlaceOrder,modifyOrder
 
 import sys
 
@@ -15,30 +15,30 @@ from threading import Thread
 
 
 
-def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty ,lotSize ,tickSize):
+def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty ,lotSize ,tickSize,validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
     try:
 
-        self.leToken.setText(str(token))
-        self.leInsType.setText(instrument)
-        self.leSymbol.setText(symbol)
-        self.cbExp.clear()
-        self.cbExp.addItem(exp)
-        self.cbStrike.clear()
-        self.cbStrike.addItem(strk)
-        self.cbOpt.clear()
-        self.cbOpt.addItem(opt)
-        self.leMLT.setText('1')
+        self.sellW.leToken.setText(str(token))
+        self.sellW.leInsType.setText(instrument)
+        self.sellW.leSymbol.setText(symbol)
+        self.sellW.cbExp.clear()
+        self.sellW.cbExp.addItem(exp)
+        self.sellW.cbStrike.clear()
+        self.sellW.cbStrike.addItem(strk)
+        self.sellW.cbOpt.clear()
+        self.sellW.cbOpt.addItem(opt)
+        self.sellW.leMLT.setText('1')
+        self.sellW.leQty.setText(str(lotSize))
+        self.sellW.leRate.setText(price)
+        self.sellW.lotsize =lotSize
+        self.sellW.ticksize =tickSize
+        self.sellW.freezeQty = freezeQty
+        self.sellW.sellW.cbOrdType.setCurrentText(orderType)
+        self.sellW.cbProduct.setCurrentText(productType)
+        self.sellW.cbValidity.setCurrentText(validity)
+        self.sellW.isFresh = isFreshOrd
+        self.sellW.show()
 
-        self.leQty.setText(str(lotSize))
-        self.leRate.setText(price)
-
-
-
-        self.lotsize =lotSize
-        self.ticksize =tickSize
-        self.freezeQty = freezeQty
-
-        self.show()
     except:
         print(traceback.print_exc())
 
@@ -72,24 +72,13 @@ def placeOrd(self):
                                     limitPrice,  validity, disQty,triggerPrice,uid,
                                      orderType,productType))
                     th1.start()
-            # else:
-            #     if(len(sellW.modifyOIDList)>1):
-            #         print(len(sellW.modifyOIDList),'len(self.modifyOIDList)')
-            #         for i in sellW.modifyOIDList:
-            #             th1 = Thread(target=sellW.modify,
-            #                          args=(i[0], self.cbOrdType.currentText(),  i[1],self.leDiscQ.text(),
-            #                                self.leRate.text(), self.leTrigger.text(), self.cbStretegyNo.currentText() ,
-            #                                  self.leClient.text()))
-            #             th1.start()
-            #
-            #     else:
-            #         th1 = Thread(target=self.modify,
-            #                      args=(self.modifyOIDList[0][0], self.cbOrdType.currentText(), self.modifyOIDList[0][1], self.leDiscQ.text(),
-            #                            self.leRate.text(), self.leTrigger.text(), self.cbStretegyNo.currentText(),
-            #                            self.leClient.text()))
-            #         th1.start()
+            else:
 
+                th1 = Thread(target=modifyOrder,
+                             args=(sellW.appOrderIdFprModification,exchange,clientID,token,orderSide,qty,limitPrice,disQty,triggerPrice,uid,orderType,productType,validity))
+                th1.start()
         hideWindow(self.sellW)
+        sellW.appOrderIdFprModification=0
     except:
         print(sys.exc_info())
 
@@ -180,7 +169,7 @@ def setAllShortcuts(self):
     # self.pbSubmit.clicked.connect(lambda: placeOrd(self))
 
 
-def modify(self, apporderid, orderType, qty, discQty, Mprice, MStopPrice, OrderUniqueID, clientId):
+def modify(self, apporderid, orderType, qty, discQty, Mprice, MStopPrice, OrderUniqueID, clientId, productType):
     try:
         if (self.source != 'TWSAPI'):
 
