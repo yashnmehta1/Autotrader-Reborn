@@ -532,7 +532,7 @@ def updateGetTrade_FP(self,trades):
 
                 self.table[serialNo, [12, 13, 14,15,16,17,18,19,26]] = [dayQ, netQ, netAmt,netAvg,buyQ,buyAvg,sellQ,sellA,dayAmt]
 
-                print('perv',self.table[serialNo,:],'\n',i,"\n",self.table[serialNo,:],'\n\n\n')
+                # print('perv',self.table[serialNo,:],'\n',i,"\n",self.table[serialNo,:],'\n\n\n')
 
 
             ind = self.modelFP.index(0, 0)

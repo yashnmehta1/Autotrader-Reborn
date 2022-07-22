@@ -389,8 +389,8 @@ def get_Trades(self,requestClass):
                     trades = np.vstack([trades,trade])
 
                     if(requestClass=='main'):
-                        updateGetTradeTable(self,trade,j)
-                        self.FolioPos.updateGetApitrd(trades)
+                        updateGetTrade_TB(self,trade,j)
+                        updateGetTrade_FP(self.FolioPos,trades)
         else:
             jk = 0
             ApiTrade = np.empty((0, 24))
