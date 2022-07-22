@@ -56,7 +56,7 @@ from Application.Utils.basicWinOps import res_max
 
 from Application.Utils.createTables import tables_details_mw, tables_details_mw_basic
 from Application.Services.UDP.UDPSock import Receiver
-
+from Application.Views.FolioPosition.support import filterData
 
 from Application.Services.Xts.Api import servicesMD
 from Application.Services.Xts.Api import servicesIA
