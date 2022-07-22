@@ -118,16 +118,14 @@ class PendingOrder(QMainWindow):
             cancledOrderist = []
             for i in range(noOfSelectedRecord):
 
-                AppOrderId = int(indexes[startingPoint+8].data())
-                clientId = indexes[startingPoint+0].data()
-                FolioNO = indexes[startingPoint+15].data()
+                AppOrderId = int(indexes[startingPoint+0].data())
+                clientId = self.getClientId(AppOrderId)
+                FolioNO = self.getFolioNo(AppOrderId)
                 startingPoint += self.visibleColumns
                 if (FolioNO == ''):
                     FolioNO = ' '
-
                 cancledOrderist.append({'AppOrderId':AppOrderId, 'clientId': clientId,'FolioNO' :FolioNO })
-            # List of array will be passed in thread for cancle in fuuture
-            th1=threading.Thread(target=self.cancel_order,args=(cancledOrderist, )
+            th1=threading.Thread(target=self.cancel_order,args=(cancledOrderist, ))
             th1.start()
         except:
             logging.error(sys.exc_info()[1])
@@ -492,8 +490,17 @@ class PendingOrder(QMainWindow):
         self.smodelO.setFilterKeyColumn(2)
 
 
+    def getClientId(self,AppOrderId):
+        fltr = np.asarray([AppOrderId])
+        clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),1]
+        print('clientId',clientId)
+        return clientId
 
-
+    def getFolioNo(self,AppOrderId):
+        fltr = np.asarray([AppOrderId])
+        folioNo = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),15]
+        print('folioNo',folioNo)
+        return folioNo
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

@@ -249,9 +249,9 @@ def getOrderBook(self,ifFlush = False):
                     ins_details = get_ins_details(self, exchange, token )
                     Qty1 = i['LeavesQuantity'] if(i['OrderSide'].upper()=='BUY') else -i['LeavesQuantity']
                     orderSide = i['OrderSide'].replace('BUY','Buy').replace('SELL','Sell')
-                    order =dt.Frame([[i['ClientID']],
-                            [i['ExchangeInstrumentID']], [ ins_details[4]], [ins_details[3]],[ins_details[6]], [ins_details[7]],
-                            [ins_details[8]],[orderSide],[(i['AppOrderID'])],[i['OrderType']], [i['OrderStatus']],
+                    order =dt.Frame([[(i['AppOrderID'])],
+                            [i['ClientID']],[i['ExchangeInstrumentID']], [ ins_details[4]], [ins_details[3]],[ins_details[6]],
+                            [ins_details[7]],[ins_details[8]],[orderSide],[i['OrderType']], [i['OrderStatus']],
                             [i['OrderQuantity']],[i['LeavesQuantity']],[i['OrderPrice']],[i['OrderStopPrice']], [i['OrderUniqueIdentifier']],
                             [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']],[i['CancelRejectReason']],[ins_details[0]],[ins_details[5]],
                             [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
@@ -287,12 +287,12 @@ def getOrderBook(self,ifFlush = False):
                         Qty1 = i['LeavesQuantity'] if (i['OrderSide'].upper() == 'BUY') else -i['LeavesQuantity']
                         orderSide = i['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')
 
-                        order = dt.Frame([[i['ClientID']],
-                        [i['ExchangeInstrumentID']], [ins_details[4]], [ins_details[3]], [ins_details[6]], [ins_details[7]],
-                        [ins_details[8]],[orderSide],[i['AppOrderID']], [i['OrderType']], [i['OrderStatus']],
-                        [i['OrderQuantity']],[i['LeavesQuantity']], [i['OrderPrice']], [i['OrderStopPrice']],[i['OrderUniqueIdentifier']],
-                        [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']], [i['CancelRejectReason']], [ins_details[0]], [ins_details[5]],
-                        [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
+                        order = dt.Frame([[i['AppOrderID']],
+                                        [i['ClientID']],[i['ExchangeInstrumentID']], [ins_details[4]], [ins_details[3]], [ins_details[6]],
+                                        [ins_details[7]],[ins_details[8]],[orderSide], [i['OrderType']], [i['OrderStatus']],
+                                        [i['OrderQuantity']],[i['LeavesQuantity']], [i['OrderPrice']], [i['OrderStopPrice']],[i['OrderUniqueIdentifier']],
+                                        [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']], [i['CancelRejectReason']], [ins_details[0]], [ins_details[5]],
+                                        [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
                         #############################################################################################
                         updateGetOrderTable(self, order, j)
 
