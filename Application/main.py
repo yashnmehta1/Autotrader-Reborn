@@ -25,7 +25,7 @@ from Application.Utils.getMasters import  *
 from Application.Utils.banned import *
 from Application.Utils.supMethods import *
 from Application.Utils.configReader import all_refresh_config,refresh
-from Application.Utils.updation import UpdateLTP_FP, UpdateLTP_MW,UpdateLTP_MW_basic,UpdateLTP_NP,updateCashIndex,updateSocketTB,update_Position_socket_MW,update_Position_Socket_NP
+from Application.Utils.updation import *
 
 from Application.Services.Xts.Sockets.Trade.interactiveApi import Interactive
 from Application.Services.Xts.Sockets.Feeds.marketData import MarketFeeds
@@ -387,21 +387,21 @@ class Ui_Main(QMainWindow):
         update_Position_socket_MW(self,position)
     ##################################################################
     def updateGetorderBook(self,orderBook):
-        updateGetOrderBook(self,orderBook)
+        updateGetOrder_OB(self,orderBook)
     def updateGetPendinOrderBook(self,orderBook):
         self.PendingW.updateGetApi(orderBook)
 
 
     def updateOderSocket(self,order):
         self.OrderBook.updateSocketOB(order)
-        self.PendingW.updateSocketOB(order)
+        updateSocketPOB(self,order)
 
     ##################################################################
     def on_get_tradeBook(self,tradeBook):
         updateGetTradeApi(self.TradeW,tradeBook)
         self.FolioPos.updateGetApitrd(tradeBook)
     def updateOnTrade(self,trade):
-        updateSocketTB(self,trade)
+        updateTradeSocket_TB(self,trade)
         self.FolioPos.updateSocketTB(trade)
     ##################################################################
 
@@ -415,7 +415,7 @@ class Ui_Main(QMainWindow):
 
 
     def on_new_feed_1502(self,data):
-        self.snapW.sock1502(data)
+        sock1502(self.snapW,data)
     def on_new_feed_Index(self,data):
         updateCashIndex(self,data)
 

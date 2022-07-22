@@ -207,7 +207,7 @@ def getMaster(validation):
                 iklo +=1
 
             ##################### adding extra columns for additional fields ##########
-            bdf = np.zeros((contract_fo.shape[0], 21))
+            bdf = np.zeros((contract_fo.shape[0], 21),dtype=object)
             contract_fo = np.hstack([contract_fo, bdf])
             ################################################################
 

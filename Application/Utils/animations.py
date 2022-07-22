@@ -147,3 +147,45 @@ def showScriptBar(self):
         self.anim42.start()
         self.isScriptBarOpen = False
 
+def showSnapFrame(self):
+
+    if(self.isSnapQuotOpen==False):
+        self.animssq4 = QPropertyAnimation(self.snapQ, b"minimumWidth")
+        self.animssq4.setDuration(50)
+        self.animssq4.setStartValue(0)
+        self.animssq4.setEndValue(400)
+        self.animssq4.start()
+        self.isSnapQuotOpen = True
+
+        self.unSubscription_feed(self.subToken)
+
+def hideSnapFrame(self):
+
+    print('hideSnapwin', self.isSnapQuotOpen)
+    if(self.isSnapQuotOpen==True):
+        self.animssq3 = QPropertyAnimation(self.snapQ, b"minimumWidth")
+        self.animssq3.setDuration(50)
+        self.animssq3.setStartValue(400)
+        self.animssq3.setEndValue(0)
+        self.animssq3.start()
+        self.isSnapQuotOpen = False
+        self.unSubscription_feed(self.subToken)
+
+def showSnapFrame1(self):
+    if(self.isSnapQuotOpen==False):
+        self.animssq1 = QPropertyAnimation(self.snapQ, b"minimumWidth")
+        self.animssq1.setDuration(50)
+        self.animssq1.setStartValue(0)
+        self.animssq1.setEndValue(400)
+        self.animssq1.start()
+        self.isSnapQuotOpen = True
+        self.subscription_feed(self.subToken)
+
+    else:
+        self.animssq2 = QPropertyAnimation(self.snapQ, b"minimumWidth")
+        self.animssq2.setDuration(50)
+        self.animssq2.setStartValue(400)
+        self.animssq2.setEndValue(0)
+        self.animssq2.start()
+        self.isSnapQuotOpen = False
+        self.unSubscription_feed(self.subToken)

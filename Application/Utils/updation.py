@@ -347,6 +347,9 @@ def update_Position_Socket_NP(self,pos):
             self.NetPos.modelP.dataChanged.emit(ind, ind1)
     print('update get posion finished')
 
+
+
+#verify if it is in process
 def updateOpenPosition(self,openPosArray):
     for i in openPosArray:
         isRecordExist = False
@@ -433,7 +436,7 @@ def updateGetTradeApi(self,data):
         print(traceback.print_exc())
         logging.error(sys.exc_info())
 
-def updateSocketTB(self,trd):
+def updateTradeSocket_TB(self,trd):
     try:
         self.TradeW.ApiTrade[self.TradeW.modelT.lastSerialNo,:] =  trd
         self.TradeW.lastSerialNo +=1
@@ -449,7 +452,7 @@ def updateSocketTB(self,trd):
         print(traceback.print_exc())
         logging.error(sys.exc_info())
 
-def updateGetTradeTable(self,trade,rowNo):
+def updateGetTrade_TB(self,trade,rowNo):
     self.TradeW.ApiTrade[rowNo, :] = trade
     self.TradeW.lastSerialNo += 1
     self.TradeW.modelT.lastSerialNo += 1
@@ -457,7 +460,7 @@ def updateGetTradeTable(self,trade,rowNo):
     self.TradeW.modelT.insertRows()
 
 
-def updateGetOrderTable(self,order,rowNo):
+def updateGetOrder_OB(self,order,rowNo):
     self.OrderBook.ApiOrder[rowNo, :] = order
     self.OrderBook.lastSerialNo += 1
     self.OrderBook.modelO.lastSerialNo += 1
@@ -466,7 +469,7 @@ def updateGetOrderTable(self,order,rowNo):
     #############################################################################################
 
 
-def updateGetPendingOrderTable(self,order,rowNo):
+def updateGetOrder_POB(self,order,rowNo):
 
     """
     first flush data
@@ -502,6 +505,53 @@ def marketW_datachanged_full(self):
     ind = self.OrderBook.modelO.index(0, 0)
     ind1 = self.OrderBook.modelO.index(0, 1)
     self.OrderBook.modelO.dataChanged.emit(ind, ind1)
+
+def sock1502(self, a):
+    b = a.split(',')
+    token = int(b[0].split('_')[1])
+    if (token == self.subToken):
+        for i in b:
+            # print(i[:2])
+            if (i[:2] == 'ai'):
+                ask = i.split(':')[1].split('|')
+            elif (i[:2] == 'bi'):
+                bids = i.split(':')[1].split('|')
+
+        self.bq1.setText(bids[1])
+        self.bq2.setText(bids[5])
+        self.bq3.setText(bids[9])
+        self.bq4.setText(bids[13])
+        self.bq5.setText(bids[17])
+
+        self.bp1.setText(bids[2])
+        self.bp1.setText(bids[6])
+        self.bp1.setText(bids[10])
+        self.bp1.setText(bids[14])
+        self.bp1.setText(bids[18])
+
+        self.nb1.setText(bids[3])
+        self.nb2.setText(bids[7])
+        self.nb3.setText(bids[11])
+        self.nb4.setText(bids[15])
+        self.nb5.setText(bids[19])
+
+        self.sq1.setText(ask[1])
+        self.sq2.setText(ask[5])
+        self.sq3.setText(ask[9])
+        self.sq4.setText(ask[13])
+        self.sq5.setText(ask[17])
+
+        self.sp1.setText(ask[2])
+        self.sp1.setText(ask[6])
+        self.sp1.setText(ask[10])
+        self.sp1.setText(ask[14])
+        self.sp1.setText(ask[18])
+
+        self.ns1.setText(ask[3])
+        self.ns2.setText(ask[7])
+        self.ns3.setText(ask[11])
+        self.ns4.setText(ask[15])
+        self.ns5.setText(ask[19])
 
 
 
@@ -601,3 +651,72 @@ def marketW_datachanged_full(self):
 #             self.marketW.model.dataChanged.emit(ind, ind1)
 #     print('update get posion finished')
 #
+
+
+
+
+def updateSocketPOB(self,ord):
+    try:
+        appOrderId = ord[0][8]
+        orderStatus = ord[0][10]
+        print(orderStatus,'appOrderId',appOrderId,type(appOrderId))
+        fltr = np.asarray([ord[0][8]])
+        if (orderStatus == 'New'):
+
+            self.ApiOrder = np.vstack([self.ApiOrder,ord])
+            self.modelO = tableO.ModelOB(self.ApiOrder, self.heads)
+            self.smodelO = QSortFilterProxyModel()
+            self.smodelO.setSourceModel(self.modelO)
+            self.tableView.setModel(self.smodelO)
+
+            self.modelO.insertRows()
+            self.modelO.rowCount()
+
+            print('self.ApiOrder',self.modelO._data,self.modelO.lastSerialNo)
+            ind = self.modelO.index(0, 0)
+            ind1 = self.modelO.index(0, 1)
+            self.modelO.dataChanged.emit(ind, ind1)
+
+        elif (orderStatus in ['Rejected','Cancelled','PendingCancel','Filled']):
+            self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,8] != appOrderId)]
+
+
+            self.modelO = tableO.ModelOB(self.ApiOrder, self.heads)
+            self.smodelO = QSortFilterProxyModel()
+            self.smodelO.setSourceModel(self.modelO)
+            self.tableView.setModel(self.smodelO)
+            # self.modelO.lastSerialNo -=1
+            self.modelO.rowCount()
+            # self.modelO.DelRows()
+
+
+            ind = self.modelO.index(0, 0)
+            ind1 = self.modelO.index(0,1)
+            self.modelO.dataChanged.emit(ind, ind1)
+
+            ######################################################################################################
+        elif (orderStatus == 'PartiallyFilled'):
+            try:
+                self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,12]] = [ord[10],ord[12]]
+            except:
+                print(sys.exc_info())
+            ind = self.modelO.index(0, 0)
+            ind1 = self.modelO.index(0, 1)
+            self.modelO.dataChanged.emit(ind, ind1)
+        elif (orderStatus == 'Replaced'):
+            self.ApiOrder[np.in1d(self.ApiOrder[:, 8], fltr), [10,11,12,13]] = [ord[10],ord[11],ord[12],ord[13]]
+            ind = self.modelO.index(0, 0)
+            ind1 = self.modelO.index(0, 1)
+            self.modelO.dataChanged.emit(ind, ind1)
+
+
+
+        ind = self.modelO.index(0, 0)
+        ind1 = self.modelO.index(0, 1)
+        self.modelO.dataChanged.emit(ind, ind1)
+
+
+    except:
+        logging.error(sys.exc_info()[1])
+        print(traceback.print_exc())
+
