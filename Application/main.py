@@ -370,7 +370,7 @@ class Ui_Main(QMainWindow):
         self.login.hide()
         self.show()
         self.showMaximized()
-        self.FolioPos.filterData()
+        filterData(self.FolioPos)
         servicesMD.subscribeToken(self, 26000, 'NSECM')
         servicesMD.subscribeToken(self, 26001, 'NSECM')
         servicesMD.subscribeToken(self, 26002, 'NSECM')
@@ -394,7 +394,7 @@ class Ui_Main(QMainWindow):
 
     def updateOderSocket(self,order):
         self.OrderBook.updateSocketOB(order)
-        updateSocketPOB(self,order)
+        updateSocketPOB(self.PendingW,order)
 
     ##################################################################
     def on_get_tradeBook(self,tradeBook):

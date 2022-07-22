@@ -6,6 +6,10 @@ import threading
 import logging
 from Application.Services.Xts.Api.servicesMD import subscribeToken
 from Application.Utils.supMethods import get_ins_details
+from Application.Views.Models import tableO
+
+from PyQt5.QtCore import QSortFilterProxyModel
+
 
 
 def updateCashIndex(self, token, ltp):
