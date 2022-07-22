@@ -212,9 +212,9 @@ def tables_details_ob(self):
         #############################################################################################################
 
         self.ApiOrder = np.empty((15000,23),dtype=object)
-        self.heads = ['ClientID',
-                      'ExchangeInstrumentID', 'Instrument','Symbol','Expiry','Strike_price',
-                      'C/P','OrderSide', 'AppOrderID', 'OrderType','OrderStatus',
+        self.heads = ['AppOrderID',
+                      'ClientID','ExchangeInstrumentID', 'Instrument','Symbol','Expiry',
+                      'Strike_price','C/P','OrderSide', 'OrderType','OrderStatus',
                         'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
                       'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
                       'AvgPrice',"Qty1"]
