@@ -70,7 +70,7 @@ def update_on_order(self, data):
                             [ins_details[7]],[ins_details[8]],[orderSide], [data1['OrderType']], [data1['OrderStatus']],
                             [data1['OrderQuantity']],[data1['LeavesQuantity']], [data1['OrderPrice']], [data1['OrderStopPrice']],[data1['OrderUniqueIdentifier']],
                             [data1['OrderGeneratedDateTime']],[data1['ExchangeTransactTime']],[data1['CancelRejectReason']], [ins_details[0]], [ins_details[5]],
-                            [data1['OrderAverageTradedPrice']],[qty1]]).to_numpy()
+                            [data1['OrderAverageTradedPrice']],[qty1],[data1['ProductType']],[data1['TimeInForce']]]).to_numpy()
         self.sgPendSoc.emit(n2darray)
 
         if (data1['OrderStatus'] == 'Filled'):

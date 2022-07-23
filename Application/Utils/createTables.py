@@ -100,7 +100,6 @@ def tables_details_tb(self):
                       'LastTradedQuantity', 'OrderStatus', 'OrderAverageTradedPrice','ExchangeTransactTime', 'OrderUniqueIdentifier',
                       'ExchangeOrderID','TradedPrice']
 
-        self.visibleColumns = len(self.heads)
         self.ApiTrade =  np.empty((20000, 24),dtype=object)
         #############################################################################################################
         self.lastSerialNo = 0
@@ -209,13 +208,13 @@ def tables_details_ob(self):
     try:
         #############################################################################################################
 
-        self.ApiOrder = np.empty((15000,23),dtype=object)
+        self.ApiOrder = np.zeros((15000,25),dtype=object)
         self.heads = ['AppOrderID',
                       'ClientID','ExchangeInstrumentID', 'Instrument','Symbol','Expiry',
                       'Strike_price','C/P','OrderSide', 'OrderType','OrderStatus',
                         'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
                       'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
-                      'AvgPrice',"Qty1"]
+                      'AvgPrice',"Qty1",'ProductType','validity']
 
         #############################################################################################################
 
@@ -242,13 +241,14 @@ def tables_details_ob(self):
 
 def tables_details_pob(self):
     try:
-        self.ApiOrder = np.zeros((1000,23),dtype=object)
+        self.ApiOrder = np.zeros((1000,25),dtype=object)
         self.heads = ['AppOrderID',
                       'ClientID','ExchangeInstrumentID', 'Instrument','Symbol','Expiry',
                       'Strike_price','C/P','OrderSide',  'OrderType','OrderStatus',
             'OrderQuantity', 'LeavesQuantity', 'OrderPrice','OrderStopPrice','OrderUniqueIdentifier',
               'OrderGeneratedDateTime','ExchangeTransactTime','CancelRejectReason','Exchange','Instrument',
-                      'AvgPrice', 'Qty1'] #productType validity
+                      'AvgPrice', 'Qty1', 'ProductType','validity'] #productType validity
+        self.visibleColumns = len(self.heads)
 
         #############################################################################################################
 

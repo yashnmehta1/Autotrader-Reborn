@@ -54,13 +54,14 @@ class PendingOrder(QMainWindow):
         self.lastSerialNo = 0
         self.filterStr = ''
         self.modifyOIDList =[]
-        self.visibleColumns = 23
+        self.visibleColumns = 25
         self.createShortcuts()
         self.createSlots()
 
 
     def pppi(self):
         self.tableView.setColumnHidden(10, True)
+
     def createObjects(self):
         tables_details_pob(self)
 

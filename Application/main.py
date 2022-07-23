@@ -211,13 +211,13 @@ class Ui_Main(QMainWindow):
 
             self.IAS.sgAPIpos.connect(self.updateOnPosition)
             self.IAS.sgTrdSoc.connect(self.updateOnTrade)
+            self.IAS.sgPendSoc.connect(self.updateOderSocket)
 
             ######################################################################
             # both getOrderbook process is done directly from Api call methos only
             # self.IAS.sgGetOrder.connect(self.updateGetorderBook)
             # self.IAS.sgGetPOrder.connect(self.updateGetPendinOrderBook)
             # self.IAS.sgGetTrd.connect(self.on_get_tradeBook)
-            # self.IAS.sgPendSoc.connect(self.updateOderSocket)
 
 
 
@@ -395,7 +395,7 @@ class Ui_Main(QMainWindow):
         update_Position_socket_MW(self,position)
 
     def updateOderSocket(self,order):
-        updateSocketOB(order)
+        updateSocketOB(self.OrderBook,order)
         updateSocketPOB(self.PendingW,order)
 
     def updateOnTrade(self,trade):

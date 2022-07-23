@@ -40,7 +40,7 @@ def snapQuoteRequested(self,superClass):
     self.snapW.show()
 
 
-def requestBuyModification(self,appOrderID, exchange, token, price, orderType, validity, productType):
+def requestBuyModification(self,appOrderID, exchange, token, price, orderType, validity, productType,triggerPrice):
 
     try:
         if(exchange == 'NSEFO'):
@@ -58,12 +58,12 @@ def requestBuyModification(self,appOrderID, exchange, token, price, orderType, v
         max = ins_details[14]
         self.buyW.appOrderIdFprModification = appOrderID
         price = '%.2f' %price
-        BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick, validity, productType, orderType,False)
+        BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick, triggerPrice,validity, productType, orderType,False)
         #self.buyW.show()
     except:
         print(traceback.print_exc())
 
-def requestSellModification(self,appOrderID, exchange, token, price, orderType, validity, productType):
+def requestSellModification(self,appOrderID, exchange, token, price, orderType, validity, productType, triggerPrice):
     pass
 
 def requestBuyWindow(self,sourceClass):
@@ -105,8 +105,9 @@ def requestBuyWindow(self,sourceClass):
     tick = ins_details[10]
     lot = ins_details[11]
     max = ins_details[14]
+    triggerPrice = '0.0'
 
-    BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)
+    BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick, triggerPrice)
 
 def requestSellWindow(self,sourceClass):
 

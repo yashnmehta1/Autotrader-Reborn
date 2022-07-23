@@ -834,11 +834,9 @@ def sock1502(self, a):
 def updateSocketOB(self,ord):
     try:
         orderStatus = ord[0][10]
-        appOrderId = ord[0][8]
-        #PendingNew
+        appOrderId = ord[0][0]
         if(orderStatus !='PendingNew'):
-
-            if(appOrderId not in self.ApiOrder[:,8]):
+            if(appOrderId not in self.ApiOrder[:,0]):
                 self.ApiOrder[self.lastSerialNo, :] = ord
                 self.lastSerialNo += 1
                 self.modelO.lastSerialNo += 1
@@ -846,7 +844,8 @@ def updateSocketOB(self,ord):
                 self.modelO.insertRows()
             else:
                 filter = np.asarray([appOrderId])
-                self.ApiOrder[np.in1d(self.ApiOrder[:, 8], filter),[10,12]] = [orderStatus,ord[0][12]]
+                print("====API order 8 : ", (self.ApiOrder))
+                self.ApiOrder[np.in1d(self.ApiOrder[:, 0], filter),[9,10,11,12,13,14,15,18,21,23,24]] = [ord[0][9],orderStatus,ord[0][11],ord[0][12],ord[0][13],ord[0][14],ord[0][15],ord[0][18],ord[0][21],ord[0][23],ord[0][24]]
 
             if(self.isVisible()):
                 ind = self.modelO.index(0, 0)
@@ -861,18 +860,20 @@ def updateSocketPOB(self,ord):
     try:
         appOrderId = ord[0][0]
         orderStatus = ord[0][10]
-        # print(orderStatus,'appOrderId',appOrderId,type(appOrderId))
+        print(orderStatus,'appOrderId',appOrderId,type(appOrderId))
         fltr = np.asarray([appOrderId])
-        # print("filter:", fltr, "\n\n\n\n", self.ApiOrder)
+
+
+
+
         if (orderStatus == 'New'):
 
-            self.ApiOrder = np.vstack([self.ApiOrder[:self.lastSerialNo,:],ord])
+            self.ApiOrder = np.vstack([self.ApiOrder[:self.modelO.lastSerialNo,:],ord])
             self.modelO = tableO.ModelOB(self.ApiOrder, self.heads)
+
             self.smodelO = QSortFilterProxyModel()
             self.smodelO.setSourceModel(self.modelO)
             self.tableView.setModel(self.smodelO)
-
-            self.modelO.insertRows()
             self.modelO.rowCount()
             #
             # print('self.ApiOrder',self.modelO._data,self.modelO.lastSerialNo)
@@ -881,8 +882,8 @@ def updateSocketPOB(self,ord):
             self.modelO.dataChanged.emit(ind, ind1)
 
         elif (orderStatus in ['Rejected','Cancelled','PendingCancel','Filled']):
+            self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,0] != 0)]
             self.ApiOrder = self.ApiOrder[np.where(self.ApiOrder[:,0] != appOrderId)]
-
 
             self.modelO = tableO.ModelOB(self.ApiOrder, self.heads)
             self.smodelO = QSortFilterProxyModel()
@@ -908,7 +909,8 @@ def updateSocketPOB(self,ord):
             self.modelO.dataChanged.emit(ind, ind1)
         elif (orderStatus == 'Replaced'):
             print("yyyy----",self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr)])
-            self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr), [10,11,12,13]] = [ord[0][10],ord[0][11],ord[0][12],ord[0][13]]
+            self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr), [9,10,11,12,13,14,15,18,21,23,24]] = [ord[0][9],orderStatus,ord[0][11],ord[0][12],ord[0][13],ord[0][14],ord[0][15],ord[0][18],ord[0][21],ord[0][23],ord[0][24]]
+
             ind = self.modelO.index(0, 0)
             ind1 = self.modelO.index(0, 1)
             self.modelO.dataChanged.emit(ind, ind1)

@@ -10,65 +10,72 @@ from Application.Utils.openRequstedWindow import requestBuyModification, request
 
 def getClientId(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
-    clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),1]
-    print('clientId',clientId)
-    return clientId[0]
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),1]
+    print('getClientId',value)
+    return value[0]
 
 def getFolioNo(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
     folioNo = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),15]
-    print('folioNo',folioNo)
+    print('getFolioNo',folioNo)
     return folioNo[0]
 
 def getOrderSide(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
-    clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),8]
-    print('clientId',clientId)
-    return clientId[0]
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),8]
+    print('getOrderSide',value)
+    return value[0]
 
 def getExchange(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
-    clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),19]
-    print('clientId',clientId)
-    return clientId[0]
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),19]
+    print('getExchange',value)
+    return value[0]
 
 def getPrice(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
-    clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),13]
-    print('clientId',clientId)
-    return clientId[0]
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),13]
+    print('getPrice',value)
+    return value[0]
 
 def getToken(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
-    clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),2]
-    print('clientId',clientId)
-    return clientId[0]
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),2]
+    print('getToken',value)
+    return value[0]
 
 def getOrderType(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
-    clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),9]
-    print('clientId',clientId)
-    return clientId[0]
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),9]
+    print('getOrderType',value)
+    return value[0]
 
 def getValidity(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
-    clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),0]
-    print('clientId',clientId)
-    return 'DAY'
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),24]
+    print('getValidity',value)
+    return value[0]
 
 def getProductType(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
-    clientId = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),7]
-    print('clientId',clientId)
-    return 'NRML'
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),23]
+    print('getProductType',value)
+    return value[0]
+
+def getTriggerPrice(self,AppOrderId):
+    fltr = np.asarray([AppOrderId])
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),14]
+    print('getTriggerPrice',value)
+    return '%.2f'%value[0]
 
 def CancleOrder(self):
     try:
         indexes = self.tableView.selectedIndexes()
         selectedLen = len(indexes)
-        # rows
+
         noOfSelectedRecord = int (selectedLen / self.visibleColumns )
         print("noOfSelectedRecord:", noOfSelectedRecord)
+
         startingPoint = 0
         cancledOrderist = []
         for i in range(noOfSelectedRecord):
@@ -107,11 +114,13 @@ def ModifyOrder(self):
             exchange = getExchange(self.PendingW,AppOrderId)
             price = getPrice(self.PendingW,AppOrderId)
             token = getToken(self.PendingW,AppOrderId)
+            triggerPrice = getTriggerPrice(self.PendingW,AppOrderId)
+
 
             if orderSide == 'Buy':
-                requestBuyModification(self,AppOrderId, exchange, token, price, orderType, validity, productType)
+                requestBuyModification(self,AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice)
             else:
-                requestSellModification(self, AppOrderId, exchange, token, price, orderType, validity, productType)
+                requestSellModification(self, AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice)
         else:
             pass
     except:

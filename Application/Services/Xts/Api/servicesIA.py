@@ -115,7 +115,7 @@ def modifyOrder( self,appOrderId,exchange, clientID, token,  orderSide, qty, lim
             payload = getOrderModifyPayloadTWSApi(clientID,appOrderId,productType,orderType,qty,limitPrice,triggerPrice,disQty,validity,uid)
         else:
             payload = getOrderModifyPayloadWEBApi(appOrderId,productType,orderType,qty,limitPrice,triggerPrice,disQty,validity,uid)
-        # print(payload)
+        print("======modify:",payload)
         place_order_url = requests.put(self.URL + '/interactive/orders', json=payload,
                                        headers=self.IAheaders)
         data_p_order = place_order_url.json()
@@ -285,9 +285,13 @@ def getOrderBook(self,requestClass = 'main'):
 
 
             ApiOrder = np.empty((15000, 23), dtype=object)
-            PendingOrder = np.empty((15000, 23), dtype=object)
+            PendingOrder = np.empty((15000, 25), dtype=object)
             if(data_p['result']!=[]):
                 for j,i in enumerate(data_p['result']):
+                    ########################
+                    if(j==0):
+                        print('get_order',i)
+                    #######################
                     exchange = i["ExchangeSegment"]
                     token = i["ExchangeInstrumentID"]
                     ######################################## contract working ##########################################
@@ -299,7 +303,7 @@ def getOrderBook(self,requestClass = 'main'):
                             [ins_details[7]],[ins_details[8]],[orderSide],[i['OrderType']], [i['OrderStatus']],
                             [i['OrderQuantity']],[i['LeavesQuantity']],[i['OrderPrice']],[i['OrderStopPrice']], [i['OrderUniqueIdentifier']],
                             [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']],[i['CancelRejectReason']],[ins_details[0]],[ins_details[5]],
-                            [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
+                            [i['OrderAverageTradedPrice']],[Qty1],[i['ProductType']],[i['TimeInForce']]]).to_numpy()
 
                     if(requestClass=='main'):
                         updateGetOrder_OB(self,order,j)
