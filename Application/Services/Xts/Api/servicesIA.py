@@ -421,8 +421,6 @@ def get_Trades(self,requestClass):
                             self.sgGTrdSoc.emit(trades)
                             ApiTrade = np.vstack([ApiTrade, trades])
                             jk+=1
-            self.sgGetTrd.emit(ApiTrade)
-            # print('get Trade signal is emitted')
 
         tradeW_datachanged_full(self)
     except:

@@ -390,11 +390,9 @@ class Ui_Main(QMainWindow):
 
         update_Position_socket_MW(self,position)
     ##################################################################
-    # currently not in use
-
+    # currently not in us
     def updateGetorderBook(self,order,rowNo):
         updateGetOrder_OB(self,order,rowNo)
-
     def updateGetPendinOrderBook(self,order,rowNo):
         updateGetOrder_POB(order,rowNo)
     ##################################################################
