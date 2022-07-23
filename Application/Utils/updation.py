@@ -644,7 +644,7 @@ def updateGetOrder_OB(self,order,rowNo):
     self.OrderBook.modelO.insertRows()
     #############################################################################################
 
-def updateGetOrder_POB(self,orderBook,rowNo1,PendingOrder,rowNo2):
+def updateGetOrder_POB(self,PendingOrder,rowNo2):
 
     """
     first flush data

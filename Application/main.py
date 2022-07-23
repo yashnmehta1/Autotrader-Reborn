@@ -201,7 +201,6 @@ class Ui_Main(QMainWindow):
             self.LiveFeed.sgSocketConn.connect(lambda: self.login.label.append('Marketdata socket is connected'))
             self.LiveFeed.sgSocketConn.connect(self.login.pbNext.show)
 
-
             ################################################################################3
             # self.marketW.buyw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
             # self.marketW.sellw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
@@ -213,8 +212,13 @@ class Ui_Main(QMainWindow):
             self.IAS.sgGetTrd.connect(self.on_get_tradeBook)
             self.IAS.sgTrdSoc.connect(self.updateOnTrade)
 
-            self.IAS.sgGetOrder.connect(self.updateGetorderBook)
-            self.IAS.sgGetPOrder.connect(self.updateGetPendinOrderBook)
+            ######################################################################
+            # both getOrderbook process is done directly from Api call methos only
+            # self.IAS.sgGetOrder.connect(self.updateGetorderBook)
+            # self.IAS.sgGetPOrder.connect(self.updateGetPendinOrderBook)
+            ######################################################################
+
+
             self.IAS.sgPendSoc.connect(self.updateOderSocket)
             ############################################################################################
             self.LiveFeed.sgindexfd.connect(lambda:self.on_new_feed_Index)
@@ -386,11 +390,14 @@ class Ui_Main(QMainWindow):
 
         update_Position_socket_MW(self,position)
     ##################################################################
-    def updateGetorderBook(self,orderBook):
-        updateGetOrder_OB(self,orderBook)
-    def updateGetPendinOrderBook(self,orderBook):
-        self.PendingW.updateGetApi(orderBook)
+    # currently not in use
 
+    def updateGetorderBook(self,order,rowNo):
+        updateGetOrder_OB(self,order,rowNo)
+
+    def updateGetPendinOrderBook(self,order,rowNo):
+        updateGetOrder_POB(order,rowNo)
+    ##################################################################
 
     def updateOderSocket(self,order):
         self.OrderBook.updateSocketOB(order)

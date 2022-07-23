@@ -2,7 +2,7 @@
 Logs/*
 Theme/__pycache__
 Application/Views/*/__pycache__
-.idea/
+.idea/*
 Application/Services/Xts/*/__pycache__
 Application/Stretegies/*/__pycache__/
 Resourses/*/__pycache__/

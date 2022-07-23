@@ -276,7 +276,7 @@ def getPositionBook(self):
     except:
         print(traceback.print_exc())
 
-def getOrderBook(self,ifFlush = False):
+def getOrderBook(self,requestClass = 'main'):
     try:
         if(self.Source=='WEBAPI'):
             url = self.URL + '/interactive/orders'
@@ -303,17 +303,19 @@ def getOrderBook(self,ifFlush = False):
                             [i['OrderGeneratedDateTime']],[i['ExchangeTransactTime']],[i['CancelRejectReason']],[ins_details[0]],[ins_details[5]],
                             [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
 
-                    ApiOrder[j, :] =order
+                    if(requestClass=='main'):
+                        updateGetOrder_OB(order,j)
+
+
                     #############################################################################################
 
                     if(i['OrderStatus'] in ['PartiallyFilled','New','Replaced'] ):              #and i['OrderUniqueIdentifier']==self.FolioNo
                         PendingOrder[noOfPendingOrder,:] = order
+                        #############################################################
+                        if(requestClass=='mian'):
+                            updateGetOrder_POB(order,noOfPendingOrder)
+                        #############################################################
                         noOfPendingOrder += 1
-
-
-            """ 
-            check what should be returt with apiorder j or j+1
-            """
 
 
             return ApiOrder,j+1,PendingOrder,noOfPendingOrder+1
