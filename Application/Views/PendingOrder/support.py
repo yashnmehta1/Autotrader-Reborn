@@ -6,7 +6,8 @@ import threading
 from Application.Services.Xts.Api.servicesIA import cancle_order
 from PyQt5.QtWidgets import QMessageBox
 from Application.Utils.animations import showSnapFrame1
-from Application.Utils.openRequstedWindow import requestBuyModification, requestSellModification
+from Application.Utils.openRequstedWindow import requestBuyModification, requestSellModification, requestMultiModification
+import datatable as dt
 
 def getClientId(self,AppOrderId):
     fltr = np.asarray([AppOrderId])
@@ -115,14 +116,59 @@ def ModifyOrder(self):
             price = getPrice(self.PendingW,AppOrderId)
             token = getToken(self.PendingW,AppOrderId)
             triggerPrice = getTriggerPrice(self.PendingW,AppOrderId)
+            clientId = getClientId(self.PendingW, AppOrderId)
 
+            #### Add client ID for TWS API - pending
 
             if orderSide == 'Buy':
                 requestBuyModification(self,AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice)
             else:
                 requestSellModification(self, AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice)
         else:
-            pass
+            if noOfSelectedRecord > 10:
+                pass #throw error
+            else:
+                modifyArray = np.zeros((0,10), dtype=object)
+                for i in range(noOfSelectedRecord):
+                    AppOrderId = int(indexes[0].data())
+                    orderSide = getOrderSide(self.PendingW, AppOrderId)
+                    productType = getProductType(self.PendingW, AppOrderId)
+                    validity = getValidity(self.PendingW, AppOrderId)
+                    orderType = getOrderType(self.PendingW, AppOrderId)
+                    exchange = getExchange(self.PendingW, AppOrderId)
+                    price = getPrice(self.PendingW, AppOrderId)
+                    token = getToken(self.PendingW, AppOrderId)
+                    triggerPrice = getTriggerPrice(self.PendingW, AppOrderId)
+                    clientId = getClientId(self.PendingW,AppOrderId)
+
+                    array1 = dt.Frame([[AppOrderId],
+                       [clientId],[token],[orderSide],[orderType],[productType],
+                       [validity],[exchange],[price],[triggerPrice]]
+                                      ).to_numpy()
+                    modifyArray = np.vstack([modifyArray,array1])
+                    print("modifyArray:")
+                    print("+++++++++++++++++++++++++++++++++:")
+                    print(modifyArray)
+                uniqueToken = np.unique(modifyArray[:,2])
+                uniqueOrderSide = np.unique(modifyArray[:, 3])
+                uniqueOrderType = np.unique(modifyArray[:, 4])
+                uniqueProductType = np.unique(modifyArray[:, 5])
+                uniqueValidity = np.unique(modifyArray[:, 6])
+                uniqueExchange = np.unique(modifyArray[:, 7])
+
+                if(uniqueToken.size == 1 | uniqueOrderSide.size ==1 |
+                    uniqueOrderType.size ==1 | uniqueProductType.size ==1 |
+                    uniqueValidity.size == 1 | uniqueExchange.size == 1):
+                    pass
+
+
+
+                    requestMultiModification(self,modifyArray)
+                else:
+                    print("Modification error")
+                    #print error message
+
+           # print("uniqueTokens : ", uniqueTokens, uniqueTokens.size)
     except:
         print(traceback.print_exc())
     # RO = self.ApiOrder.shape[1]

@@ -1,7 +1,8 @@
 import numpy as np
 from Application.Views import BuyWindow
 from Application.Views import SellWindow
-
+from Application.Views import SellWindow
+from Application.Views.multiModification import  Ui_MultiModification
 import traceback
 
 
@@ -64,7 +65,53 @@ def requestBuyModification(self,appOrderID, exchange, token, price, orderType, v
         print(traceback.print_exc())
 
 def requestSellModification(self,appOrderID, exchange, token, price, orderType, validity, productType, triggerPrice):
-    pass
+    try:
+        if (exchange == 'NSEFO'):
+            ins_details = self.fo_contract[token - 35000]
+        else:
+            ins_details = self.fo_contract[token]
+
+        instrumentType = ins_details[5]
+        symbol = ins_details[3]
+        exp = ins_details[6]
+        strk = ins_details[7]
+        opt = ins_details[8]
+        tick = ins_details[10]
+        lot = ins_details[11]
+        max = ins_details[14]
+        self.sellW.appOrderIdFprModification = appOrderID
+        price = '%.2f' % price
+        SellWindow.support.showWindow(self, exchange, token, price, lot, symbol, instrumentType, exp, strk, opt, max,
+                                     lot, tick, triggerPrice, validity, productType, orderType, False)
+        # self.buyW.show()
+    except:
+        print(traceback.print_exc())
+
+def requestMultiModification(self, mofifyArray):
+    try:
+        pass
+        for i in mofifyArray:
+
+            if (i[7] == 'NSEFO'):
+                ins_details = self.fo_contract[i[2] - 35000]
+            else:
+                ins_details = self.fo_contract[i[2]]
+
+            instrumentType = ins_details[5]
+            symbol = ins_details[3]
+            exp = ins_details[6]
+            strk = ins_details[7]
+            opt = ins_details[8]
+            tick = ins_details[10]
+            lot = ins_details[11]
+            max = ins_details[14]
+            self.sellW.appOrderIdFprModification = i[0]
+            price = '%.2f' % price
+            # Ui_MultiModification.showWindow(self, exchange, token, price, lot, symbol, instrumentType, exp, strk, opt, max,
+            #                              lot, tick, triggerPrice, validity, productType, orderType, False)
+            # # self.buyW.show()
+    except:
+        print(traceback.print_exc())
 
 def requestBuyWindow(self,sourceClass):
 
@@ -149,4 +196,6 @@ def requestSellWindow(self,sourceClass):
     lot = ins_details[11]
     max = ins_details[14]
 
-    SellWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick)
+    triggerPrice = '0.0'
+
+    SellWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick,triggerPrice)

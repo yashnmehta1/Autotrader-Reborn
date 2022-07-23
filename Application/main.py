@@ -62,6 +62,7 @@ from Application.Services.Xts.Api import servicesMD
 from Application.Services.Xts.Api import servicesIA
 from Application.Utils.configReader import get_udp_port
 from Application.Utils.shortcuts import setShortcuts
+from Application.Views.multiModification import Ui_MultiModification
 from PyQt5 import uic
 
 from Application.Stretegies import TSpecial
@@ -110,6 +111,7 @@ class Ui_Main(QMainWindow):
             self.toggleUDP.setMaximumWidth(50)
             self.lbUDP.setMaximumWidth(55)
             self.Splash = Ui_Splash()
+            self.multiModificationW = Ui_MultiModification()
 
             self.buyW = Ui_BuyW()
             self.sellW = Ui_SellW()

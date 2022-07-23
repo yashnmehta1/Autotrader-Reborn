@@ -25,7 +25,7 @@ def getOrderType(self):
         return 'StopMarket'
 
 
-def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty ,lotSize ,tickSize,validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
+def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty ,lotSize ,tickSize,triggerPrice,validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
     try:
 
         self.sellW.leToken.setText(str(token))
@@ -43,9 +43,10 @@ def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk,
         self.sellW.lotsize =lotSize
         self.sellW.ticksize =tickSize
         self.sellW.freezeQty = freezeQty
-        self.sellW.sellW.cbOrdType.setCurrentText(orderType)
+        self.sellW.cbOrdType.setCurrentText(orderType)
         self.sellW.cbProduct.setCurrentText(productType)
         self.sellW.cbValidity.setCurrentText(validity)
+        self.sellW.leTrigger.setText(triggerPrice)
         self.sellW.isFresh = isFreshOrd
         self.sellW.show()
 
@@ -85,7 +86,7 @@ def placeOrd(self):
             else:
 
                 th1 = Thread(target=modifyOrder,
-                             args=(sellW.appOrderIdFprModification,exchange,clientID,token,orderSide,qty,limitPrice,disQty,triggerPrice,uid,orderType,productType,validity))
+                             args=(self,sellW.appOrderIdFprModification,exchange,clientID,token,orderSide,qty,limitPrice,disQty,triggerPrice,uid,orderType,productType,validity))
                 th1.start()
         hideWindow(self.sellW)
         sellW.appOrderIdFprModification=0

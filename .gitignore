@@ -13,4 +13,5 @@ Application/Stretegies/*/*/__pycache__
 Application/Services/*/*/*/__pycache__/
 Application/Services/*/__pycache__/
 .idea/Autotrader-Reborn.iml
+Resourses/config_json.json
 
