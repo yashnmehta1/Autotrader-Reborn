@@ -303,7 +303,7 @@ def getOrderBook(self,requestClass = 'main'):
                             [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
 
                     if(requestClass=='main'):
-                        updateGetOrder_OB(self.OrderBook,order,j)
+                        updateGetOrder_OB(self,order,j)
 
 
                     #############################################################################################
@@ -312,7 +312,7 @@ def getOrderBook(self,requestClass = 'main'):
                         PendingOrder[noOfPendingOrder,:] = order
                         #############################################################
                         if(requestClass=='mian'):
-                            updateGetOrder_POB(self.PendingW,order,noOfPendingOrder)
+                            updateGetOrder_POB(self,order,noOfPendingOrder)
                         #############################################################
                         noOfPendingOrder += 1
 
