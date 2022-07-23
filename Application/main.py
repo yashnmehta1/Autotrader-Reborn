@@ -392,20 +392,7 @@ class Ui_Main(QMainWindow):
     def updateOnPosition(self,position):
         print("update on position")
         update_Position_Socket_NP(self, position)
-
         update_Position_socket_MW(self,position)
-    ##################################################################
-    # currently not in us
-    def updateGetorderBook(self,order,rowNo):
-        updateGetOrder_OB(self,order,rowNo)
-    def updateGetPendinOrderBook(self,order,rowNo):
-        updateGetOrder_POB(order,rowNo)
-    def on_get_tradeBook(self,tradeBook):
-        updateGetTradeApi(self.TradeW,tradeBook)
-        updateGetTrade_FP(self.FolioPos,tradeBook)
-
-
-    ##################################################################
 
     def updateOderSocket(self,order):
         updateSocketOB(order)
@@ -414,9 +401,22 @@ class Ui_Main(QMainWindow):
     def updateOnTrade(self,trade):
         updateTradeSocket_TB(self,trade)
         updateGetTrade_FP(self,trade)
+
+    ##################################################################
+    # currently not in us
+    def updateGetorderBook(self,order,rowNo):
+        updateGetOrder_OB(self,order,rowNo)
+    def updateGetPendinOrderBook(self,order,rowNo):
+        updateGetOrder_POB(order,rowNo)
+
+    def on_get_tradeBook(self,tradeBook):
+        updateGetTradeApi(self.TradeW,tradeBook)
+        updateGetTrade_FP(self.FolioPos,tradeBook)
+
+
     ##################################################################
 
-
+    ##################################################################
 
     def on_new_feed_1501(self,data):
         UpdateLTP_MW(self,data)

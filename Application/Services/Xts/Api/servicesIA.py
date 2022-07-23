@@ -190,7 +190,6 @@ def getOpenPosition(self):
                     clientId = '*****'  if ('PRO' in i1['AccountID']) else i1['AccountID']
 
 
-
                     if(clientId not in self.openPosDict.keys()):
                         self.openPosDict[clientId]={}
                     if (token in dpos[:,1]):
@@ -304,7 +303,7 @@ def getOrderBook(self,requestClass = 'main'):
                             [i['OrderAverageTradedPrice']],[Qty1]]).to_numpy()
 
                     if(requestClass=='main'):
-                        updateGetOrder_OB(order,j)
+                        updateGetOrder_OB(self.OrderBook,order,j)
 
 
                     #############################################################################################
@@ -313,7 +312,7 @@ def getOrderBook(self,requestClass = 'main'):
                         PendingOrder[noOfPendingOrder,:] = order
                         #############################################################
                         if(requestClass=='mian'):
-                            updateGetOrder_POB(order,noOfPendingOrder)
+                            updateGetOrder_POB(self.PendingW,order,noOfPendingOrder)
                         #############################################################
                         noOfPendingOrder += 1
 

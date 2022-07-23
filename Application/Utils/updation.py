@@ -849,9 +849,6 @@ def updateSocketOB(self,ord):
                 ind = self.modelO.index(0, 0)
                 ind1 = self.modelO.index(0, 1)
                 self.modelO.dataChanged.emit(ind, ind1)
-
-
-
     except:
         print(traceback.print_exc())
         logging.error(sys.exc_info())

@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="050ce585-8a32-4b19-9802-2e2ed6609ea8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Autotrader-Reborn.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Autotrader-Reborn.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="050ce585-8a32-4b19-9802-2e2ed6609ea8" name="Changes" comment="initial">
       <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Utils/updation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/updation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +61,50 @@
       <option name="presentableId" value="Default" />
       <updated>1658556624121</updated>
     </task>
+    <task id="LOCAL-00001" summary="initial">
+      <created>1658558282078</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1658558282078</updated>
+    </task>
+    <task id="LOCAL-00002" summary="initial">
+      <created>1658558363723</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1658558363723</updated>
+    </task>
+    <task id="LOCAL-00003" summary="initial">
+      <created>1658558607945</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1658558607945</updated>
+    </task>
+    <task id="LOCAL-00004" summary="initial">
+      <created>1658558614169</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1658558614169</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial" />
   </component>
 </project>
