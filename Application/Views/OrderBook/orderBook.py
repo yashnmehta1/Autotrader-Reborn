@@ -94,35 +94,6 @@ class OrderBook(QMainWindow):
             print(traceback.print_exc())
             logging.error(sys.exc_info())
 
-    def updateSocketOB(self,ord):
-        try:
-            print("ord : ", ord)
-            orderStatus = ord[0][10]
-            appOrderId = ord[0][8]
-            #PendingNew
-            print("apporderId:",appOrderId)
-            if(orderStatus !='PendingNew'):
-
-                if(appOrderId not in self.ApiOrder[:,8]):
-                    self.ApiOrder[self.lastSerialNo, :] = ord
-                    self.lastSerialNo += 1
-                    self.modelO.lastSerialNo += 1
-                    self.modelO.rowCount()
-                    self.modelO.insertRows()
-                else:
-                    filter = np.asarray([appOrderId])
-                    self.ApiOrder[np.in1d(self.ApiOrder[:, 8], filter),[10,12]] = [orderStatus,ord[0][12]]
-
-                if(self.isVisible()):
-                    ind = self.modelO.index(0, 0)
-                    ind1 = self.modelO.index(0, 1)
-                    self.modelO.dataChanged.emit(ind, ind1)
-
-
-
-        except:
-            print(traceback.print_exc())
-            logging.error(sys.exc_info())
 
 
     def refresh_config(self):

@@ -197,6 +197,7 @@ class Ui_Main(QMainWindow):
             self.IAS.sgSocketConn.connect(self.LiveFeed.start_socket)
             self.IAS.sgSocketConn.connect(lambda:changeIAS_connIcon(self,0))
             self.IAS.sgSocketConn.connect(lambda:self.login.label.append('Interactive socket is connected'))
+
             self.LiveFeed.sgSocketConn.connect(lambda:changeMD_connIcon(self,0))
             self.LiveFeed.sgSocketConn.connect(lambda: self.login.label.append('Marketdata socket is connected'))
             self.LiveFeed.sgSocketConn.connect(self.login.pbNext.show)
@@ -207,19 +208,23 @@ class Ui_Main(QMainWindow):
             #########################################################################################3
             # self.IAS.sgGetAPIpos.connect(lambda: updateGetPosition(self))
             self.IAS.sgOpenPos.connect(lambda: updateOpenPosition(self))
-            self.IAS.sgAPIpos.connect(self.updateOnPosition)
 
-            self.IAS.sgGetTrd.connect(self.on_get_tradeBook)
+            self.IAS.sgAPIpos.connect(self.updateOnPosition)
             self.IAS.sgTrdSoc.connect(self.updateOnTrade)
 
             ######################################################################
             # both getOrderbook process is done directly from Api call methos only
             # self.IAS.sgGetOrder.connect(self.updateGetorderBook)
             # self.IAS.sgGetPOrder.connect(self.updateGetPendinOrderBook)
+            # self.IAS.sgGetTrd.connect(self.on_get_tradeBook)
+            # self.IAS.sgPendSoc.connect(self.updateOderSocket)
+
+
+
             ######################################################################
 
 
-            self.IAS.sgPendSoc.connect(self.updateOderSocket)
+
             ############################################################################################
             self.LiveFeed.sgindexfd.connect(lambda:self.on_new_feed_Index)
             self.LiveFeed.sgNPFrec.connect(self.on_new_feed_1501)
@@ -395,16 +400,16 @@ class Ui_Main(QMainWindow):
         updateGetOrder_OB(self,order,rowNo)
     def updateGetPendinOrderBook(self,order,rowNo):
         updateGetOrder_POB(order,rowNo)
-    ##################################################################
-
-    def updateOderSocket(self,order):
-        self.OrderBook.updateSocketOB(order)
-        updateSocketPOB(self.PendingW,order)
-
-    ##################################################################
     def on_get_tradeBook(self,tradeBook):
         updateGetTradeApi(self.TradeW,tradeBook)
         updateGetTrade_FP(self.FolioPos,tradeBook)
+
+
+    ##################################################################
+
+    def updateOderSocket(self,order):
+        updateSocketOB(order)
+        updateSocketPOB(self.PendingW,order)
 
     def updateOnTrade(self,trade):
         updateTradeSocket_TB(self,trade)

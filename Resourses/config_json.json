@@ -10,16 +10,16 @@
     "broadcastmode": "Partial",
     "url": "http://192.168.102.22:3000",
     "IAToken": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBMDExOV9CMjcwNDI0RjIyNDdENTJCMDA2ODQwIiwicHVibGljS2V5IjoiYjI3MDQyNGYyMjQ3ZDUyYjAwNjg0MCIsImlhdCI6MTY1ODUwOTg5NCwiZXhwIjoxNjU4NTk2Mjk0fQ.4cClNppJeY4vSWe8v3uBAxtnaP3zttoeVFP3tOhOBUc",
-        "login_date": "22-07-22",
-        "login_time": "22:41:34",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBMDExOV9CMjcwNDI0RjIyNDdENTJCMDA2ODQwIiwicHVibGljS2V5IjoiYjI3MDQyNGYyMjQ3ZDUyYjAwNjg0MCIsImlhdCI6MTY1ODU1NjY3NiwiZXhwIjoxNjU4NjQzMDc2fQ.R43pdzBn45Qhk9FRuYw0M6dwwIIeV-GEfqwlEfYO7dw",
+        "login_date": "22-07-23",
+        "login_time": "11:41:18",
         "Client_list": [
             "A0119"
         ]
     },
     "MDToken": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBMDExOV9lYTE5N2UzMTQ0YjM4MTg5OWM2OTI3IiwicHVibGljS2V5IjoiZWExOTdlMzE0NGIzODE4OTljNjkyNyIsImlhdCI6MTY1ODUwOTg5MiwiZXhwIjoxNjU4NTk2MjkyfQ.I0jpkRTwNmLvWATsJlq9L4VQHgIZaQXoszUhyObA_GM",
-        "login_time": "22:41:32"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJBMDExOV9lYTE5N2UzMTQ0YjM4MTg5OWM2OTI3IiwicHVibGljS2V5IjoiZWExOTdlMzE0NGIzODE4OTljNjkyNyIsImlhdCI6MTY1ODU1NjY3NSwiZXhwIjoxNjU4NjQzMDc1fQ.U92WpUc36bvEcHzTmBSU1johdOpKZW2rcYHkW5UJono",
+        "login_time": "11:41:17"
     },
     "DefaultClient": "A0119",
     "userID": "A0119",
