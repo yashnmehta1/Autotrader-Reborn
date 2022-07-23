@@ -14,6 +14,16 @@ import sys
 from threading import Thread
 
 
+def getOrderType(self):
+    if(self.cbOrdType.currentIndex()==0):
+        return 'LIMIT'
+    elif(self.cbOrdType.currentIndex()==1):
+        return 'MARKET'
+    elif(self.cbOrdType.currentIndex()==2):
+        return 'StopLimit'
+    elif(self.cbOrdType.currentIndex()==3):
+        return 'StopMarket'
+
 
 def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty ,lotSize ,tickSize,validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
     try:
@@ -162,51 +172,6 @@ def setAllShortcuts(self):
     self.leQty.sc_down1 = QShortcut(QKeySequence('Ctrl+Down'), self.leQty)
     self.leQty.sc_down1.activated.connect(lambda: dec_v(self))
     self.leQty.sc_down1.setContext(Qt.WidgetWithChildrenShortcut)
-    # self.PlaceOrdSc1 = QShortcut(QKeySequence('Return'), self)
-    # self.PlaceOrdSc1.activated.connect(lambda: placeOrd(self))
-    # self.PlaceOrdSc2 = QShortcut(QKeySequence('Enter'), self)
-    # self.PlaceOrdSc2.activated.connect(lambda: placeOrd(self))
-    # self.pbSubmit.clicked.connect(lambda: placeOrd(self))
-
-
-def modify(self, apporderid, orderType, qty, discQty, Mprice, MStopPrice, OrderUniqueID, clientId, productType):
-    try:
-        if (self.source != 'TWSAPI'):
-
-            modify_payload = {
-                "appOrderID": apporderid,
-                "modifiedProductType": "NRML",
-                "modifiedOrderType": orderType,
-                "modifiedOrderQuantity": qty,
-                "modifiedDisclosedQuantity": discQty,
-                "modifiedLimitPrice": Mprice,
-                "modifiedStopPrice": MStopPrice,
-                "modifiedTimeInForce": "DAY",
-                "orderUniqueIdentifier": OrderUniqueID
-            }
-        else:
-            modify_payload = {
-                "clientID": clientId,
-                "appOrderID": apporderid,
-                "modifiedProductType": "NRML",
-                "modifiedOrderType": orderType,
-                "modifiedOrderQuantity": qty,
-                "modifiedDisclosedQuantity": discQty,
-                "modifiedLimitPrice": Mprice,
-                "modifiedStopPrice": MStopPrice,
-                "modifiedTimeInForce": "DAY",
-                "orderUniqueIdentifier": OrderUniqueID
-            }
-
-        print(modify_payload)
-        # modify_payload1 = json.dumps(modify_payload,cls=NumpyEncoder)
-        place_order_url = requests.put(self.apiip + '/interactive/orders', json=modify_payload,
-                                       headers=self.iheaders)
-        data_p_order = place_order_url.json()
-        print('Order Modification request', data_p_order)
-    except:
-        print(traceback.print_exc())
-        logging.error(sys.exc_info()[1])
 
 def hideWindow(self):
     self.isFresh = True

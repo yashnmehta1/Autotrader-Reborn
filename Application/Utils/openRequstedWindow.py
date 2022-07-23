@@ -43,11 +43,11 @@ def snapQuoteRequested(self,superClass):
 def requestBuyModification(self,appOrderID, exchange, token, price, orderType, validity, productType):
 
     try:
-        print('pppppppppp')
         if(exchange == 'NSEFO'):
             ins_details = self.fo_contract[token-35000]
         else:
             ins_details = self.fo_contract[token]
+
         instrumentType = ins_details[5]
         symbol = ins_details[3]
         exp = ins_details[6]
@@ -57,10 +57,7 @@ def requestBuyModification(self,appOrderID, exchange, token, price, orderType, v
         lot = ins_details[11]
         max = ins_details[14]
         self.buyW.appOrderIdFprModification = appOrderID
-
-        print('path no appOrderID',appOrderID)
         price = '%.2f' %price
-
         BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick, validity, productType, orderType,False)
         #self.buyW.show()
     except:

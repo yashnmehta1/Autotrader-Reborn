@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="34886e1c-45bb-4dfb-963b-28e768ccbeaa" name="Changes" comment="`initial`">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Utils/updation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/updation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Utils/openRequstedWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Utils/openRequstedWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/PendingOrder/support.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/PendingOrder/support.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Views/SellWindow/support.py" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Views/SellWindow/support.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resourses/UI/modifyMultiOrder.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/UI/modifyMultiOrder.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Resourses/config_json.json" beforeDir="false" afterPath="$PROJECT_DIR$/Resourses/config_json.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -174,20 +177,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1656144651137</updated>
-    </task>
-    <task id="LOCAL-00001" summary="2">
-      <created>1656147502779</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1656147502779</updated>
-    </task>
-    <task id="LOCAL-00002" summary="2&#10;2">
-      <created>1656148197252</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1656148197252</updated>
     </task>
     <task id="LOCAL-00003" summary="2&#10;2">
       <created>1656148337037</created>
@@ -518,7 +507,21 @@
       <option name="project" value="LOCAL" />
       <updated>1658493561044</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="`initial`">
+      <created>1658493966093</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1658493966094</updated>
+    </task>
+    <task id="LOCAL-00051" summary="`initial`">
+      <created>1658507382852</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1658507382852</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -544,7 +547,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Utils/openRequstedWindow.py</url>
-          <line>5</line>
+          <line>8</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -559,17 +562,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Views/PendingOrder/pendingOrder.py</url>
-          <line>93</line>
+          <line>90</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py</url>
-          <line>311</line>
+          <line>360</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Services/Xts/Api/servicesIA.py</url>
-          <line>309</line>
+          <line>358</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -584,7 +587,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Application/Views/PendingOrder/support.py</url>
-          <line>154</line>
+          <line>219</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

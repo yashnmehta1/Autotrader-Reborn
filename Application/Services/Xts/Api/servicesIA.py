@@ -70,17 +70,15 @@ def getOrderModifyPayloadWEBApi(apporderid, productType,orderType, qty,limitPric
 def getOrderModifyPayloadTWSApi(clientID,apporderid, productType,orderType, qty,limitPrice, MStopPrice, disQty, validity, OrderUniqueID):
     payload_order_place = {
         "clientID": clientID,
-        "exchangeSegment": exchange,
-        "exchangeInstrumentID": token,
-        "productType": productType,
-        "orderType": orderType,
-        "orderSide": orderSide,
-        "timeInForce": validity,
-        "disclosedQuantity": disQty,
-        "orderQuantity": qty,
-        "limitPrice": limitPrice,
-        "stopPrice": triggerPrice,
-        "orderUniqueIdentifier": uid
+        "appOrderID": apporderid,
+        "modifiedProductType": productType,
+        "modifiedOrderType": orderType,
+        "modifiedOrderQuantity": qty,
+        "modifiedDisclosedQuantity": disQty,
+        "modifiedLimitPrice": limitPrice,
+        "modifiedStopPrice": MStopPrice,
+        "modifiedTimeInForce": validity,
+        "orderUniqueIdentifier": OrderUniqueID
     }
     return payload_order_place
 
@@ -100,8 +98,8 @@ def PlaceOrder( self,exchange, clientID, token,  orderSide, qty, limitPrice,  va
                                         headers=self.IAheaders)
 
         resJson = place_order_url.json()
-        aoid = resJson['result']['AppOrderID']
-        # print('resJson',aoid,resJson,)
+        # aoid = resJson['result']['AppOrderID']
+        # # print('resJson',aoid,resJson,)
         logging.info(place_order_url.text)
     except:
         print(traceback.print_exc(),resJson)
@@ -116,18 +114,16 @@ def modifyOrder( self,appOrderId,exchange, clientID, token,  orderSide, qty, lim
         if(self.Source == 'TWSAPI'):
             payload = getOrderModifyPayloadTWSApi(clientID,appOrderId,productType,orderType,qty,limitPrice,triggerPrice,disQty,validity,uid)
         else:
-            # exchange, clientID, token, orderSide, qty, limitPrice, validity, disQty, triggerPrice, uid,
-            # orderType, productType
             payload = getOrderModifyPayloadWEBApi(appOrderId,productType,orderType,qty,limitPrice,triggerPrice,disQty,validity,uid)
-        print(payload)
+        # print(payload)
         place_order_url = requests.put(self.URL + '/interactive/orders', json=payload,
                                        headers=self.IAheaders)
         data_p_order = place_order_url.json()
-        print('Order Modification request', data_p_order)
+        # print('Order Modification request', data_p_order)
 
         logging.info(place_order_url.text)
     except:
-        print(traceback.print_exc(),resJson)
+        print(traceback.print_exc())
         logging.error(sys.exc_info()[1])
 ########################################################
 def getOpenPosition(self):

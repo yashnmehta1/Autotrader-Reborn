@@ -98,12 +98,8 @@ def ModifyOrder(self):
         indexes = self.PendingW.tableView.selectedIndexes()
         selectedLen = len(indexes)
         noOfSelectedRecord = int(selectedLen / self.PendingW.visibleColumns)
-
-
         if (noOfSelectedRecord == 1):
             AppOrderId = int(indexes[0].data())
-
-
             orderSide = getOrderSide(self.PendingW,AppOrderId)
             productType= getProductType(self.PendingW,AppOrderId)
             validity = getValidity(self.PendingW,AppOrderId)
@@ -112,15 +108,10 @@ def ModifyOrder(self):
             price = getPrice(self.PendingW,AppOrderId)
             token = getToken(self.PendingW,AppOrderId)
 
-
-            print("11- order side", orderSide)
             if orderSide == 'Buy':
-                print('modification attempted')
                 requestBuyModification(self,AppOrderId, exchange, token, price, orderType, validity, productType)
             else:
                 requestSellModification(self, AppOrderId, exchange, token, price, orderType, validity, productType)
-
-
         else:
             pass
     except:
