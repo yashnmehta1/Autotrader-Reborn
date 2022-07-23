@@ -286,7 +286,6 @@ def getOrderBook(self,requestClass = 'main'):
 
             ApiOrder = np.empty((15000, 23), dtype=object)
             PendingOrder = np.empty((15000, 23), dtype=object)
-            j=0
             if(data_p['result']!=[]):
                 for j,i in enumerate(data_p['result']):
                     exchange = i["ExchangeSegment"]
@@ -309,15 +308,15 @@ def getOrderBook(self,requestClass = 'main'):
                     #############################################################################################
 
                     if(i['OrderStatus'] in ['PartiallyFilled','New','Replaced'] ):              #and i['OrderUniqueIdentifier']==self.FolioNo
+
                         PendingOrder[noOfPendingOrder,:] = order
                         #############################################################
-                        if(requestClass=='mian'):
+                        if(requestClass=='main'):
+                            print(i['OrderStatus'])
                             updateGetOrder_POB(self,order,noOfPendingOrder)
                         #############################################################
                         noOfPendingOrder += 1
 
-
-            return ApiOrder,j+1,PendingOrder,noOfPendingOrder+1
 
         else:
             jk = 0
@@ -354,7 +353,6 @@ def getOrderBook(self,requestClass = 'main'):
         orderW_datachanged_full(self)
     ####################################################
     except:
-        logging.error(sys.exc_info()[1])
         print(traceback.print_exc())
 
 def get_Trades(self,requestClass):
@@ -493,7 +491,7 @@ def login(self):
                 th1 = threading.Thread(target=get_Trades, args=(self,'main'))
                 self.IAS.start_socket_io()
                 #
-                th2 = threading.Thread(target=getOrderBook, args=(self, ))
+                th2 = threading.Thread(target=getOrderBook, args=(self,'main' ))
                 #
                 #
                 th1.start()

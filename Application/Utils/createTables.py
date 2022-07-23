@@ -242,7 +242,7 @@ def tables_details_ob(self):
 
 def tables_details_pob(self):
     try:
-        self.ApiOrder = np.zeros((0,23),dtype=object)
+        self.ApiOrder = np.zeros((1000,23),dtype=object)
         self.heads = ['AppOrderID',
                       'ClientID','ExchangeInstrumentID', 'Instrument','Symbol','Expiry',
                       'Strike_price','C/P','OrderSide',  'OrderType','OrderStatus',
@@ -253,7 +253,7 @@ def tables_details_pob(self):
         #############################################################################################################
 
         #############################################
-        self.modelO = tableO.ModelOB(self.ApiOrder,self.heads)
+        self.modelO = tableO.ModelOB(self.ApiOrder,self.heads,False)
         self.smodelO = QSortFilterProxyModel()
         self.smodelO.setSourceModel(self.modelO)
         self.tableView.setModel(self.smodelO)

@@ -651,14 +651,17 @@ def updateGetOrder_POB(self,PendingOrder,rowNo2):
     then
     restore
     """
+    try:
 
-    self.PendingW.ApiOrder[:rowNo2,:] = PendingOrder
-    self.PendingW.lastSerialNo += rowNo2
-    self.PendingW.modelO.lastSerialNo += rowNo2
-    self.PendingW.modelO.rowCount()
-    self.PendingW.modelO.insertRows()
-    pendingW_datachanged_full(self)
-
+        print('updateGetOrder_POB is called')
+        self.PendingW.ApiOrder[rowNo2,:] = PendingOrder
+        self.PendingW.lastSerialNo += 1
+        self.PendingW.modelO.lastSerialNo += 1
+        self.PendingW.modelO.rowCount()
+        self.PendingW.modelO.insertRows()
+        pendingW_datachanged_full(self)
+    except:
+        print(traceback.print_exc())
 ###############################################
 def pendingW_datachanged_full(self):
     ind = self.PendingW.modelO.index(0, 0)
@@ -858,12 +861,12 @@ def updateSocketPOB(self,ord):
     try:
         appOrderId = ord[0][0]
         orderStatus = ord[0][10]
-        print(orderStatus,'appOrderId',appOrderId,type(appOrderId))
+        # print(orderStatus,'appOrderId',appOrderId,type(appOrderId))
         fltr = np.asarray([appOrderId])
-        print("filter:", fltr, "\n\n\n\n", self.ApiOrder)
+        # print("filter:", fltr, "\n\n\n\n", self.ApiOrder)
         if (orderStatus == 'New'):
 
-            self.ApiOrder = np.vstack([self.ApiOrder,ord])
+            self.ApiOrder = np.vstack([self.ApiOrder[:self.lastSerialNo,:],ord])
             self.modelO = tableO.ModelOB(self.ApiOrder, self.heads)
             self.smodelO = QSortFilterProxyModel()
             self.smodelO.setSourceModel(self.modelO)
@@ -871,8 +874,8 @@ def updateSocketPOB(self,ord):
 
             self.modelO.insertRows()
             self.modelO.rowCount()
-
-            print('self.ApiOrder',self.modelO._data,self.modelO.lastSerialNo)
+            #
+            # print('self.ApiOrder',self.modelO._data,self.modelO.lastSerialNo)
             ind = self.modelO.index(0, 0)
             ind1 = self.modelO.index(0, 1)
             self.modelO.dataChanged.emit(ind, ind1)

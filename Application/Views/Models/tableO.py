@@ -9,12 +9,16 @@ from PyQt5.QtGui import QBrush
 
 class ModelOB(QtCore.QAbstractTableModel):
 
-    def __init__(self, data,heads):
+    def __init__(self, data,heads,isReset=True):
         super(ModelOB, self).__init__()
         self._data = data
         # self._data1 = data
         self.heads=heads
-        self.lastSerialNo = data.shape[0]
+        if(isReset):
+            self.lastSerialNo = data.shape[0]
+        else:
+            self.lastSerialNo = 0
+
 
     def data(self, index, role):
         try:
@@ -32,7 +36,10 @@ class ModelOB(QtCore.QAbstractTableModel):
         except:
             print(traceback.print_exc())
     def rowCount(self, index=''):
-        return self._data.shape[0]
+        return self.lastSerialNo
+
+
+
     def columnCount(self, index):
         return len(self.heads)
 
