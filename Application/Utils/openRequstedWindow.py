@@ -87,29 +87,15 @@ def requestSellModification(self,appOrderID, exchange, token, price, orderType, 
     except:
         print(traceback.print_exc())
 
-def requestMultiModification(self, mofifyArray):
+def requestMultiModification(self, modifyArray):
     try:
-        pass
-        for i in mofifyArray:
 
-            if (i[7] == 'NSEFO'):
-                ins_details = self.fo_contract[i[2] - 35000]
-            else:
-                ins_details = self.fo_contract[i[2]]
-
-            instrumentType = ins_details[5]
-            symbol = ins_details[3]
-            exp = ins_details[6]
-            strk = ins_details[7]
-            opt = ins_details[8]
-            tick = ins_details[10]
-            lot = ins_details[11]
-            max = ins_details[14]
-            self.sellW.appOrderIdFprModification = i[0]
-            price = '%.2f' % price
-            # Ui_MultiModification.showWindow(self, exchange, token, price, lot, symbol, instrumentType, exp, strk, opt, max,
-            #                              lot, tick, triggerPrice, validity, productType, orderType, False)
-            # # self.buyW.show()
+        if (modifyArray[0][7] == 'NSEFO'):
+            ins_details = self.fo_contract[modifyArray[0][2] - 35000]
+        else:
+            ins_details = self.fo_contract[modifyArray[0][2]]
+        instrumentType = ins_details[5]
+        self.multiModifyW.showWindow(self, modifyArray, instrumentType)
     except:
         print(traceback.print_exc())
 

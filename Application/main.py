@@ -111,7 +111,7 @@ class Ui_Main(QMainWindow):
             self.toggleUDP.setMaximumWidth(50)
             self.lbUDP.setMaximumWidth(55)
             self.Splash = Ui_Splash()
-            self.multiModificationW = Ui_MultiModification()
+            self.multiModifyW = Ui_MultiModification()
 
             self.buyW = Ui_BuyW()
             self.sellW = Ui_SellW()

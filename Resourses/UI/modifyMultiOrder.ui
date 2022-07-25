@@ -265,10 +265,10 @@ QLineEdit:selected {
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="leModifiedPrice"/>
        </item>
        <item row="1" column="2">
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="leModifiedTriggerPrice"/>
        </item>
        <item row="1" column="4">
         <widget class="QPushButton" name="pushButton_2">
@@ -278,7 +278,7 @@ QLineEdit:selected {
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="pbModify">
          <property name="text">
           <string>Modify</string>
          </property>

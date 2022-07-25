@@ -3,6 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
 from os import path, getcwd
+from Application.Services.Xts.Api.servicesIA import modifyOrder
 import qdarkstyle
 from Theme.dt2 import dt1
 import traceback
@@ -29,11 +30,11 @@ class Ui_MultiModification(QMainWindow):
 
         self.setWindowFlags(flags)
 
+    def showWindow(self,  modifyArray, instrumentType):
+        self.modifyArray = modifyArray
+        self.instrumentType = instrumentType
+        self.show()
 
-if __name__ == "__main__":
-    import sys
-    app = QApplication(sys.argv)
-    form = Ui_MultiModification()
-    form.show()
-    # form.show()
-    sys.exit(app.exec_())
+    def modifyMultipleOrders(self):
+        for i in self.modifyArray:
+            modifyOrder(self,i[0],i[7],i[1],i[2],i[3],i[])
