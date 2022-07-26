@@ -11,12 +11,13 @@ from Application.Utils.configReader import writeMD,refresh
 
 
 
-def subscribeToken(self, token, seg='NSEFO', streamType=1501):
+def subscribeToken(self, token, seg, streamType=1501):
     try:
         if (seg == 'NSEFO'):
             segment = 2
         elif (seg == 'NSECM'):
             segment = 1
+        ## ****** CD PENDING
         # print('segment',segment)
         sub_url = self.URL + '/marketdata/instruments/subscription'
         payloadsub = {"instruments": [{"exchangeSegment": segment, "exchangeInstrumentID": token}],
@@ -40,16 +41,16 @@ def subscribeToken(self, token, seg='NSEFO', streamType=1501):
         print(traceback.print_exc())
 
 
-def unSubscription_feed(self, token, seg='NSEFO', mt=1501):
+def unSubscription_feed(self, token, seg, streamType=1501):
     try:
         if (seg == 'NSEFO'):
             segment = 2
-        elif (seg == 'NSE_CASH'):
+        elif (seg == 'NSECM'):
             segment = 1
-
+        ## ****** CD PENDING
         sub_url = self.URL + '/marketdata/instruments/subscription'
         payloadsub = {"instruments": [{"exchangeSegment": segment, "exchangeInstrumentID": token}],
-                      "xtsMessageCode": mt}
+                      "xtsMessageCode": streamType}
         payloadsubjson = json.dumps(payloadsub)
         req = requests.request("PUT", sub_url, data=payloadsubjson, headers=self.MDheaders)
 
@@ -112,10 +113,14 @@ def login(self):
         logging.error(sys.exc_info()[1])
         print(traceback.print_exc())
 
-def getQuote(self, token):
+def getQuote(self, token, seg, streamType):
     try:
+        if (seg == 'NSEFO'):
+            segment = 2
+        elif (seg == 'NSECM'):
+            segment = 1
         quote_url = self.URL + '/marketdata/instruments/quotes'
-        payload_quote = {"instruments": [{"exchangeSegment": 2,"exchangeInstrumentID": token}],"xtsMessageCode": 1501,"publishFormat": "JSON"}
+        payload_quote = {"instruments": [{"exchangeSegment": segment,"exchangeInstrumentID": token}],"xtsMessageCode": streamType,"publishFormat": "JSON"}
         quote_json = json.dumps(payload_quote)
         data = requests.request("POST", quote_url, data=quote_json, headers=self.MDheaders)
         # print(data.text)

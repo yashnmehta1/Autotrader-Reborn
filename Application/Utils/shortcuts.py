@@ -106,7 +106,69 @@ def setShortcuts(self):
 
     self.marketW.tableView.callPendind = QShortcut(QKeySequence('F3'), self)
     self.marketW.tableView.callPendind.setContext(Qt.WidgetWithChildrenShortcut)
-    self.marketW.tableView.callPendind.activated.connect(lambda:requestBuyWindow(self))
+    self.marketW.tableView.callPendind.activated.connect(lambda:requestPendingWindow(self))
+
+    self.marketW.tableView.callOrderbook = QShortcut(QKeySequence('Ctrl+F3'), self)
+    self.marketW.tableView.callOrderbook.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketW.tableView.callOrderbook.activated.connect(lambda:requestOrderbook(self))
+
+    self.marketW.tableView.callTradebook = QShortcut(QKeySequence('F8'), self)
+    self.marketW.tableView.callTradebook.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketW.tableView.callTradebook.activated.connect(lambda:requestTradebook(self))
+
+
+
+    self.marketWB.tableView.callPendind = QShortcut(QKeySequence('F3'), self)
+    self.marketWB.tableView.callPendind.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.callPendind.activated.connect(lambda:requestPendingWindow(self))
+
+    self.marketWB.tableView.callOrderbook = QShortcut(QKeySequence('Ctrl+F3'), self)
+    self.marketWB.tableView.callOrderbook.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.callOrderbook.activated.connect(lambda:requestOrderbook(self))
+
+    self.marketWB.tableView.callTradebook = QShortcut(QKeySequence('F8'), self)
+    self.marketWB.tableView.callTradebook.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.callTradebook.activated.connect(lambda:requestTradebook(self))
+
+
+
+    self.FolioPos.tableView.callPendind = QShortcut(QKeySequence('F3'), self)
+    self.FolioPos.tableView.callPendind.setContext(Qt.WidgetWithChildrenShortcut)
+    self.FolioPos.tableView.callPendind.activated.connect(lambda:requestPendingWindow(self))
+
+    self.FolioPos.tableView.callOrderbook = QShortcut(QKeySequence('Ctrl+F3'), self)
+    self.FolioPos.tableView.callOrderbook.setContext(Qt.WidgetWithChildrenShortcut)
+    self.FolioPos.tableView.callOrderbook.activated.connect(lambda:requestOrderbook(self))
+
+    self.FolioPos.tableView.callTradebook = QShortcut(QKeySequence('F8'), self)
+    self.FolioPos.tableView.callTradebook.setContext(Qt.WidgetWithChildrenShortcut)
+    self.FolioPos.tableView.callTradebook.activated.connect(lambda:requestTradebook(self))
+
+
+
+    self.NetPos.tableView.callPendind = QShortcut(QKeySequence('F3'), self)
+    self.NetPos.tableView.callPendind.setContext(Qt.WidgetWithChildrenShortcut)
+    self.NetPos.tableView.callPendind.activated.connect(lambda:requestPendingWindow(self))
+
+    self.NetPos.tableView.callOrderbook = QShortcut(QKeySequence('Ctrl+F3'), self)
+    self.NetPos.tableView.callOrderbook.setContext(Qt.WidgetWithChildrenShortcut)
+    self.NetPos.tableView.callOrderbook.activated.connect(lambda:requestOrderbook(self))
+
+    self.NetPos.tableView.callTradebook = QShortcut(QKeySequence('F8'), self)
+    self.NetPos.tableView.callTradebook.setContext(Qt.WidgetWithChildrenShortcut)
+    self.NetPos.tableView.callTradebook.activated.connect(lambda:requestTradebook(self))
+
+
+######################
+
+    self.callNetPos = QShortcut(QKeySequence('Alt+F6'), self)
+    self.callNetPos.activated.connect(lambda: requestNetPos(self))
+
+
+
+
+
+
 
     self.marketW.tableView.shortcut_snapQuote = QShortcut(QKeySequence('F5'), self.marketW.tableView)
     self.marketW.tableView.shortcut_snapQuote.setContext(Qt.WidgetWithChildrenShortcut)

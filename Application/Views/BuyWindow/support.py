@@ -27,6 +27,18 @@ def getOrderType(self):
     elif(self.cbOrdType.currentIndex()==3):
         return 'StopMarket'
 
+def setOrderType(self, orderType):
+    if(orderType == 'Limit'):
+        self.cbOrdType.setCurrentIndex(0)
+    elif (orderType == 'Market'):
+        self.cbOrdType.setCurrentIndex(1)
+
+    elif (orderType == 'StopLimit'):
+        self.cbOrdType.setCurrentIndex(2)
+
+    elif (orderType == 'StopMarket'):
+        self.cbOrdType.setCurrentIndex(3)
+
 def dec_v(self):
     if(self.leQty.hasFocus( ) == True):
         if (self.leQty.text( ) != '0'):
@@ -166,7 +178,10 @@ def showWindow(self, exchange,token, price, qty, symbol, instrument, exp, strk, 
         self.buyW.cbOpt.addItem(opt)
         self.buyW.leQty.setText(str(qty))
         self.buyW.leRate.setText(price)
-        self.buyW.cbOrdType.setCurrentText(orderType)
+
+        print("#################################")
+        print("orderType:", orderType)
+        setOrderType(self.buyW,orderType)
         self.buyW.cbProduct.setCurrentText(productType)
         self.buyW.cbValidity.setCurrentText(validity)
         self.buyW.isFresh = isFreshOrd

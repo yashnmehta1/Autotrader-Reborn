@@ -55,6 +55,7 @@ class Ui_SellW(QMainWindow):
             # self.MDheaders, self.IAheaders, self.MDToken, self.IAToken, self.URL, self.userID, self.source,market_data_appKey,market_data_secretKey,ia_appKey,ia_secretKey,clist,DClient,broadcastMode = readConfig_All()
 
             self.slist = ['MANUAL']
+            #self.slist = []
             self.isFresh =True
             self.modifyOIDList = []
 

@@ -493,7 +493,7 @@ def getMaster(validation):
             contractEq1['Segment'] = 'E'
             contractEq1['option_type'] = ' '
             contractEq1['strike_price'] =' '
-            contractEq1['instrument_type'] =' '
+            contractEq1['instrument_type'] ='Equity'
             contractEq1['asset_token'] =' '
             contractEq1['strike1'] =0.0
 
@@ -502,7 +502,7 @@ def getMaster(validation):
 
 
             cndEq = contractEq1[['Exchange',
-                                 'Segment','Token', 'Stock_name','symbol','instrument_type',
+                                 'Segment','Token', 'symbol','Stock_name','instrument_type',
                                  'exp','strike_price','option_type','asset_token','tick_size',
                                  'lot_size','strike1','Multiplier','FreezeQty','PriceBand.High',
                                  'PriceBand.Low']]

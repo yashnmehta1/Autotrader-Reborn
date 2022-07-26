@@ -302,7 +302,7 @@ QLineEdit:selected {
           <property name="minimumSize">
            <size>
             <width>100</width>
-            <height>22</height>
+            <height>28</height>
            </size>
           </property>
           <property name="font">
@@ -337,7 +337,7 @@ QLineEdit:selected {
           <property name="minimumSize">
            <size>
             <width>80</width>
-            <height>22</height>
+            <height>28</height>
            </size>
           </property>
           <property name="font">
@@ -375,7 +375,7 @@ QLineEdit:selected {
           <property name="minimumSize">
            <size>
             <width>60</width>
-            <height>22</height>
+            <height>28</height>
            </size>
           </property>
           <property name="font">
@@ -489,7 +489,7 @@ QLineEdit:selected {
           <property name="minimumSize">
            <size>
             <width>100</width>
-            <height>22</height>
+            <height>28</height>
            </size>
           </property>
           <property name="font">
@@ -602,7 +602,7 @@ QLineEdit:selected {
           <property name="minimumSize">
            <size>
             <width>70</width>
-            <height>22</height>
+            <height>28</height>
            </size>
           </property>
           <property name="font">
@@ -975,7 +975,7 @@ QLineEdit:selected {
            <string notr="true"/>
           </property>
           <property name="text">
-           <string>Buy</string>
+           <string>Sell</string>
           </property>
          </widget>
         </item>

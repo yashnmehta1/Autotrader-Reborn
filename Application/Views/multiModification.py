@@ -31,10 +31,24 @@ class Ui_MultiModification(QMainWindow):
         self.setWindowFlags(flags)
 
     def showWindow(self,  modifyArray, instrumentType):
+        if (self.isVisible()):
+            self.hideWindow()
+        orderType = modifyArray[0][4]
+        print("orderType multi:", orderType)
+        if(orderType == 'StopLimit'):
+            self.leModifiedTriggerPrice.setEnabled(True)
+        else:
+            self.leModifiedTriggerPrice.setEnabled(False)
         self.modifyArray = modifyArray
         self.instrumentType = instrumentType
         self.show()
 
     def modifyMultipleOrders(self):
+        ########### pending
         for i in self.modifyArray:
             modifyOrder(self,i[0],i[7],i[1],i[2],i[3],i[0])
+
+    def hideWindow(self):
+        self.modifyArray = []
+        self.instrumentType = ''
+        self.hide()

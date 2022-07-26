@@ -95,7 +95,7 @@ def requestMultiModification(self, modifyArray):
         else:
             ins_details = self.fo_contract[modifyArray[0][2]]
         instrumentType = ins_details[5]
-        self.multiModifyW.showWindow(self, modifyArray, instrumentType)
+        self.multiModifyW.showWindow( modifyArray, instrumentType)
     except:
         print(traceback.print_exc())
 
@@ -109,7 +109,7 @@ def requestBuyWindow(self,sourceClass):
         price = '%.2f' % selectedIndexes[8].data()
     elif(sourceClass == 'MarketWatch_basic'):
         selectedIndexes = self.marketWB.tableView.selectedIndexes()
-
+        print("selectedIndexes:",selectedIndexes[0].data())
         token = int(selectedIndexes[0].data())
         exchange = selectedIndexes[1].data()
         price = '%.2f' % selectedIndexes[8].data()
@@ -128,8 +128,10 @@ def requestBuyWindow(self,sourceClass):
 
     if(exchange == 'NSEFO'):
         ins_details = self.fo_contract[token-35000]
-    else:
-        ins_details = self.fo_contract[token]
+    elif(exchange == 'NSECM'):
+        ins_details = self.eq_contract[token]
+    elif(exchange == 'NSECD'):
+        ins_details = self.cd_contract[token]
     instrumentType = ins_details[5]
     symbol = ins_details[3]
     exp = ins_details[6]

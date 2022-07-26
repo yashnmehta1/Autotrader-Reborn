@@ -97,7 +97,10 @@ def PlaceOrder( self,exchange, clientID, token,  orderSide, qty, limitPrice,  va
         place_order_url = requests.post(self.URL+'/interactive/orders', json=payload,
                                         headers=self.IAheaders)
 
+        print('place_order_url',place_order_url.text)
         resJson = place_order_url.json()
+
+        print(resJson)
         # aoid = resJson['result']['AppOrderID']
         # # print('resJson',aoid,resJson,)
         logging.info(place_order_url.text)

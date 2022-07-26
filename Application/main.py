@@ -425,6 +425,8 @@ class Ui_Main(QMainWindow):
         UpdateLTP_MW_basic(self, data)
         UpdateLTP_NP(self,data)
         UpdateLTP_FP(self,data)
+        if(data['Exch'] == 'NSEFO'):
+            self.fo_contract[data['Token'] - 35000,18 ] = data['LTP']
 
 
     def on_new_feed_1502(self,data):

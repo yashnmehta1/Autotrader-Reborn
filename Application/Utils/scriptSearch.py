@@ -159,6 +159,11 @@ def SegmentChange(self, aa):
         fltr = np.asarray([a])
         self.t12 = self.t11[np.in1d(self.t11[:, 1], fltr)]
         lsIns = np.unique(self.t12[:,5])
+
+
+        print(lsIns)
+
+
         self.cbIns.clear()
         self.cbIns.addItems(lsIns)
     except:
@@ -196,14 +201,18 @@ def symchange(self, aa):
         fltr = np.asarray([a])
         self.t2 = self.t1[np.in1d(self.t1[:, 3], fltr)]
         self.t2_tp = self.t2.transpose()
-        # print(self.t2)
+
+
+
+
         lsExp = np.unique(self.t2_tp[6]).tolist()
-        # print('LSEXP',lsExp)
+        print('LSEXP',lsExp)
         self.cbExp.clear()
         self.cbExp.addItems(lsExp)
         # print(lsExp,self.t2)
     except:
-        print(traceback.print_exc(),sys.exc_info(),lsExp)
+        print('\n\n\n\n\n\n\n',self.t2)
+        print(traceback.print_exc(),sys.exc_info())
         logging.error(sys.exc_info()[1])
 
 def expchange(self, aa):
@@ -236,12 +245,15 @@ def expchange(self, aa):
 
 def changestrike(self, aa):
     try:
+        print('changestrike')
         if ('FUT' in self.cbIns.currentText()):
             self.cbOtype.clear()
             self.cbOtype.addItem(' ')
         elif (self.cbIns.currentText() == 'Equity'):
+
             self.cbOtype.clear()
             self.cbOtype.addItem(' ')
+            self.changeOtype()
         elif ('OPT' in self.cbIns.currentText()):
             if (self.cbOtype.currentText() not in ['CE', 'PE']):
                 self.cbOtype.clear()
@@ -254,6 +266,7 @@ def changestrike(self, aa):
 
 def changeOtype(self):
     try:
+        print('changeOtype')
         a = self.cbOtype.currentText()
 
         if (self.cbSym.currentText() != '' and self.cbExp.currentText() != ''):

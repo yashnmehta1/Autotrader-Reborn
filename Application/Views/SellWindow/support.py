@@ -24,6 +24,17 @@ def getOrderType(self):
     elif(self.cbOrdType.currentIndex()==3):
         return 'StopMarket'
 
+def setOrderType(self, orderType):
+    if(orderType == 'Limit'):
+        self.cbOrdType.setCurrentIndex(0)
+    elif (orderType == 'Market'):
+        self.cbOrdType.setCurrentIndex(1)
+
+    elif (orderType == 'StopLimit'):
+        self.cbOrdType.setCurrentIndex(2)
+
+    elif (orderType == 'StopMarket'):
+        self.cbOrdType.setCurrentIndex(3)
 
 def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty ,lotSize ,tickSize,triggerPrice,validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
     try:
@@ -38,12 +49,12 @@ def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk,
         self.sellW.cbOpt.clear()
         self.sellW.cbOpt.addItem(opt)
         self.sellW.leMLT.setText('1')
-        self.sellW.leQty.setText(str(lotSize))
+        self.sellW.leQty.setText(str(qty))
         self.sellW.leRate.setText(price)
         self.sellW.lotsize =lotSize
         self.sellW.ticksize =tickSize
         self.sellW.freezeQty = freezeQty
-        self.sellW.cbOrdType.setCurrentText(orderType)
+        setOrderType(self.sellW,orderType)
         self.sellW.cbProduct.setCurrentText(productType)
         self.sellW.cbValidity.setCurrentText(validity)
         self.sellW.leTrigger.setText(triggerPrice)
