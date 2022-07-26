@@ -41,7 +41,7 @@ def snapQuoteRequested(self,superClass):
     self.snapW.show()
 
 
-def requestBuyModification(self,appOrderID, exchange, token, price, orderType, validity, productType,triggerPrice):
+def requestBuyModification(self,appOrderID, exchange, token, price, orderType, validity, productType,triggerPrice,qty):
 
     try:
         if(exchange == 'NSEFO'):
@@ -55,16 +55,16 @@ def requestBuyModification(self,appOrderID, exchange, token, price, orderType, v
         strk = ins_details[7]
         opt = ins_details[8]
         tick = ins_details[10]
-        lot = ins_details[11]
+        lotSize = ins_details[11]
         max = ins_details[14]
         self.buyW.appOrderIdFprModification = appOrderID
         price = '%.2f' %price
-        BuyWindow.support.showWindow(self,exchange,token,price,lot,symbol,instrumentType,exp,strk,opt,max,lot,tick, triggerPrice,validity, productType, orderType,False)
+        BuyWindow.support.showWindow(self,exchange,token,price,qty,symbol,instrumentType,exp,strk,opt,max,lotSize,tick, triggerPrice,validity, productType, orderType,False)
         #self.buyW.show()
     except:
         print(traceback.print_exc())
 
-def requestSellModification(self,appOrderID, exchange, token, price, orderType, validity, productType, triggerPrice):
+def requestSellModification(self,appOrderID, exchange, token, price, orderType, validity, productType, triggerPrice, qty):
     try:
         if (exchange == 'NSEFO'):
             ins_details = self.fo_contract[token - 35000]
@@ -81,7 +81,7 @@ def requestSellModification(self,appOrderID, exchange, token, price, orderType, 
         max = ins_details[14]
         self.sellW.appOrderIdFprModification = appOrderID
         price = '%.2f' % price
-        SellWindow.support.showWindow(self, exchange, token, price, lot, symbol, instrumentType, exp, strk, opt, max,
+        SellWindow.support.showWindow(self, exchange, token, price, qty, symbol, instrumentType, exp, strk, opt, max,
                                      lot, tick, triggerPrice, validity, productType, orderType, False)
         # self.buyW.show()
     except:

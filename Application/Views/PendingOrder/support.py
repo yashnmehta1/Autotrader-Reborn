@@ -69,6 +69,24 @@ def getTriggerPrice(self,AppOrderId):
     print('getTriggerPrice',value)
     return '%.2f'%value[0]
 
+def getQty(self,AppOrderId):
+    fltr = np.asarray([AppOrderId])
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),12]
+    print('getQty',value)
+    return value[0]
+
+def getOUID(self,AppOrderId):
+    fltr = np.asarray([AppOrderId])
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),15]
+    print('getQty',value)
+    return value[0]
+
+def getLimitPrice(self,AppOrderId):
+    fltr = np.asarray([AppOrderId])
+    value = self.ApiOrder[np.in1d(self.ApiOrder[:, 0], fltr),13]
+    print('getLimitPrice',value)
+    return value[0]
+
 def CancleOrder(self):
     try:
         indexes = self.tableView.selectedIndexes()
@@ -117,13 +135,14 @@ def ModifyOrder(self):
             token = getToken(self.PendingW,AppOrderId)
             triggerPrice = getTriggerPrice(self.PendingW,AppOrderId)
             clientId = getClientId(self.PendingW, AppOrderId)
+            qty = getQty(self.PendingW,AppOrderId)
 
             #### Add client ID for TWS API - pending
 
             if orderSide == 'Buy':
-                requestBuyModification(self,AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice)
+                requestBuyModification(self,AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice,qty)
             else:
-                requestSellModification(self, AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice)
+                requestSellModification(self, AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice,qty)
         else:
             if noOfSelectedRecord > 10:
                 pass #throw error

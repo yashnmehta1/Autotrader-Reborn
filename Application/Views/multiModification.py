@@ -37,4 +37,4 @@ class Ui_MultiModification(QMainWindow):
 
     def modifyMultipleOrders(self):
         for i in self.modifyArray:
-            modifyOrder(self,i[0],i[7],i[1],i[2],i[3],i[])
+            modifyOrder(self,i[0],i[7],i[1],i[2],i[3],i[0])

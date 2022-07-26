@@ -37,4 +37,7 @@ a different stylesheet for orderBook wth alternate row color [tableview and qwid
 #######################################################################################################################
 model = model no modelO/modelP
 #######################################################################################################################
-
+pendingorder & order book -> add disQTY
+#########################
+placeorder - cover and bracker order
+##########################################

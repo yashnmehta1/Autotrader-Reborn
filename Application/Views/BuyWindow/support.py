@@ -164,7 +164,7 @@ def showWindow(self, exchange,token, price, qty, symbol, instrument, exp, strk, 
         self.buyW.cbStrike.addItem(strk)
         self.buyW.cbOpt.clear()
         self.buyW.cbOpt.addItem(opt)
-        self.buyW.leQty.setText(str(lotSize))
+        self.buyW.leQty.setText(str(qty))
         self.buyW.leRate.setText(price)
         self.buyW.cbOrdType.setCurrentText(orderType)
         self.buyW.cbProduct.setCurrentText(productType)
