@@ -183,8 +183,11 @@ def setShortcuts(self):
     self.buyW.PlaceOrdSc2 = QShortcut(QKeySequence('Enter'), self.buyW)
     self.buyW.PlaceOrdSc2.activated.connect(lambda:BuyWindow.support.placeOrd(self))
     self.buyW.pbSubmit.clicked.connect(lambda:BuyWindow.support.placeOrd(self))
-
-
+    # multi modification
+    self.multiModifyW.PlaceOrdSc1 = QShortcut(QKeySequence('Return'), self.multiModifyW)
+    self.multiModifyW.PlaceOrdSc1.activated.connect(self.multiModifyW.modifyMultipleOrders)
+    self.multiModifyW.PlaceOrdSc2 = QShortcut(QKeySequence('Enter'), self.multiModifyW)
+    self.multiModifyW.PlaceOrdSc2.activated.connect(self.multiModifyW.modifyMultipleOrders)
 
     self.sellW.PlaceOrdSc1 = QShortcut(QKeySequence('Return'), self.sellW)
     self.sellW.PlaceOrdSc1.activated.connect(lambda:SellWindow.support.placeOrd(self))

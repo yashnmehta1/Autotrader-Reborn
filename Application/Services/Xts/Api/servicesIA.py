@@ -122,7 +122,7 @@ def modifyOrder( self,appOrderId,exchange, clientID, token,  orderSide, qty, lim
         place_order_url = requests.put(self.URL + '/interactive/orders', json=payload,
                                        headers=self.IAheaders)
         data_p_order = place_order_url.json()
-        # print('Order Modification request', data_p_order)
+        print('Order Modification request', data_p_order)
 
         logging.info(place_order_url.text)
     except:

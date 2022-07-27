@@ -136,20 +136,27 @@ def ModifyOrder(self):
             triggerPrice = getTriggerPrice(self.PendingW,AppOrderId)
             clientId = getClientId(self.PendingW, AppOrderId)
             qty = getQty(self.PendingW,AppOrderId)
+            uid = getOUID(self.PendingW,AppOrderId)
 
             #### Add client ID for TWS API - pending
 
             if orderSide == 'Buy':
-                requestBuyModification(self,AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice,qty)
+                requestBuyModification(self,AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice,qty,uid)
             else:
-                requestSellModification(self, AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice,qty)
+                requestSellModification(self, AppOrderId, exchange, token, price, orderType, validity, productType,triggerPrice,qty,uid)
         else:
             if noOfSelectedRecord > 10:
                 pass #throw error
             else:
-                modifyArray = np.zeros((0,10), dtype=object)
+                statingPoint=0
+                print("len indexes : ", len(indexes))
+                print("************************* " )
+                modifyArray = np.zeros((0,12), dtype=object)
                 for i in range(noOfSelectedRecord):
-                    AppOrderId = int(indexes[0].data())
+
+                    AppOrderId = int(indexes[statingPoint].data())
+
+                    print("AppOrderId :", AppOrderId)
                     orderSide = getOrderSide(self.PendingW, AppOrderId)
                     productType = getProductType(self.PendingW, AppOrderId)
                     validity = getValidity(self.PendingW, AppOrderId)
@@ -159,15 +166,21 @@ def ModifyOrder(self):
                     token = getToken(self.PendingW, AppOrderId)
                     triggerPrice = getTriggerPrice(self.PendingW, AppOrderId)
                     clientId = getClientId(self.PendingW,AppOrderId)
+                    qty = getQty(self.PendingW, AppOrderId)
+
+                    uid = getOUID(self.PendingW, AppOrderId)
 
                     array1 = dt.Frame([[AppOrderId],
                        [clientId],[token],[orderSide],[orderType],[productType],
-                       [validity],[exchange],[price],[triggerPrice]]
-                                      ).to_numpy()
+                       [validity],[exchange],[price],[triggerPrice],[qty],
+                        [uid]]).to_numpy()
+
                     modifyArray = np.vstack([modifyArray,array1])
                     print("modifyArray:")
                     print("+++++++++++++++++++++++++++++++++:")
                     print(modifyArray)
+                    statingPoint +=  self.PendingW.visibleColumns
+
                 uniqueToken = np.unique(modifyArray[:,2])
                 uniqueOrderSide = np.unique(modifyArray[:, 3])
                 uniqueOrderType = np.unique(modifyArray[:, 4])

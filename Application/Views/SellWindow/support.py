@@ -36,7 +36,7 @@ def setOrderType(self, orderType):
     elif (orderType == 'StopMarket'):
         self.cbOrdType.setCurrentIndex(3)
 
-def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty ,lotSize ,tickSize,triggerPrice,validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
+def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty ,lotSize ,tickSize,triggerPrice, uid='', validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
     try:
 
         self.sellW.leToken.setText(str(token))
@@ -58,6 +58,8 @@ def showWindow(self, exchange ,token, price, qty, symbol, instrument, exp, strk,
         self.sellW.cbProduct.setCurrentText(productType)
         self.sellW.cbValidity.setCurrentText(validity)
         self.sellW.leTrigger.setText(triggerPrice)
+        if (isFreshOrd == False):
+            self.sellW.cbStretegyNo.setCurrentText(uid)
         self.sellW.isFresh = isFreshOrd
         self.sellW.show()
 

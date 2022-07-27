@@ -160,7 +160,7 @@ def modify(self,apporderid,orderType,qty,discQty,Mprice,MStopPrice,OrderUniqueID
         print(traceback.print_exc())
         logging.error(sys.exc_info()[1])
 
-def showWindow(self, exchange,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty,lotSize,tickSize,triggerPrice, validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
+def showWindow(self, exchange,token, price, qty, symbol, instrument, exp, strk, opt, freezeQty,lotSize,tickSize,triggerPrice, uid='', validity='DAY',productType='NRML',orderType='LIMIT', isFreshOrd = True):
     if(self.buyW.isVisible()):
         hideWindow(self.buyW)
     try:
@@ -185,9 +185,12 @@ def showWindow(self, exchange,token, price, qty, symbol, instrument, exp, strk, 
         self.buyW.cbProduct.setCurrentText(productType)
         self.buyW.cbValidity.setCurrentText(validity)
         self.buyW.isFresh = isFreshOrd
+
         self.buyW.leMLT.setText('1')
         self.buyW.leTrigger.setText(triggerPrice)
 
+        if(isFreshOrd== False):
+            self.buyW.cbStretegyNo.setCurrentText(uid)
         self.buyW.lotsize=lotSize
         self.buyW.ticksize =tickSize
         self.buyW.freezeQty = freezeQty

@@ -29,6 +29,7 @@ class Ui_MultiModification(QMainWindow):
             flags = Qt.WindowFlags(Qt.SubWindow | Qt.FramelessWindowHint)
 
         self.setWindowFlags(flags)
+        self.connectSlot();
 
     def showWindow(self,  modifyArray, instrumentType):
         if (self.isVisible()):
@@ -46,7 +47,12 @@ class Ui_MultiModification(QMainWindow):
     def modifyMultipleOrders(self):
         ########### pending
         for i in self.modifyArray:
-            modifyOrder(self,i[0],i[7],i[1],i[2],i[3],i[0])
+            print("Multi order exec : ")
+            modifiedPrice = self.leModifiedPrice.text()
+            modifyOrder(self,i[0],i[7],i[1],i[2],i[3],i[10],modifiedPrice,0,i[9],i[11],i[4],i[5],i[6])
+
+    def connectSlot(self):
+        self.pbModify.clicked.connect(self.modifyMultipleOrders)
 
     def hideWindow(self):
         self.modifyArray = []

@@ -220,6 +220,7 @@ def all_refresh_config(self):
         refresh(self.marketW)
         refresh(self.PendingW)
         refresh(self.snapW)
+        refresh(self.multiModifyW)
         # print('cofing all refresh end')
     except:
         print(traceback.print_exc(),'all config refresh')

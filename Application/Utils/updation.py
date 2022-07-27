@@ -687,7 +687,7 @@ def marketW_datachanged_full(self):
 def sock1502(self, a):
     b = a.split(',')
     token = int(b[0].split('_')[1])
-    if (token == self.subToken):
+    if (token == self.Token):
         for i in b:
             # print(i[:2])
             if (i[:2] == 'ai'):

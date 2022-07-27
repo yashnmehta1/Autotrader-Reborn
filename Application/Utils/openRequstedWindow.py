@@ -15,8 +15,10 @@ def snapQuoteRequested(self,superClass):
 
     if(superClass == 'MarketWatch'):
         token = int(self.marketW.tableView.selectedIndexes()[0].data())
+        exchange = self.marketW.tableView.selectedIndexes()[0].data()
     elif(superClass=='MarketWatch_basic'):
         token = int(self.marketWB.tableView.selectedIndexes()[0].data())
+        exchange = self.marketWB.tableView.selectedIndexes()[1].data()
 
 
 
@@ -34,14 +36,18 @@ def snapQuoteRequested(self,superClass):
         self.snapW.cbOtype.setCurrentText(lua[8])
         self.snapW.LeToken.setText(str(token))
     else:
-        self.snapW.subscription_feed(self.snapW.token)
+
+
+
+
+        self.snapW.subscription_feed(self.snapW.Token,seg=exchange,streamType=1502)
 
         if(self.snapW.isVisible()):
             self.snapW.hideWindow()
     self.snapW.show()
 
 
-def requestBuyModification(self,appOrderID, exchange, token, price, orderType, validity, productType,triggerPrice,qty):
+def requestBuyModification(self,appOrderID, exchange, token, price, orderType, validity, productType,triggerPrice,qty,uid):
 
     try:
         if(exchange == 'NSEFO'):
@@ -59,12 +65,12 @@ def requestBuyModification(self,appOrderID, exchange, token, price, orderType, v
         max = ins_details[14]
         self.buyW.appOrderIdFprModification = appOrderID
         price = '%.2f' %price
-        BuyWindow.support.showWindow(self,exchange,token,price,qty,symbol,instrumentType,exp,strk,opt,max,lotSize,tick, triggerPrice,validity, productType, orderType,False)
+        BuyWindow.support.showWindow(self,exchange,token,price,qty,symbol,instrumentType,exp,strk,opt,max,lotSize,tick, triggerPrice,uid,validity, productType, orderType,False)
         #self.buyW.show()
     except:
         print(traceback.print_exc())
 
-def requestSellModification(self,appOrderID, exchange, token, price, orderType, validity, productType, triggerPrice, qty):
+def requestSellModification(self,appOrderID, exchange, token, price, orderType, validity, productType, triggerPrice, qty,uid):
     try:
         if (exchange == 'NSEFO'):
             ins_details = self.fo_contract[token - 35000]
@@ -82,7 +88,7 @@ def requestSellModification(self,appOrderID, exchange, token, price, orderType, 
         self.sellW.appOrderIdFprModification = appOrderID
         price = '%.2f' % price
         SellWindow.support.showWindow(self, exchange, token, price, qty, symbol, instrumentType, exp, strk, opt, max,
-                                     lot, tick, triggerPrice, validity, productType, orderType, False)
+                                     lot, tick, triggerPrice, uid, validity, productType, orderType, False)
         # self.buyW.show()
     except:
         print(traceback.print_exc())
