@@ -316,13 +316,14 @@ class Ui_snapQ(QMainWindow):
             'Instrument subscribed successfully!',
             #"Instrument Already Subscribed !"
             if(resp['description']=='Instrument subscribed successfully!'):
-
+                print("subscription feed : ", resp['result']['listQuotes'])
                 packet =json.loads(resp['result']['listQuotes'][0])
                 bids= packet['Bids']
                 asks= packet['Asks']
                 # print(bids)
                 # print(asks)
             elif(resp['description']=='Instrument Already Subscribed !'):
+                print("Instrument Already Subscribed:", token)
                 packet = self.getQuote(token)
                 bids = packet['Bids']
                 asks = packet['Asks']
@@ -409,6 +410,7 @@ class Ui_snapQ(QMainWindow):
             return d
 
         except:
+            print("getQuote exception : ")
             print(traceback.print_exc())
             logging.error(sys.exc_info()[1])
 

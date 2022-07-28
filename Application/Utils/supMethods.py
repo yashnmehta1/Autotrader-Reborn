@@ -16,13 +16,34 @@ from Application.Utils.scriptSearch import selExchange,addscript
 
 
 
-def showPendingMW(self, a):
+def showPendingW(self, a):
     self.CFrame.dockOP.raise_()
     self.PendingW.filterStr = a
-    self.PendingW.smodelO.setFilterKeyColumn(1)
-    self.PendingW.smodelO.setFilterFixedString(a)
+    self.PendingW.smodelO.setFilterKeyColumn(2)
+    self.PendingW.smodelO.setFilterFixedString(str(a))
     self.PendingW.tableView.setFocus()
+    self.PendingW.tableView.selectRow(0)
 
+def showTradeBookW(self, a):
+    if(a != ''):
+        if(self.TradeW.isVisible()):
+            self.TradeW.hide()
+
+    self.TradeW.filterStr = a
+    self.TradeW.smodelT.setFilterKeyColumn(2)
+    self.TradeW.smodelT.setFilterFixedString(str(a))
+    self.TradeW.tableView.setFocus()
+    self.TradeW.show()
+def showOrderBookW(self, a):
+    if(a != ''):
+        if(self.OrderBook.isVisible()):
+            self.OrderBook.hide()
+
+    self.OrderBook.filterStr = a
+    self.OrderBook.smodelO.setFilterKeyColumn(2)
+    self.OrderBook.smodelO.setFilterFixedString(str(a))
+    self.OrderBook.tableView.setFocus()
+    self.OrderBook.show()
 
 def getLogPath(xclass):
     today =  datetime.datetime.today().strftime('%Y%m%d')

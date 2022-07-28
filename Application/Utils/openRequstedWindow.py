@@ -4,8 +4,110 @@ from Application.Views import SellWindow
 from Application.Views import SellWindow
 from Application.Views.multiModification import  Ui_MultiModification
 import traceback
+from Application.Utils.supMethods import showPendingW, showOrderBookW, showTradeBookW
 
 
+def orderBookRequested(self,superClass):
+    print("Ordrbook inside",superClass )
+
+    if (superClass == 'MarketWatch'):
+        token = int(self.marketW.tableView.selectedIndexes()[0].data())
+        exchange = self.marketW.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'MarketWatch_basic'):
+        token = int(self.marketWB.tableView.selectedIndexes()[0].data())
+        exchange = self.marketWB.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'PendingOrder'):
+        token = int(self.PendingW.tableView.selectedIndexes()[2].data())
+        exchange = self.PendingW.tableView.selectedIndexes()[19].data()
+
+    elif (superClass == 'OrderBook'):
+        token = ''
+    elif (superClass == 'NetPosition'):
+        token = int(self.NetPos.tableView.selectedIndexes()[3].data())
+        exchange = self.NetPos.tableView.selectedIndexes()[2].data()
+    elif (superClass == 'FolioPosition'):
+        token = int(self.FolioPos.tableView.selectedIndexes()[5].data())
+        exchange = self.FolioPos.tableView.selectedIndexes()[4].data()
+    elif (superClass == 'SnapQuote'):
+        token = self.snapW.Token
+        exchange = self.snapW.exchange
+
+    showOrderBookW(self, token)
+
+def tradeBookRequested(self,superClass):
+    print("Tradebook inside",superClass )
+
+    if (superClass == 'MarketWatch'):
+        token = int(self.marketW.tableView.selectedIndexes()[0].data())
+        exchange = self.marketW.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'MarketWatch_basic'):
+        token = int(self.marketWB.tableView.selectedIndexes()[0].data())
+        exchange = self.marketWB.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'PendingOrder'):
+        token = int(self.PendingW.tableView.selectedIndexes()[2].data())
+        exchange = self.PendingW.tableView.selectedIndexes()[19].data()
+    elif (superClass == 'OrderBook'):
+        token = int(self.OrderBook.tableView.selectedIndexes()[2].data())
+        exchange = self.OrderBook.tableView.selectedIndexes()[19].data()
+    elif (superClass == 'TradeBook'):
+        token = ''
+    elif (superClass == 'NetPosition'):
+        token = int(self.NetPos.tableView.selectedIndexes()[3].data())
+        exchange = self.NetPos.tableView.selectedIndexes()[2].data()
+    elif (superClass == 'FolioPosition'):
+        token = int(self.FolioPos.tableView.selectedIndexes()[5].data())
+        exchange = self.FolioPos.tableView.selectedIndexes()[4].data()
+    elif (superClass == 'SnapQuote'):
+        token = self.snapW.Token
+        exchange = self.snapW.exchange
+
+    showTradeBookW(self, token)
+
+def folioRequested(self,superClass):
+    if (superClass == 'MarketWatch'):
+        token = int(self.marketW.tableView.selectedIndexes()[0].data())
+        exchange = self.marketW.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'MarketWatch_basic'):
+        token = int(self.marketWB.tableView.selectedIndexes()[0].data())
+        exchange = self.marketWB.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'PendingOrder'):
+        # self.PendingW.smodelO.setFilterFixedString('')
+        token = ''
+        exchange = self.PendingW.tableView.selectedIndexes()[19].data()
+    elif (superClass == 'NetPosition'):
+        token = int(self.NetPos.tableView.selectedIndexes()[3].data())
+        exchange = self.NetPos.tableView.selectedIndexes()[2].data()
+    elif (superClass == 'FolioPosition'):
+        token = int(self.FolioPos.tableView.selectedIndexes()[5].data())
+        exchange = self.FolioPos.tableView.selectedIndexes()[4].data()
+    elif (superClass == 'SnapQuote'):
+        token = self.snapW.Token
+        exchange = self.snapW.exchange
+
+    showPendingMW(self, token)
+
+def pendingOrderRequested(self,superClass):
+    if (superClass == 'MarketWatch'):
+        token = int(self.marketW.tableView.selectedIndexes()[0].data())
+        exchange = self.marketW.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'MarketWatch_basic'):
+        token = int(self.marketWB.tableView.selectedIndexes()[0].data())
+        exchange = self.marketWB.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'PendingOrder'):
+        # self.PendingW.smodelO.setFilterFixedString('')
+        token = ''
+        #exchange = self.PendingW.tableView.selectedIndexes()[19].data()
+    elif (superClass == 'NetPosition'):
+        token = int(self.NetPos.tableView.selectedIndexes()[3].data())
+        exchange = self.NetPos.tableView.selectedIndexes()[2].data()
+    elif (superClass == 'FolioPosition'):
+        token = int(self.FolioPos.tableView.selectedIndexes()[5].data())
+        exchange = self.FolioPos.tableView.selectedIndexes()[4].data()
+    elif (superClass == 'SnapQuote'):
+        token = self.snapW.Token
+        exchange = self.snapW.exchange
+
+    showPendingW(self, token)
 
 def snapQuoteRequested(self,superClass):
 
@@ -15,18 +117,28 @@ def snapQuoteRequested(self,superClass):
 
     if(superClass == 'MarketWatch'):
         token = int(self.marketW.tableView.selectedIndexes()[0].data())
-        exchange = self.marketW.tableView.selectedIndexes()[0].data()
+        exchange = self.marketW.tableView.selectedIndexes()[1].data()
     elif(superClass=='MarketWatch_basic'):
         token = int(self.marketWB.tableView.selectedIndexes()[0].data())
         exchange = self.marketWB.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'PendingOrder'):
+        token = int(self.PendingW.tableView.selectedIndexes()[2].data())
+        exchange = self.PendingW.tableView.selectedIndexes()[19].data()
+    elif (superClass == 'NetPosition'):
+        token = int(self.NetPos.tableView.selectedIndexes()[3].data())
+        exchange = self.NetPos.tableView.selectedIndexes()[2].data()
+    elif (superClass == 'FolioPosition'):
+        token = int(self.FolioPos.tableView.selectedIndexes()[5].data())
+        exchange = self.FolioPos.tableView.selectedIndexes()[4].data()
 
 
 
+    print("Token = :",token!=self.snapW.token, token, self.snapW.token)
     if(token!=self.snapW.token):
         self.snapW.Token = token
         self.ins_details = self.fo_contract[token-35000]
         lua = self.ins_details
-
+        print("LUaa:::::", lua)
         self.snapW.cbEx.setCurrentText(lua[0])
         self.snapW.cbSg.setCurrentText(lua[1])
         self.snapW.cbIns.setCurrentText(lua[5])
@@ -36,14 +148,13 @@ def snapQuoteRequested(self,superClass):
         self.snapW.cbOtype.setCurrentText(lua[8])
         self.snapW.LeToken.setText(str(token))
     else:
-
-
-
-
+        print("----0.0")
         self.snapW.subscription_feed(self.snapW.Token,seg=exchange,streamType=1502)
 
-        if(self.snapW.isVisible()):
-            self.snapW.hideWindow()
+    if(self.snapW.isVisible()):
+        print("----0")
+        self.snapW.hideWindow()
+    print("----1")
     self.snapW.show()
 
 
