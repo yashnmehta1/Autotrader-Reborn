@@ -58,7 +58,6 @@ class OrderBook(QMainWindow):
             self.createShortcuts()
             self.connectAllSlots()
             QSizeGrip(self.frameGrip)
-
         except:
             print(traceback.print_exc())
             logging.error(sys.exc_info())

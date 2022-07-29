@@ -188,6 +188,42 @@ def setShortcuts(self):
     self.snapW.callTradeBook.activated.connect(lambda: orderBookRequested(self, 'SnapQuote'))
 
     ##############################
+
+    ############################## 'A'
+
+    self.marketW.tableView.callFolioPos = QShortcut(QKeySequence('Ctrl+F1'), self.marketW)
+    self.marketW.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketW.tableView.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'MarketWatch'))
+
+    self.marketWB.tableView.callFolioPos = QShortcut(QKeySequence('Ctrl+F1'), self.marketWB)
+    self.marketWB.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'MarketWatch_basic'))
+
+    self.FolioPos.tableView.callFolioPos = QShortcut(QKeySequence('A'), self.FolioPos)
+    self.FolioPos.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.FolioPos.tableView.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'FolioPosition'))
+
+    self.NetPos.tableView.callFolioPos = QShortcut(QKeySequence('A'), self.NetPos)
+    self.NetPos.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.NetPos.tableView.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'NetPosition'))
+
+    self.OrderBook.tableView.callFolioPos = QShortcut(QKeySequence('A'), self.OrderBook)
+    self.OrderBook.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.OrderBook.tableView.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'OrderBook'))
+
+    self.PendingW.tableView.callFolioPos = QShortcut(QKeySequence('A'), self.PendingW)
+    self.PendingW.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.PendingW.tableView.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'PendingOrder'))
+
+    self.TradeW.tableView.callFolioPos = QShortcut(QKeySequence('A'), self.PendingW)
+    self.PendingW.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.PendingW.tableView.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'TradeBook'))
+
+    self.snapW.callFolioPos = QShortcut(QKeySequence('A'), self.snapW)
+    self.snapW.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.snapW.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'SnapQuote'))
+
+    ##############################
     # self.marketW.tableView.callOrderbook = QShortcut(QKeySequence('Ctrl+F3'), self)
     # self.marketW.tableView.callOrderbook.setContext(Qt.WidgetWithChildrenShortcut)
     # self.marketW.tableView.callOrderbook.activated.connect(lambda:requestOrderbook(self))

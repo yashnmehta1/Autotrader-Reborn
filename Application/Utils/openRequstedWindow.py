@@ -4,8 +4,7 @@ from Application.Views import SellWindow
 from Application.Views import SellWindow
 from Application.Views.multiModification import  Ui_MultiModification
 import traceback
-from Application.Utils.supMethods import showPendingW, showOrderBookW, showTradeBookW
-
+from Application.Utils.supMethods import showPendingW, showOrderBookW, showTradeBookW, showFolioPosW
 
 def orderBookRequested(self,superClass):
     print("Ordrbook inside",superClass )
@@ -33,6 +32,33 @@ def orderBookRequested(self,superClass):
         exchange = self.snapW.exchange
 
     showOrderBookW(self, token)
+
+def FolioPosRequested(self,superClass):
+    print("FolioPosRequested",superClass )
+
+    if (superClass == 'MarketWatch'):
+        token = int(self.marketW.tableView.selectedIndexes()[0].data())
+        exchange = self.marketW.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'MarketWatch_basic'):
+        token = int(self.marketWB.tableView.selectedIndexes()[0].data())
+        exchange = self.marketWB.tableView.selectedIndexes()[1].data()
+    elif (superClass == 'PendingOrder'):
+        token = int(self.PendingW.tableView.selectedIndexes()[2].data())
+        exchange = self.PendingW.tableView.selectedIndexes()[19].data()
+
+    elif (superClass == 'OrderBook'):
+        token = int(self.OrderBook.tableView.selectedIndexes()[2].data())
+        exchange = self.OrderBook.tableView.selectedIndexes()[19].data()
+    elif (superClass == 'NetPosition'):
+        token = int(self.NetPos.tableView.selectedIndexes()[3].data())
+        exchange = self.NetPos.tableView.selectedIndexes()[2].data()
+    elif (superClass == 'FolioPosition'):
+        token = ''
+    elif (superClass == 'SnapQuote'):
+        token = self.snapW.Token
+        exchange = self.snapW.exchange
+
+    showFolioPosW(self, token)
 
 def tradeBookRequested(self,superClass):
     print("Tradebook inside",superClass )

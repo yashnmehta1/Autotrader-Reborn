@@ -24,6 +24,17 @@ def showPendingW(self, a):
     self.PendingW.tableView.setFocus()
     self.PendingW.tableView.selectRow(0)
 
+def showFolioPosW(self, a):
+    if(a != ''):
+        if(self.FolioPos.isVisible()):
+            self.FolioPos.hide()
+
+    self.FolioPos.filterStr = a
+    self.FolioPos.smodelFP.setFilterKeyColumn(2)
+    self.FolioPos.smodelFP.setFilterFixedString(str(a))
+    self.FolioPos.tableView.setFocus()
+    self.FolioPos.show()
+
 def showTradeBookW(self, a):
     if(a != ''):
         if(self.TradeW.isVisible()):

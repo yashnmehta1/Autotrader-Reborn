@@ -69,7 +69,7 @@ class NetPosition(QMainWindow):
             # self.tables_details()
             self.tableView.horizontalHeader().sectionMoved.connect(print)
             self.tableView.customContextMenuRequested.connect(lambda:rightClickMenu(self))
-
+            createShortcuts(self)
             # self.CreateToolBar()
 
             ########################################################################################################################

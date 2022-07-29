@@ -1,5 +1,8 @@
-
-
+from PyQt5.QtCore import QObject,QFile,pyqtSignal,pyqtSlot,Qt,QSortFilterProxyModel,QTimer
+from PyQt5.QtGui import QIcon, QKeySequence
+from PyQt5.QtWidgets import *
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import uic
 
 def cbClientChange(self):
     self.cbUID.clear()
@@ -87,5 +90,9 @@ def rightClickMenu(self,position):
     except:
         print(sys.exc_info()[1])
 
+
+def createShortcuts(self):
+    self.quitSc = QShortcut(QKeySequence('Esc'), self)
+    self.quitSc.activated.connect(self.hide)
 
 

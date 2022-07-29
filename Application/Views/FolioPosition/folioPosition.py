@@ -53,7 +53,7 @@ class FolioPosition(QMainWindow):
             self.tableView.customContextMenuRequested.connect(lambda:rightClickMenu(self))
             self.pbShow.clicked.connect(lambda:filterData(self))
             self.cbClient.currentIndexChanged.connect(lambda: cbClientChange(self))
-
+            createShortcuts(self)
         except:
             print(traceback.print_exc())
             logging.error(sys.exc_info()[1])

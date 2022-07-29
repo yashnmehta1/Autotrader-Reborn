@@ -1,3 +1,7 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+
 def filterData(self, a):
     self.filterStr = a
     self.smodelP.setFilterFixedString(self.filterStr)
@@ -49,10 +53,14 @@ def rightClickMenu(self,position):
                         absQty = absQty - Maxqty
                     self.PlaceOrder(token, orderSide, absQty, 0)
 
+
     except:
         print(sys.exc_info()[1])
 
 
+def createShortcuts(self):
+    self.quitSc = QShortcut(QKeySequence('Esc'), self)
+    self.quitSc.activated.connect(self.hide)
 
 
 def changeDayNet(self):
