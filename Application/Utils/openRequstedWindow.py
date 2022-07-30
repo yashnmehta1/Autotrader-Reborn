@@ -5,24 +5,15 @@ from Application.Views import SellWindow
 from Application.Views.multiModification import  Ui_MultiModification
 import traceback
 from Application.Utils.supMethods import  showPendingW, showOrderBookW, showTradeBookW, showFolioPosW
-from Application.Views import  multiOrders
+from Application.Views.MultiOrders import support
 
 def multiOrdersRequested(self,superClass):
-    print("FolioPosRequested",superClass )
-
-    if (superClass == 'MarketWatch'):
-        token = int(self.marketW.tableView.selectedIndexes()[0].data())
-        exchange = self.marketW.tableView.selectedIndexes()[1].data()
-    elif (superClass == 'MarketWatch_basic'):
-        token = int(self.marketWB.tableView.selectedIndexes()[0].data())
-        exchange = self.marketWB.tableView.selectedIndexes()[1].data()
+    print("multiOrdersRequested",superClass )
 
     try:
-        indexes = self.PendingW.tableView.selectedIndexes()
-        selectedLen = len(indexes)
-        noOfSelectedRecord = int(selectedLen / self.PendingW.visibleColumns)
-        if(noOfSelectedRecord > 1)
-            multiOrders.showWindow(self, noOfSelectedRecord, indexes)
+        support.showWindow(self, superClass)
+    except:
+        print(traceback.print_exc())
 
 def orderBookRequested(self,superClass):
     print("Ordrbook inside",superClass )

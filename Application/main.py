@@ -1,39 +1,21 @@
-from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import *
 
-import qdarkstyle
 from Theme.dt2 import dt1
 from qtwidgets import AnimatedToggle
 
-import numpy as np
-import time
-import datetime
-import threading
-import sys
-import traceback
-import logging
 import platform
-from os import path, getcwd,makedirs,listdir
-import playsound
 
 from Application.Utils.scriptSearch import scriptBarSlots
 
 from Application.Utils.animations import *
 from Application.Utils.feedHandler import FeedHandler
-from Application.Utils.getMasters import  *
 from Application.Utils.banned import *
 from Application.Utils.supMethods import *
-from Application.Utils.configReader import all_refresh_config,refresh
+from Application.Utils.configReader import refresh
 from Application.Utils.updation import *
 
 from Application.Services.Xts.Sockets.Trade.interactiveApi import Interactive
 from Application.Services.Xts.Sockets.Feeds.marketData import MarketFeeds
-
-from Application.Views.Models.ProxyModel import ProxyModel
-from Application.Views.Models.tableTB import ModelTB
-from Application.Views.Models.tableMW import  ModelPosition
-from Application.Views.Models.tableOrder import ModelOB
 
 from Application.Views.SManager.sManager import Manager
 from Application.Views.PendingOrder.pendingOrder import PendingOrder
@@ -52,11 +34,11 @@ from Application.Views.SellWindow.sellWindow import Ui_SellW
 from Application.Views.SnapQuote.snapQuote import Ui_snapQ
 from Application.Views.FolioPosition.folioPosition  import FolioPosition
 from Application.Views.NetPosition.netPosition  import NetPosition
-from Application.Views.multiOrders import Ui_MultiOrders
+from Application.Views.MultiOrders.multiOrders import Ui_MultiOrders
 
 from Application.Utils.basicWinOps import res_max
 
-from Application.Utils.createTables import tables_details_mw, tables_details_mw_basic
+from Application.Utils.createTables import tables_details_mw, tables_details_mw_basic, tables_details_mo
 from Application.Services.UDP.UDPSock import Receiver
 from Application.Views.FolioPosition.support import filterData
 
@@ -140,6 +122,7 @@ class Ui_Main(QMainWindow):
             self.NetPos = NetPosition()
             self.Manager = Manager()
             self.multiOrders = Ui_MultiOrders()
+            tables_details_mo(self)
 
             self.PendingW = PendingOrder()
             self.OrderBook =OrderBook(self)
@@ -454,6 +437,7 @@ class Ui_Main(QMainWindow):
         self.sellW.cbStretegyNo.addItem(folio)
         self.FolioPos.folioList.append(folio)
         self.FolioPos.cbUID.addItem(folio)
+        self.multiOrders.cbFolio.addItem(folio)
 
 if __name__ == "__main__":
     import sys

@@ -11,13 +11,14 @@ from Application.Views.Models import ProxyModel
 from Application.Views.Models import tableNP
 from Application.Views.Models import tableOrder
 from Application.Views.Models import tableO
+from Application.Views.Models import tableMO
 from PyQt5.QtCore import QSortFilterProxyModel,Qt
 from Application.Views.Models import ProxyModel
 
 def tables_details_mw(self):
     try:
         self.marketW.heads = ['Token',
-                      'Exchange', 'Segment', 'symbol', 'exp', 'strike_price',
+                      'Exchange', 'InstrumentType', 'symbol', 'exp', 'strike_price',
                       'C/P', 'Bid', 'Ask', 'LTP', 'CHNG',
                       '%CH', 'CFP', 'DAY', 'NET', 'MTM',
                       'NetValue', 'NetAvg', 'OPEN', 'HIGH', 'LOW',
@@ -26,6 +27,7 @@ def tables_details_mw(self):
                       'openAmt', 'StockName']
 
         #############################################################################################################
+        self.marketW.visibleColumns = len(self.marketW.heads)
         self.marketW.table = np.zeros((500, 33), dtype=object)
         self.marketW.model = tableMW.ModelPosition(self.marketW.table, self.marketW.heads)
         self.marketW.model.setDta(self.marketW.table)
@@ -53,17 +55,33 @@ def tables_details_mw(self):
     except:
         print(traceback.print_exc())
 
+def tables_details_mo(self):
+    try:
+        self.multiOrders.heads = ['Exchange',
+                      'Token', 'Symbol', 'Exp', 'StrikePrice','C/P',
+                      'LTP']
+
+        #############################################################################################################
+        self.visibleColumns = len(self.multiOrders.heads)
+        self.multiOrders.table = np.zeros((4, 7), dtype=object)
+        self.multiOrders.model = tableMO.ModelMO(self.multiOrders.table, self.multiOrders.heads)
+        #self.multiOrders.model.setData(self.multiOrders.table)
+        self.multiOrders.tableView.setModel(self.multiOrders.model)
+
+    except:
+        print(traceback.print_exc())
 
 def tables_details_mw_basic(self):
     try:
         self.marketWB.heads = ['Token',
-                      'Exchange', 'Segment', 'symbol', 'exp', 'strike_price',
+                      'Exchange', 'InstrumentType', 'symbol', 'exp', 'strike_price',
                       'C/P', 'Bid', 'Ask', 'LTP', 'CHNG',
                       '%CH', 'OPEN', 'HIGH', 'LOW', 'CLOSE',
                       'IV', 'tick_size', 'Lot_size', 'FreezQ', 'FToken',
                       'AToken', 'SerialNo','StockName']
 
         #############################################################################################################
+        self.marketWB.visibleColumns = len(self.marketWB.heads)
         self.marketWB.table = np.zeros((500, 24), dtype=object)
         self.marketWB.model = tableMW.ModelPosition(self.marketWB.table, self.marketWB.heads)
         self.marketWB.model.setDta(self.marketWB.table)

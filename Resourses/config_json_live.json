@@ -1,0 +1,26 @@
+{
+    "Credentials": {
+        "marketdata_appkey": "5115607adfaafff53f2439",
+        "marketdata_secretkey": "Rrab134#p4",
+        "interactive_appkey": "2576b01e2b2ea811821712",
+        "interactive_secretkey": "Dcif177#vc",
+        "source": "TWSAPI"
+    },
+    "disable_ssl": "True",
+    "broadcastmode": "Partial",
+    "url": "http://192.168.102.9:3000",
+    "IAToken": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJZQVNIMTVfMjU3NkIwMUUyQjJFQTgxMTgyMTcxMiIsInB1YmxpY0tleSI6IjI1NzZiMDFlMmIyZWE4MTE4MjE3MTIiLCJpYXQiOjE2NTg5ODMxMzYsImV4cCI6MTY1OTA2OTUzNn0.vSd-0F2jSfdoE5UZ8EeIC2fjhP8wulDKyVnKPrEfnZk",
+        "login_date": "22-07-28",
+        "login_time": "10:08:56",
+        "Client_list": [
+            "*****"
+        ]
+    },
+    "MDToken": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJZQVNIMTVfNTExNTYwN2FkZmFhZmZmNTNmMjQzOSIsInB1YmxpY0tleSI6IjUxMTU2MDdhZGZhYWZmZjUzZjI0MzkiLCJpYXQiOjE2NTg5ODMxMzYsImV4cCI6MTY1OTA2OTUzNn0.FFsQCt7vdtH7SO2qxz3Xenn09zlk0FdgRMhDFqv9s3E",
+        "login_time": "10:08:56"
+    },
+    "DefaultClient": "*****",
+    "userID": "YASH15"
+}

@@ -6,6 +6,7 @@ from Application.Utils.scriptSearch import *
 from Application.Views import BuyWindow
 from Application.Views import SellWindow
 from Application.Views import PendingOrder
+from Application.Views import MultiOrders
 def setWindowShortcuts(self):
     self.quitSc = QShortcut(QKeySequence('Esc'), self)
     self.quitSc.activated.connect(self.hide)
@@ -224,13 +225,13 @@ def setShortcuts(self):
     ##############################
     ############################## 'Ctrl+Z'
 
-    self.marketW.tableView.callFolioPos = QShortcut(QKeySequence('Ctrl+Z'), self.marketW)
-    self.marketW.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
-    self.marketW.tableView.callFolioPos.activated.connect(lambda: multiOrdersRequested(self, 'MarketWatch'))
+    self.marketW.tableView.callMultiOrders = QShortcut(QKeySequence('F12'), self.marketW)
+    self.marketW.tableView.callMultiOrders.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketW.tableView.callMultiOrders.activated.connect(lambda: multiOrdersRequested(self, 'MarketWatch'))
 
-    self.marketWB.tableView.callFolioPos = QShortcut(QKeySequence('Ctrl+Z'), self.marketWB)
-    self.marketWB.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
-    self.marketWB.tableView.callFolioPos.activated.connect(lambda: multiOrdersRequested(self, 'MarketWatch_basic'))
+    self.marketWB.tableView.callMultiOrders = QShortcut(QKeySequence('F12'), self.marketWB)
+    self.marketWB.tableView.callMultiOrders.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.callMultiOrders.activated.connect(lambda: multiOrdersRequested(self, 'MarketWatch_basic'))
 ####################
     # self.marketW.tableView.callOrderbook = QShortcut(QKeySequence('Ctrl+F3'), self)
     # self.marketW.tableView.callOrderbook.setContext(Qt.WidgetWithChildrenShortcut)
@@ -318,3 +319,9 @@ def setShortcuts(self):
     self.sellW.PlaceOrdSc2 = QShortcut(QKeySequence('Enter'), self.sellW)
     self.sellW.PlaceOrdSc2.activated.connect(lambda:SellWindow.support.placeOrd(self))
     self.sellW.pbSubmit.clicked.connect(lambda:SellWindow.support.placeOrd(self))
+
+    ############# Multi Orders
+    self.multiOrders.executeOrdersReturnBtn = QShortcut(QKeySequence('Return'), self.multiOrders)
+    self.multiOrders.executeOrdersReturnBtn.activated.connect(lambda : MultiOrders.support.executeMultipleOrders(self))
+    self.multiOrders.executeOrdersEnterBtn = QShortcut(QKeySequence('Enter'), self.multiOrders)
+    self.multiOrders.executeOrdersEnterBtn.activated.connect(lambda : MultiOrders.support.executeMultipleOrders(self))

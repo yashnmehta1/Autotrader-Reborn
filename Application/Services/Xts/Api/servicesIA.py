@@ -100,7 +100,7 @@ def PlaceOrder( self,exchange, clientID, token,  orderSide, qty, limitPrice,  va
         print('place_order_url',place_order_url.text)
         resJson = place_order_url.json()
 
-        print(resJson)
+        print("Place order res : ",resJson)
         # aoid = resJson['result']['AppOrderID']
         # # print('resJson',aoid,resJson,)
         logging.info(place_order_url.text)
@@ -486,6 +486,8 @@ def login(self):
                 dclient = readDefaultClient()
                 if (dclient in self.client_list):
                     self.defaultClient = dclient
+                self.multiOrders.cbClient.addItems(client_codes_r)
+
 
                 writeITR(token, self.userID, self.client_list)
                 self.login.updateIAstatus(data['type'])
