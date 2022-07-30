@@ -56,6 +56,8 @@ def showOrderBookW(self, a):
     self.OrderBook.tableView.setFocus()
     self.OrderBook.show()
 
+
+
 def getLogPath(xclass):
     today =  datetime.datetime.today().strftime('%Y%m%d')
     loc1 = getcwd().split('Application')

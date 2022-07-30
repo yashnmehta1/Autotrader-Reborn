@@ -59,11 +59,9 @@ def setShortcuts(self):
     self.marketW.tableView.shortcut_sell1.activated.connect(lambda:requestSellWindow(self,'MarketWatch'))
 
 
-    self.PendingW.tableView.shortcut_modify = QShortcut(QKeySequence('M'), self.PendingW.tableView)
+    self.PendingW.tableView.shortcut_modify = QShortcut(QKeySequence('M'), self.PendingW)
     self.PendingW.tableView.shortcut_modify.setContext(Qt.WidgetWithChildrenShortcut)
     self.PendingW.tableView.shortcut_modify.activated.connect(lambda: PendingOrder.support.ModifyOrder(self))
-
-
 
 
     self.marketWB.tableView.shortcut_buy = QShortcut(QKeySequence('F1'), self.marketWB.tableView)
@@ -224,6 +222,16 @@ def setShortcuts(self):
     self.snapW.callFolioPos.activated.connect(lambda: FolioPosRequested(self, 'SnapQuote'))
 
     ##############################
+    ############################## 'Ctrl+Z'
+
+    self.marketW.tableView.callFolioPos = QShortcut(QKeySequence('Ctrl+Z'), self.marketW)
+    self.marketW.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketW.tableView.callFolioPos.activated.connect(lambda: multiOrdersRequested(self, 'MarketWatch'))
+
+    self.marketWB.tableView.callFolioPos = QShortcut(QKeySequence('Ctrl+Z'), self.marketWB)
+    self.marketWB.tableView.callFolioPos.setContext(Qt.WidgetWithChildrenShortcut)
+    self.marketWB.tableView.callFolioPos.activated.connect(lambda: multiOrdersRequested(self, 'MarketWatch_basic'))
+####################
     # self.marketW.tableView.callOrderbook = QShortcut(QKeySequence('Ctrl+F3'), self)
     # self.marketW.tableView.callOrderbook.setContext(Qt.WidgetWithChildrenShortcut)
     # self.marketW.tableView.callOrderbook.activated.connect(lambda:requestOrderbook(self))
@@ -277,11 +285,11 @@ def setShortcuts(self):
 
 ######################
 
-    self.callNetPos = QShortcut(QKeySequence('Alt+F6'), self)
-    self.callNetPos.activated.connect(lambda: requestNetPos(self))
-
-
-
+    # self.callNetPos = QShortcut(QKeySequence('Alt+F6'), self)
+    # self.callNetPos.activated.connect(lambda: requestNetPos(self))
+    #
+    #
+    #
 
 
 

@@ -52,6 +52,8 @@ from Application.Views.SellWindow.sellWindow import Ui_SellW
 from Application.Views.SnapQuote.snapQuote import Ui_snapQ
 from Application.Views.FolioPosition.folioPosition  import FolioPosition
 from Application.Views.NetPosition.netPosition  import NetPosition
+from Application.Views.multiOrders import Ui_MultiOrders
+
 from Application.Utils.basicWinOps import res_max
 
 from Application.Utils.createTables import tables_details_mw, tables_details_mw_basic
@@ -137,6 +139,7 @@ class Ui_Main(QMainWindow):
             self.FolioPos = FolioPosition()
             self.NetPos = NetPosition()
             self.Manager = Manager()
+            self.multiOrders = Ui_MultiOrders()
 
             self.PendingW = PendingOrder()
             self.OrderBook =OrderBook(self)
