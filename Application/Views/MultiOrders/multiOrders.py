@@ -11,6 +11,7 @@ import traceback
 # from Resourses.icons import icons_rc
 import platform
 import datatable as dt
+from Application.Views.MultiOrders import  support
 
 class Ui_MultiOrders(QWidget):
 
@@ -34,17 +35,13 @@ class Ui_MultiOrders(QWidget):
         dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(dt1)
         QSizeGrip(self.sGripFrame)
-        self.createShortcuts()
 
     def createShortcuts(self):
         self.quitSc = QShortcut(QKeySequence('Esc'), self)
         self.quitSc.activated.connect(self.hide)
 
-
     def hideWindow(self):
         self.hide()
-
-
 
 if __name__ == "__main__":
     import sys

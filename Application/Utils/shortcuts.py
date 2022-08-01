@@ -325,3 +325,4 @@ def setShortcuts(self):
     self.multiOrders.executeOrdersReturnBtn.activated.connect(lambda : MultiOrders.support.executeMultipleOrders(self))
     self.multiOrders.executeOrdersEnterBtn = QShortcut(QKeySequence('Enter'), self.multiOrders)
     self.multiOrders.executeOrdersEnterBtn.activated.connect(lambda : MultiOrders.support.executeMultipleOrders(self))
+    self.multiOrders.pbSubmit.clicked.connect(lambda: MultiOrders.support.executeMultipleOrders(self))
