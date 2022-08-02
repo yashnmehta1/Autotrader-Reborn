@@ -1,4 +1,23 @@
 
+from Application.Utils.scriptSearch import scriptBarSlots
+import  sys
+
+from Application.Utils.openRequstedWindow import showPendingW,showFolioPosW,showOrderBookW,showTradeBookW
+from Application.Utils.animations import *
+from Application.Utils.feedHandler import FeedHandler
+from Application.Utils.supMethods import *
+from Application.Utils.configReader import refresh
+from Application.Utils.updation import *
+
+
+from Application.Utils.basicWinOps import res_max
+
+from Application.Utils.animations import *
+
+
+from Application.Stretegies import TSpecial
+
+
 
 
 def createSlots_main(main):
@@ -66,16 +85,19 @@ def createSlots_main(main):
         # main.pbMenu.clicked.connect(main.openSideBar)
         # main.pbDPosition.clicked.connect(lambda:showDetailPos(main.marketW.DetailPos))
 
-        main.pbDelta.clicked.connect(lambda: showDeltaSummary)
         main.pbBanned.clicked.connect(main.Banned.show)
 
-        main.Splash.sgFin.connect(lambda: splashWork(main))
+        # main.Splash.sgFin.connect(lambda: splashWork(main))
+
         main.btnIB.clicked.connect(lambda: showIndexBar(main))
         main.btnSB.clicked.connect(lambda: showScriptBar(main))
         main.btnSttn.clicked.connect(lambda: showSettingMenu(main))
         main.btnMMW.clicked.connect(lambda: showM2mW(main))
         main.title.sgDClick.connect(lambda: res_max(main))
-        main.marketW.sgShowPending.connect(lambda: showPendingMW(main))
+        main.marketW.sgShowPending.connect(lambda: showPendingW(main))
+
+
+
 
         main.Banned.pbAddBSym.clicked.connect(lambda: addBannedSymbol(main))
         main.Banned.pbAddBIns.clicked.connect(lambda: addBannedInstrument(main))

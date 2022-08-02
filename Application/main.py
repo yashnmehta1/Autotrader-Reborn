@@ -9,7 +9,6 @@ from Application.Utils.scriptSearch import scriptBarSlots
 
 from Application.Utils.animations import *
 from Application.Utils.feedHandler import FeedHandler
-from Application.Utils.banned import *
 from Application.Utils.supMethods import *
 from Application.Utils.configReader import refresh
 from Application.Utils.updation import *
@@ -49,6 +48,11 @@ from Application.Utils.shortcuts import setShortcuts
 from Application.Views.multiModification import Ui_MultiModification
 from PyQt5 import uic
 
+from Application.Utils.animations import createAnimations
+from Application.Utils.all_slots import createSlots_main
+
+
+
 from Application.Stretegies import TSpecial
 
 class Ui_Main(QMainWindow):
@@ -75,17 +79,23 @@ class Ui_Main(QMainWindow):
         #########################################################
         self.objectCreation()
         self.initVariables()
-        self.createSlots()
+        createSlots_main(self)
 
         effectWorking(self)
-        self.createAnimations()
+        createAnimations(self)
+
+
         self.scriptBar.layout().addWidget(self.lbUDP,19)
         self.scriptBar.layout().addWidget(self.toggleUDP,20)
         setShortcuts(self)
         refresh(self)
 
+
         self.addFolio('abc')
         self.addFolio('parth')
+
+
+
 
     def objectCreation(self):
         try:
@@ -100,22 +110,16 @@ class Ui_Main(QMainWindow):
             self.buyW = Ui_BuyW()
             self.sellW = Ui_SellW()
             self.snapW = Ui_snapQ()
-
             get_udp_port(self)
-
             self.recv_fo = Receiver(self.port_fo)
             self.recv_cash = Receiver(self.port_cash)
-
             self.CFrame = Ui_CFrame()
-
             self.LiveFeed = MarketFeeds()
             self.IAS = Interactive()
-
             self.marketW = MarketW()
             self.marketWB = MarketW_basic()
             self.marketW.buyw = Ui_BuyW()
             self.marketW.sellw = Ui_SellW()
-
             tables_details_mw(self)
             tables_details_mw_basic(self)
             self.FolioPos = FolioPosition()
@@ -123,100 +127,32 @@ class Ui_Main(QMainWindow):
             self.Manager = Manager()
             self.multiOrders = Ui_MultiOrders()
             tables_details_mo(self)
-
             self.PendingW = PendingOrder()
             self.OrderBook =OrderBook(self)
             self.TradeW = TradeBook(self)
-
             self.PreferanceW = Ui_Preferences(self)
-
             self.Banned = Ui_Banned()
-
-
             self.mainFrame.layout().addWidget(self.CFrame,0,1)
             self.CFrame.dockOP.setWidget(self.PendingW)
-
-            # self.CFrame.dockPB.setWidget(self.FolioPos)
             self.CFrame.dockMGR.setWidget(self.Manager)
             self.CFrame.dockMW.setWidget(self.marketW)
             self.CFrame.dockMW_basic.setWidget(self.marketWB)
-
             self.CFrame.resizeDocks([self.CFrame.dockOP,self.CFrame.dockMW],[500,500],Qt.Vertical)
             self.CFrame.resizeDocks([self.CFrame.dockOP],[500],Qt.Horizontal)
-
             self.login = Ui_Login()
             self.FeedHandler = FeedHandler()
-
-            # self.marketW.snapW.FeedHandler = self.FeedHandler
             self.PendingW.FeedHandler = self.FeedHandler
             self.createTimers()
-
             self.msg = QMessageBox()
         except:
             print(traceback.print_exc())
 
 
 
-    def createTimers(self):
-        self.timeSplash =QTimer()
-        self.timeSplash.setInterval(1000)
-        self.timeSplash.timeout.connect(self.SplashTimerWorking)
-
-
-        self.timerChStatus = QTimer()
-        self.timerChStatus.setInterval(5000)
-        self.timerChStatus.timeout.connect(lambda:clearStatus(self))
-        self.timerChStatus.start()
-
-
-    def SplashTimerWorking(self):
-        self.Splash.close()
-        self.login.show()
-        # self.show()
-        self.timeSplash.stop()
-
-###########################################################
-    def setMTM(self,a):
-        self.lbMTM.setText(a)
-        if(float(a)>0):
-            self.lbMTM.setStyleSheet('QLabel {background-color: #1464A0;border: 1px solid #2d2d2d;color: #F0F0F0;border-radius: 4px;padding: 3px;outline: none;min-width: 10px;}')
-        else:
-            self.lbMTM.setStyleSheet('QLabel {background-color: #c32051;border: 1px solid #2d2d2d;color: #F0F0F0;border-radius: 4px;padding: 3px;outline: none;min-width: 10px;}')
-
-
-    def shareContract(self):
-        try:
-            self.fo_contract1 = self.fo_contract[np.where(self.fo_contract[:,1] != 'x')]
-            self.eq_contract1 = self.eq_contract[np.where(self.eq_contract[:,1] !='x')]
-            self.cd_contract1 = self.cd_contract[np.where(self.cd_contract[:,1] !='x')]
-
-            self.IAS.fo_contract = self.fo_contract
-            self.IAS.eq_contract = self.eq_contract
-            self.IAS.cd_contract = self.cd_contract
-
-            self.snapW.fo_contract1 = self.fo_contract1
-            self.snapW.eq_contract1 = self.eq_contract1
-            self.snapW.cd_contract1 = self.cd_contract1
-
-            # self.snapW.fo_contract = self.fo_contract
-            # self.snapW.eq_contract = self.eq_contract
-            # self.snapW.cd_contract = self.cd_contract
-
-            self.marketW.fo_contract = self.fo_contract
-            self.marketW.eq_contract = self.eq_contract
-            self.marketW.cd_contract = self.cd_contract
-
-        except:
-            print(traceback.print_exc())
-            logging.error(sys.exc_info()[1])
-
 
     def cancelAllMDAPIConnction(self):
         self.LiveFeed.sgNSQrec.disconnect(self.PendingW.sock1502)
         self.LiveFeed.sgNSQrec.disconnect(self.snapW.sock1502)
-        # self.LiveFeed.sgNSQrec.disconnect(self.snapW.sock1502)
-        # self.LiveFeed.sgNPFrec.disconnect(self.UpdateLTP)
-        # self.LiveFeed.sgNPFrec.disconnect(self.updatefuturePdict)
         self.LiveFeed.sgNPFrec.disconnect(self.PositionW.MTM_update)
 
     def initVariables(self):
@@ -239,18 +175,6 @@ class Ui_Main(QMainWindow):
         self.isOverOTRFIndex = True  #check its use
         self.openPosDict ={}
 
-    def proceed2login(self):
-        servicesMD.login(self)
-        servicesIA.login(self)
-
-    def proceed2Main(self):
-        self.login.hide()
-        self.show()
-        self.showMaximized()
-        filterData(self.FolioPos)
-        servicesMD.subscribeToken(self, 26000, 'NSECM')
-        servicesMD.subscribeToken(self, 26001, 'NSECM')
-        servicesMD.subscribeToken(self, 26002, 'NSECM')
 
     def movWin(self, x, y):
         self.move(self.pos().x() + x, self.pos().y() + y)
@@ -310,33 +234,6 @@ class Ui_Main(QMainWindow):
             folioName = str(x) +'_TSpecial'
             newStretegy.addW.leFolioName.setText(folioName)
             newStretegy.addW.show()
-
-
-    def addFolio(self,folio):
-        self.buyW.cbStretegyNo.addItem(folio)
-        self.sellW.cbStretegyNo.addItem(folio)
-        self.FolioPos.folioList.append(folio)
-        self.FolioPos.cbUID.addItem(folio)
-        self.multiOrders.cbFolio.addItem(folio)
-
-    def setclist(self,a):
-        self.PreferanceW.cbCList.addItems(a)
-        self.marketW.buyw.clist=a
-        self.marketW.sellw.clist=a
-
-    def setDefaultClient(self,a):
-        try:
-            self.DefaultClient = a
-            self.marketW.buyw.DefaultClient=self.DefaultClient
-            self.marketW.sellw.DefaultClient=self.DefaultClient
-
-            self.marketW.buyw.leClient.setText(self.DefaultClient)
-            self.marketW.sellw.leClient.setText(self.DefaultClient)
-
-            # self.marketW.snapW.sellw.leClient.setText(self.DefaultClient)
-
-        except:
-            logging.error(traceback.print_exc())
 
 
 
