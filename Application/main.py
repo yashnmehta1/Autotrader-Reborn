@@ -156,98 +156,6 @@ class Ui_Main(QMainWindow):
             print(traceback.print_exc())
 
 
-    def createSlots(self):
-        try:
-            scriptBarSlots(self)
-
-            self.pbFolioPos.clicked.connect(self.FolioPos.hide)
-            self.pbFolioPos.clicked.connect(self.FolioPos.show)
-            self.pbNetPos.clicked.connect(self.NetPos.hide)
-            self.pbNetPos.clicked.connect(self.NetPos.show)
-            self.pbTradeB.clicked.connect(self.TradeW.hide)
-            self.pbTradeB.clicked.connect(self.TradeW.show)
-            self.pbOrderB.clicked.connect(self.OrderBook.hide)
-            self.pbOrderB.clicked.connect(self.OrderBook.show)
-
-            self.pbPreferences.clicked.connect(self.PreferanceW.show)
-            self.PreferanceW.pbApply.clicked.connect(lambda:self.setDefaultClient(self.PreferanceW.cbCList.currentText))
-
-            ################################## Trade Setting Slot  ##########################################
-
-
-            ################################# Login Class Slota ####################################
-
-            self.login.pbLogin.clicked.connect(self.proceed2login)
-            self.login.pbNext.clicked.connect(self.proceed2Main)
-            self.login.pbCancel.clicked.connect(sys.exit)
-
-
-            self.IAS.sgSocketConn.connect(self.LiveFeed.start_socket)
-            self.IAS.sgSocketConn.connect(lambda:changeIAS_connIcon(self,0))
-            self.IAS.sgSocketConn.connect(lambda:self.login.label.append('Interactive socket is connected'))
-
-            self.LiveFeed.sgSocketConn.connect(lambda:changeMD_connIcon(self,0))
-            self.LiveFeed.sgSocketConn.connect(lambda: self.login.label.append('Marketdata socket is connected'))
-            self.LiveFeed.sgSocketConn.connect(self.login.pbNext.show)
-
-            ################################################################################3
-            # self.marketW.buyw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
-            # self.marketW.sellw.sgAppOrderID.connect(self.inPoreccessOrderIds.append)
-            #########################################################################################3
-            # self.IAS.sgGetAPIpos.connect(lambda: updateGetPosition(self))
-            self.IAS.sgOpenPos.connect(lambda: updateOpenPosition(self))
-
-            self.IAS.sgAPIpos.connect(self.updateOnPosition)
-            self.IAS.sgTrdSoc.connect(self.updateOnTrade)
-            self.IAS.sgPendSoc.connect(self.updateOderSocket)
-
-            ######################################################################
-            # both getOrderbook process is done directly from Api call methos only
-            # self.IAS.sgGetOrder.connect(self.updateGetorderBook)
-            # self.IAS.sgGetPOrder.connect(self.updateGetPendinOrderBook)
-            # self.IAS.sgGetTrd.connect(self.on_get_tradeBook)
-
-
-
-            ######################################################################
-
-
-
-            ############################################################################################
-            self.LiveFeed.sgindexfd.connect(lambda:self.on_new_feed_Index)
-            self.LiveFeed.sgNPFrec.connect(self.on_new_feed_1501)
-            self.LiveFeed.sgNSQrec.connect(self.on_new_feed_1502)
-            #########################################################################################3
-            self.IAS.sgStatusUp.connect(lambda:updateStatusLable(self,'x'))
-            #########################################################################################3
-            # self.PositionW.sgTMTM.connect(self.setMTM)
-            self.bt_close.clicked .connect(self.close)
-            self.bt_min.clicked.connect(self.showMinimized)
-            self.bt_max.clicked.connect(lambda:res_max(self))
-            self.title.sgPoss.connect(self.movWin)
-            # self.pbMenu.clicked.connect(self.openSideBar)
-            # self.pbDPosition.clicked.connect(lambda:showDetailPos(self.marketW.DetailPos))
-
-            self.pbDelta.clicked.connect(lambda:showDeltaSummary)
-            self.pbBanned.clicked.connect(self.Banned.show)
-
-            self.Splash.sgFin.connect(lambda:splashWork(self))
-            self.btnIB.clicked.connect(lambda:showIndexBar(self))
-            self.btnSB.clicked.connect(lambda:showScriptBar(self))
-            self.btnSttn.clicked.connect(lambda:showSettingMenu(self))
-            self.btnMMW.clicked.connect(lambda:showM2mW(self))
-            self.title.sgDClick.connect(lambda:res_max(self))
-            self.marketW.sgShowPending.connect(lambda:showPendingMW(self))
-
-            self.Banned.pbAddBSym.clicked.connect(lambda:addBannedSymbol(self))
-            self.Banned.pbAddBIns.clicked.connect(lambda:addBannedInstrument(self))
-            self.Banned.pbRemBSym.clicked.connect(lambda:remBannedSymbol(self))
-            self.Banned.pbRemBIns.clicked.connect(lambda:remBannedInstrument(self))
-
-
-            self.Manager.pbAdd.clicked.connect(self.addNewStretegy)
-        except:
-            print(traceback.print_exc())
 
     def createTimers(self):
         self.timeSplash =QTimer()
@@ -260,16 +168,6 @@ class Ui_Main(QMainWindow):
         self.timerChStatus.timeout.connect(lambda:clearStatus(self))
         self.timerChStatus.start()
 
-
-    def createAnimations(self):
-        self.anim41 = QPropertyAnimation(self.scriptBar, b"maximumHeight")
-        self.anim31 = QPropertyAnimation(self.indexBar, b"maximumHeight")
-        self.anim32 = QPropertyAnimation(self.indexBar, b"maximumHeight")
-        self.anim71 = QPropertyAnimation(self.settingsMenu, b"minimumWidth")
-        self.anim72 = QPropertyAnimation(self.settingsMenu, b"minimumWidth")
-        self.anim42 = QPropertyAnimation(self.scriptBar, b"maximumHeight")
-        self.anim93 = QPropertyAnimation(self.lbMTM, b"maximumWidth")
-        self.anim94 = QPropertyAnimation(self.lbMTM, b"maximumWidth")
 
     def SplashTimerWorking(self):
         self.Splash.close()
@@ -286,24 +184,6 @@ class Ui_Main(QMainWindow):
             self.lbMTM.setStyleSheet('QLabel {background-color: #c32051;border: 1px solid #2d2d2d;color: #F0F0F0;border-radius: 4px;padding: 3px;outline: none;min-width: 10px;}')
 
 
-    def setclist(self,a):
-        self.PreferanceW.cbCList.addItems(a)
-        self.marketW.buyw.clist=a
-        self.marketW.sellw.clist=a
-
-    def setDefaultClient(self,a):
-        try:
-            self.DefaultClient = a
-            self.marketW.buyw.DefaultClient=self.DefaultClient
-            self.marketW.sellw.DefaultClient=self.DefaultClient
-
-            self.marketW.buyw.leClient.setText(self.DefaultClient)
-            self.marketW.sellw.leClient.setText(self.DefaultClient)
-
-            # self.marketW.snapW.sellw.leClient.setText(self.DefaultClient)
-
-        except:
-            logging.error(traceback.print_exc())
     def shareContract(self):
         try:
             self.fo_contract1 = self.fo_contract[np.where(self.fo_contract[:,1] != 'x')]
@@ -438,6 +318,28 @@ class Ui_Main(QMainWindow):
         self.FolioPos.folioList.append(folio)
         self.FolioPos.cbUID.addItem(folio)
         self.multiOrders.cbFolio.addItem(folio)
+
+    def setclist(self,a):
+        self.PreferanceW.cbCList.addItems(a)
+        self.marketW.buyw.clist=a
+        self.marketW.sellw.clist=a
+
+    def setDefaultClient(self,a):
+        try:
+            self.DefaultClient = a
+            self.marketW.buyw.DefaultClient=self.DefaultClient
+            self.marketW.sellw.DefaultClient=self.DefaultClient
+
+            self.marketW.buyw.leClient.setText(self.DefaultClient)
+            self.marketW.sellw.leClient.setText(self.DefaultClient)
+
+            # self.marketW.snapW.sellw.leClient.setText(self.DefaultClient)
+
+        except:
+            logging.error(traceback.print_exc())
+
+
+
 
 if __name__ == "__main__":
     import sys

@@ -395,36 +395,45 @@ def get_Trades(self,requestClass):
                         updateGetTrade_FP(self.FolioPos,trades)
         else:
             jk = 0
-            ApiTrade = np.empty((0, 24))
+            trades = np.zeros((0, 24), dtype=object)
+
             for kl in self.client_list:
                 url = self.URL + '/interactive/orders/trades?clientID=' + kl
                 req = requests.request("GET", url, headers=self.IAheaders)
                 data_p = req.json()
+
+
+
                 if (data_p['result'] != []):
                     for j, i in enumerate(data_p['result']):
                         if(i['LoginID']==self.userID):
-                            if (i['ExchangeSegment'] == 'NSEFO'):
-                                ins_details = self.fo_contract[int(i['ExchangeInstrumentID']) - 35000]
-                            elif (i['ExchangeSegment'] == 'NSECM'):
-                                ins_details = self.eq_contract[int(i['ExchangeInstrumentID'])]
-                            elif (i['ExchangeSegment'] == 'NSECD'):
-                                ins_details = self.cd_contract[int(i['ExchangeInstrumentID'])]
-
+                            exchange = i['ExchangeSegment']
+                            token = i['ExchangeInstrumentID']
+                            ins_details = get_ins_details(self, exchange, token)
                             orderSide = i['OrderSide'].replace('BUY', 'Buy').replace('SELL', 'Sell')
                             tradedQty = i['LastTradedQuantity']
-                            qty = tradedQty if(orderSide == 'Buy') else -tradedQty
-                            netValue = qty * i['LastTradedPrice']
+                            qty = tradedQty if (orderSide == 'Buy') else -tradedQty
+                            netValue = - qty * i['LastTradedPrice']
 
-                            trades = dt.Frame([
+                            trade = dt.Frame([
                             [i['LoginID']],
                             [i['ClientID']], [i['ExchangeInstrumentID']], [ins_details[4]],[ins_details[3]], [ins_details[6]],
                             [ins_details[7]], [ins_details[8]],[orderSide],[i['AppOrderID']], [i['OrderType']],
                             [tradedQty],[i['OrderStatus']],[i['OrderAverageTradedPrice']], [i['ExchangeTransactTime']],[i['OrderUniqueIdentifier']],
                             [i['ExchangeOrderID']],[i['LastTradedPrice']],[qty],[netValue],[ins_details[0]],
                             [ins_details[11]],[ins_details[14]],['openValue']]).to_numpy()
-                            self.sgGTrdSoc.emit(trades)
-                            ApiTrade = np.vstack([ApiTrade, trades])
+
+
+
+
                             jk+=1
+
+                        trades = np.vstack([trades,trade])
+
+            if(requestClass=='main'):
+                updateGetTrade_TB(self,trade,j)
+                updateGetTrade_FP(self.FolioPos,trades)
+
 
         tradeW_datachanged_full(self)
     except:

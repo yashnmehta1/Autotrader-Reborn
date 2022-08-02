@@ -189,3 +189,15 @@ def showSnapFrame1(self):
         self.animssq2.start()
         self.isSnapQuotOpen = False
         self.unSubscription_feed(self.subToken)
+
+
+
+def createAnimations(self):
+    self.anim41 = QPropertyAnimation(self.scriptBar, b"maximumHeight")
+    self.anim31 = QPropertyAnimation(self.indexBar, b"maximumHeight")
+    self.anim32 = QPropertyAnimation(self.indexBar, b"maximumHeight")
+    self.anim71 = QPropertyAnimation(self.settingsMenu, b"minimumWidth")
+    self.anim72 = QPropertyAnimation(self.settingsMenu, b"minimumWidth")
+    self.anim42 = QPropertyAnimation(self.scriptBar, b"maximumHeight")
+    self.anim93 = QPropertyAnimation(self.lbMTM, b"maximumWidth")
+    self.anim94 = QPropertyAnimation(self.lbMTM, b"maximumWidth")
